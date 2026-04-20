@@ -86,7 +86,7 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def load_aip(aip):
+def load_aip(aip) -> bytes:
     et = ET.parse(aip)
 
     # Replace "[ft_i]" with "FT"
