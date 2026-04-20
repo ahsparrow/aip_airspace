@@ -12,7 +12,7 @@ def matz(matz_list, atz_gdf):
 
     # Filter MATZ ATZs
     atz_ids = [m["atz_identifier"] for m in matz_list]
-    catz_gdf = catz_gdf.query("identifier in @atz_ids")
+    catz_gdf = catz_gdf[catz_gdf["identifier"].isin(atz_ids)]
 
     # Trim " ATZ" from end of name
     catz_gdf["name"] = [n[:-4] for n in catz_gdf["name"]]
