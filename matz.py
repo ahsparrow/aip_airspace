@@ -1,4 +1,4 @@
-import geopandas
+from geopandas import read_file, GeoDataFrame
 import pandas
 import yaml
 from shapely import affinity, box, union_all, Point
@@ -6,7 +6,7 @@ from shapely import affinity, box, union_all, Point
 NM_M = 1852
 
 
-def matz(matz_list, atz_gdf):
+def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # ATS DataFrame with cartesian coordiates
     catz_gdf = atz_gdf.to_crs(epsg=27700)
 
@@ -67,7 +67,7 @@ def matz(matz_list, atz_gdf):
         uppers.append(atzs.upperLimit.max())
 
     # Create GeoDataFrame of MATZ cores
-    core_gdf = geopandas.GeoDataFrame(
+    core_gdf = GeoDataFrame(
         {
             "localType": ["MATZ"] * len(geom),
             "name": names,
@@ -114,7 +114,7 @@ def matz(matz_list, atz_gdf):
             # Upper limit is 1000' above ATZ upper limit
             uppers.append(catz.upperLimit + 1000)
 
-    stub_gdf = geopandas.GeoDataFrame(
+    stub_gdf = GeoDataFrame(
         {
             "localType": ["MATZ"] * len(geom),
             "name": names,
@@ -130,7 +130,7 @@ def matz(matz_list, atz_gdf):
     )
 
     # Concatenate cores and stubs and convert to WGS84
-    matz_gdf = pandas.concat([core_gdf, stub_gdf])
+    matz_gdf = GeoDataFrame(pandas.concat([core_gdf, stub_gdf]), crs="EPSG:27700")
     matz_gdf.to_crs(epsg=4326, inplace=True)
 
     return matz_gdf
@@ -138,16 +138,16 @@ def matz(matz_list, atz_gdf):
 
 if __name__ == "__main__":
     from loadaip import load_aip
+    from pathlib import Path
 
     with open("config.yaml") as f:
         config = yaml.safe_load(f)
 
     aip = load_aip("data/EG_AIP_DS_FULL_20260416.xml")
 
-    gdf = geopandas.read_file(aip, layer="Airspace")
+    gdf = read_file(aip, layer="Airspace")
     gdf.set_crs(epsg=4326, inplace=True)
     atz_gdf = gdf[gdf["timeSlice|AirspaceTimeSlice|localType"] == "ATZ"]
 
     matz_gdf = matz(config["matz"], atz_gdf)
-
-    matz_gdf.to_file("matz.geojson", driver="GeoJSON")
+    matz_gdf.to_file(Path("matz.geojson"), driver="GeoJSON")
