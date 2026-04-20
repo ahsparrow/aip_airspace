@@ -28,7 +28,7 @@ def as_type(row):
         return None
 
 
-def remove_offshore(gdf, buffer=20000):
+def remove_offshore(gdf, buffer=10000):
     coast = geopandas.read_file("coast.geojson")
     coast.to_crs(epsg=27700, inplace=True)
     coast["geometry"] = coast.buffer(buffer)
