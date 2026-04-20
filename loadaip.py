@@ -36,7 +36,6 @@ def fix_links(et, borders_df):
             href = cm.attrib.get(f"{{{ns['xlink']}}}href")
             if href:
                 identifier = href.split(":")[-1]
-                border_segment = et.find(f".//gml:identifier[.='{identifier}']", ns)
 
                 # Get previous and next positions
                 prev = curve_members[(n - 1) % len(ring)].findall(".//gml:pos", ns)

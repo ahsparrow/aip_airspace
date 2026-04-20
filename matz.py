@@ -1,7 +1,7 @@
 import geopandas
 import pandas
 import yaml
-from shapely import affinity, box, difference, union_all, Point
+from shapely import affinity, box, union_all, Point
 
 NM_M = 1852
 
@@ -137,7 +137,6 @@ def matz(matz_list, atz_gdf):
 
 
 if __name__ == "__main__":
-    import xml.etree.ElementTree as ET
     from loadaip import load_aip
 
     with open("config.yaml") as f:
