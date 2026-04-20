@@ -48,6 +48,10 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     # Drop above FL195
     gdf = gdf[(gdf["lowerLimit_uom"] != "FL") | (gdf["lowerLimit"] < 195)]
 
+    # Remove anything wholely inside a CTR
+    ctr_poly = shapely.MultiPolygon(gdf[gdf["astype"] == "CTR"].geometry)
+    gdf = gdf[~gdf.within(ctr_poly) | (gdf["astype"] == "CTR")]
+
     # Remove unused columns
     gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
 
