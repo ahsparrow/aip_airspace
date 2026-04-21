@@ -18,12 +18,31 @@ KEEP_COLUMNS = [
 
 
 def as_type(row):
-    if row["type"] in ["CTA", "CTR", "TMA", "D"]:
+    if row["type"] in ["CTA", "CTR", "TMA", "D", "P"]:
         return row["type"]
+    elif row["type"] == "R" and row["timeSlice|AirspaceTimeSlice|localType"] not in [
+        "RPZ",
+        "FRZ",
+    ]:
+        return "R"
     elif row["timeSlice|AirspaceTimeSlice|localType"] == "ATZ":
         return "ATZ"
+    elif row["timeSlice|AirspaceTimeSlice|localType"] == "RMZ":
+        return "RMZ"
+    elif row["timeSlice|AirspaceTimeSlice|localType"] == "TMZ":
+        return "TMZ"
+    elif row["timeSlice|AirspaceTimeSlice|localType"] == "TRAG":
+        return "TRAG"
     elif row["activity"] == "PARACHUTE":
         return "DZ"
+    elif row["activity"] == "LASER":
+        return "LASER"
+    elif row["activity"] == "HI_RADIO":
+        return "HIRTA"
+    elif row["activity"] == "GAS":
+        return "GVS"
+    elif row["name"].startswith("NSGA"):
+        return "NSGA"
     else:
         return None
 
