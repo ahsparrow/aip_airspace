@@ -1,11 +1,8 @@
 from geopandas import read_file, GeoDataFrame
 
 KEEP_COLUMNS = [
-    "geometry",
-    "astype",
     "gml_id",
     "identifier",
-    "type",
     "name",
     "classification",
     "upperLimit",
@@ -14,10 +11,12 @@ KEEP_COLUMNS = [
     "lowerLimit",
     "lowerLimit_uom",
     "lowerLimitReference",
+    "geometry",
+    "stype",
 ]
 
 
-def as_type(row):
+def simple_type(row):
     if row["type"] in ["CTA", "CTR", "TMA", "D", "P"]:
         return row["type"]
     elif row["type"] == "R" and row["timeSlice|AirspaceTimeSlice|localType"] not in [
@@ -59,17 +58,19 @@ def remove_offshore(gdf, buffer=10000):
 
 
 def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
-    as_gdf["astype"] = as_gdf.apply(as_type, axis=1)
+    as_gdf["stype"] = as_gdf.apply(simple_type, axis=1)
 
     # Drop unknown types
-    gdf = as_gdf.dropna(subset=["astype"])
+    gdf = as_gdf.dropna(subset=["stype"])
 
-    # Drop above FL195
-    gdf = gdf[(gdf["lowerLimit_uom"] != "FL") | (gdf["lowerLimit"] < 195)]
+    # Drop above FL195 (except TRAG)
+    gdf = gdf[
+        (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf.stype == "TRAG")
+    ]
 
     # Remove anything wholely inside a CTR
-    ctr_poly = shapely.MultiPolygon(gdf[gdf["astype"] == "CTR"].geometry)
-    gdf = gdf[~gdf.within(ctr_poly) | (gdf["astype"] == "CTR")]
+    ctr_poly = shapely.MultiPolygon(gdf[gdf["stype"] == "CTR"].geometry)
+    gdf = gdf[~gdf.within(ctr_poly) | (gdf["stype"] == "CTR")]
 
     # Remove unused columns
     gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
