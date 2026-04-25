@@ -1,4 +1,7 @@
+import shapely
 from geopandas import read_file, GeoDataFrame
+from pandas import DataFrame, merge
+from uuid import UUID
 
 KEEP_COLUMNS = [
     "gml_id",
@@ -78,18 +81,113 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     return gdf
 
 
+def add_frequency(
+    as_gdf: GeoDataFrame,
+    ats_gdf: GeoDataFrame,
+    is_gdf: GeoDataFrame,
+    rcc_gdf: GeoDataFrame,
+) -> GeoDataFrame:
+    as_gdf = as_gdf.set_index("identifier")
+    rcc_gdf = rcc_gdf.set_index("identifier")
+
+    # Emtpy dictionary of services
+    service_dict = {
+        k: v for k, v in zip(as_gdf.index, [[] for _ in range(len(as_gdf.index))])
+    }
+
+    # Loop over ATC services
+    for _, row in ats_gdf.iterrows():
+        if row.clientAirspace_href is not None:
+            for href in row.clientAirspace_href:
+                uuid = str(UUID(href))
+                if uuid in as_gdf.index:
+                    # Ignore class A and C
+                    if len(set(as_gdf.loc[uuid].classification) & set(["A", "C"])) == 0:
+                        service_dict[uuid].append(row)
+
+    # Loop over Information services
+    for _, row in is_gdf.iterrows():
+        if row.clientAirspace_href is not None:
+            for href in row.clientAirspace_href:
+                uuid = str(UUID(href))
+                if uuid in as_gdf.index:
+                    service_dict[uuid].append(row)
+
+    # Channel list
+    channel = {
+        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+    }
+    call_sign = {
+        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+    }
+
+    # Find services for airspaces
+    for uuid, services in service_dict.items():
+        service = None
+        if len(services) == 1:
+            # Just one service
+            service = services[0]
+        elif len(services) > 1:
+            asrvc = [s for s in services if "APPROACH" in str(s.callSign)]
+            if len(asrvc) == 1:
+                service = asrvc[0]
+            elif len(asrvc) == 0:
+                rsrvc = [s for s in services if "RADAR" in str(s.callSign)]
+                if len(rsrvc) == 1:
+                    service = rsrvc[0]
+                elif len(rsrvc) > 1:
+                    channel[uuid] = "Multiple RADAR"
+                else:
+                    channel[uuid] = "No APPROACH/RADAR"
+            else:
+                channel[uuid] = "Multiple APPROACH"
+
+        # Get frequency for service
+        if service is not None:
+            href = service.radioCommunication_href
+            if len(href) == 1:
+                # Just one frequency
+                channel[uuid] = str(
+                    rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
+                )
+                call_sign[uuid] = service.callSign[0]
+            else:
+                # More than one frequency
+                channel[uuid] = "Multiple frequency"
+
+    df = DataFrame.from_dict(channel, orient="index", columns=["channel"])
+    gdf = merge(as_gdf, df, left_index=True, right_index=True)
+
+    df = DataFrame.from_dict(call_sign, orient="index", columns=["call_sign"])
+    gdf = merge(gdf, df, left_index=True, right_index=True)
+
+    return gdf
+
+
 if __name__ == "__main__":
     from loadaip import load_aip
     from pathlib import Path
     import geopandas
-    import shapely
 
+    print("Load AIP")
     aip = load_aip("data/EG_AIP_DS_FULL_20260416.xml")
 
-    gdf = read_file(aip, layer="Airspace")
-    gdf.set_crs(epsg=4326, inplace=True)
+    print("Load Airspace layer")
+    airspace_gdf = read_file(aip, layer="Airspace")
+    airspace_gdf.set_crs(epsg=4326, inplace=True)
 
-    gdf = remove_offshore(gdf)
+    airspace_gdf = remove_offshore(airspace_gdf)
+    airspace_gdf = airspace(airspace_gdf)
 
-    as_gdf = airspace(gdf)
-    as_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
+    print("Load ATC Service layer")
+    ats_gdf = read_file(aip, layer="AirTrafficControlService")
+
+    print("Load Information Service layer")
+    is_gdf = read_file(aip, layer="InformationService")
+
+    print("Load Radio Communication Channel layer")
+    rcc_gdf = read_file(aip, layer="RadioCommunicationChannel")
+
+    output_gdf = add_frequency(airspace_gdf, ats_gdf, is_gdf, rcc_gdf)
+
+    output_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
