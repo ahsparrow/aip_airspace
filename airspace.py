@@ -129,15 +129,22 @@ def add_frequency(
             # Just one service
             service = services[0]
         elif len(services) > 1:
-            # Prefer APPROACH to RADAR
-            asrvc = [s for s in services if str(s.callSign).endswith("APPROACH")]
-            if len(asrvc) == 1:
-                service = asrvc[0]
-            elif len(asrvc) == 0:
-                rsrvc = [s for s in services if str(s.callSign).endswith("RADAR")]
-                if len(rsrvc) == 1:
-                    service = rsrvc[0]
-                elif len(rsrvc) > 1:
+            # Search for APPROACH service
+            approach_svc = [
+                s for s in services if [c for c in s.callSign if c.endswith("APPROACH")]
+            ]
+            if len(approach_svc) == 1:
+                service = approach_svc[0]
+            elif len(approach_svc) == 0:
+                # Search for RADAR service
+                radar_svc = [
+                    s
+                    for s in services
+                    if [c for c in s.callSign if c.endswith("RADAR")]
+                ]
+                if len(radar_svc) == 1:
+                    service = radar_svc[0]
+                elif len(radar_svc) > 1:
                     callsign[uuid] = "Warning - multiple RADAR"
                 else:
                     callsign[uuid] = "Warning - no APPROACH/RADAR"
@@ -153,7 +160,14 @@ def add_frequency(
                 freq = rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
                 channel[uuid] = f"{freq:0.3f}"
 
-                callsign[uuid] = service.callSign[0]
+                for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
+                    for cs in service.callSign:
+                        if cs.endswith(svc):
+                            callsign[uuid] = cs
+                            break
+
+                    if callsign[uuid] != "":
+                        break
             else:
                 # More than one frequency
                 callsign[uuid] = "Warning - multiple frequency"
