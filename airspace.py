@@ -148,10 +148,11 @@ def add_frequency(
         if service is not None:
             href = service.radioCommunication_href
             if len(href) == 1:
-                # Just one frequency
-                channel[uuid] = str(
-                    rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
-                )
+                # Exactly one frequency
+                rcc_uuid = str(UUID(href[0]))
+                freq = rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
+                channel[uuid] = f"{freq:0.3f}"
+
                 callsign[uuid] = service.callSign[0]
             else:
                 # More than one frequency
