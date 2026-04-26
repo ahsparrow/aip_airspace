@@ -130,11 +130,11 @@ def add_frequency(
             service = services[0]
         elif len(services) > 1:
             # Prefer APPROACH to RADAR
-            asrvc = [s for s in services if "APPROACH" in str(s.callSign)]
+            asrvc = [s for s in services if str(s.callSign).endswith("APPROACH")]
             if len(asrvc) == 1:
                 service = asrvc[0]
             elif len(asrvc) == 0:
-                rsrvc = [s for s in services if "RADAR" in str(s.callSign)]
+                rsrvc = [s for s in services if str(s.callSign).endswith("RADAR")]
                 if len(rsrvc) == 1:
                     service = rsrvc[0]
                 elif len(rsrvc) > 1:
