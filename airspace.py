@@ -113,11 +113,12 @@ def add_frequency(
                 if uuid in as_gdf.index:
                     service_dict[uuid].append(row)
 
-    # Channel list
+    # Channels and call signs
     channel = {
         k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
     }
-    call_sign = {
+
+    callsign = {
         k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
     }
 
@@ -128,6 +129,7 @@ def add_frequency(
             # Just one service
             service = services[0]
         elif len(services) > 1:
+            # Prefer APPROACH to RADAR
             asrvc = [s for s in services if "APPROACH" in str(s.callSign)]
             if len(asrvc) == 1:
                 service = asrvc[0]
@@ -136,11 +138,11 @@ def add_frequency(
                 if len(rsrvc) == 1:
                     service = rsrvc[0]
                 elif len(rsrvc) > 1:
-                    channel[uuid] = "Multiple RADAR"
+                    callsign[uuid] = "Warning - multiple RADAR"
                 else:
-                    channel[uuid] = "No APPROACH/RADAR"
+                    callsign[uuid] = "Warning - no APPROACH/RADAR"
             else:
-                channel[uuid] = "Multiple APPROACH"
+                callsign[uuid] = "Warning - multiple APPROACH"
 
         # Get frequency for service
         if service is not None:
@@ -150,15 +152,15 @@ def add_frequency(
                 channel[uuid] = str(
                     rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
                 )
-                call_sign[uuid] = service.callSign[0]
+                callsign[uuid] = service.callSign[0]
             else:
                 # More than one frequency
-                channel[uuid] = "Multiple frequency"
+                callsign[uuid] = "Warning - multiple frequency"
 
     df = DataFrame.from_dict(channel, orient="index", columns=["channel"])
     gdf = merge(as_gdf, df, left_index=True, right_index=True)
 
-    df = DataFrame.from_dict(call_sign, orient="index", columns=["call_sign"])
+    df = DataFrame.from_dict(callsign, orient="index", columns=["callsign"])
     gdf = merge(gdf, df, left_index=True, right_index=True)
 
     return gdf
