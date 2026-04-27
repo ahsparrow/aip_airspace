@@ -1,3 +1,8 @@
+service:
+ - id: b99df1df-db49-41b1-b0e9-3a71bb04209f
+   callsign: BRISTOL RADAR
+   rcc_href: adf772be-d044-404e-a3be-0958c08a8b72
+
 matz:
 - name: BARKSTON HEATH
   atz_identifier: 7a1e90ed-a0bb-4a83-8d87-7ffc47bef49f

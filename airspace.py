@@ -83,12 +83,12 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
 
 def add_frequency(
     as_gdf: GeoDataFrame,
-    ats_gdf: GeoDataFrame,
-    is_gdf: GeoDataFrame,
-    rcc_gdf: GeoDataFrame,
+    ats_df: GeoDataFrame,
+    is_df: GeoDataFrame,
+    rcc_df: GeoDataFrame,
 ) -> GeoDataFrame:
     as_gdf = as_gdf.set_index("identifier")
-    rcc_gdf = rcc_gdf.set_index("identifier")
+    rcc_df = rcc_df.set_index("identifier")
 
     # list of services for each airspace
     service_dict = {
@@ -104,7 +104,7 @@ def add_frequency(
     }
 
     # loop over ATC services
-    for _, row in ats_gdf.iterrows():
+    for _, row in ats_df.iterrows():
         if row.clientAirspace_href is not None:
             for href in row.clientAirspace_href:
                 uuid = str(UUID(href))
@@ -124,7 +124,7 @@ def add_frequency(
                         callsign[uuid] = "Missing callsign"
 
     # loop over Information services
-    for _, row in is_gdf.iterrows():
+    for _, row in is_df.iterrows():
         if row.clientAirspace_href is not None:
             for href in row.clientAirspace_href:
                 uuid = str(UUID(href))
@@ -148,7 +148,7 @@ def add_frequency(
                 if cs.endswith(svc):
                     href = services[n_svc].radioCommunication_href[n_cs]
                     rcc_uuid = str(UUID(href))
-                    freq = rcc_gdf.loc[rcc_uuid].frequencyTransmission
+                    freq = rcc_df.loc[rcc_uuid].frequencyTransmission
 
                     callsign[uuid] = cs
                     channel[uuid] = freq
@@ -179,14 +179,14 @@ if __name__ == "__main__":
     airspace_gdf = airspace(airspace_gdf)
 
     print("Load ATC Service layer")
-    ats_gdf = read_file(aip, layer="AirTrafficControlService")
+    ats_df = read_file(aip, layer="AirTrafficControlService")
 
     print("Load Information Service layer")
-    is_gdf = read_file(aip, layer="InformationService")
+    is_df = read_file(aip, layer="InformationService")
 
     print("Load Radio Communication Channel layer")
-    rcc_gdf = read_file(aip, layer="RadioCommunicationChannel")
+    rcc_df = read_file(aip, layer="RadioCommunicationChannel")
 
-    output_gdf = add_frequency(airspace_gdf, ats_gdf, is_gdf, rcc_gdf)
+    output_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
 
     output_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
