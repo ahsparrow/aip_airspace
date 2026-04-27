@@ -90,22 +90,40 @@ def add_frequency(
     as_gdf = as_gdf.set_index("identifier")
     rcc_gdf = rcc_gdf.set_index("identifier")
 
-    # Emtpy dictionary of services
+    # list of services for each airspace
     service_dict = {
         k: v for k, v in zip(as_gdf.index, [[] for _ in range(len(as_gdf.index))])
     }
 
-    # Loop over ATC services
+    # channels and call signs for each airspace
+    channel = {
+        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+    }
+    callsign = {
+        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+    }
+
+    # loop over ATC services
     for _, row in ats_gdf.iterrows():
         if row.clientAirspace_href is not None:
             for href in row.clientAirspace_href:
                 uuid = str(UUID(href))
-                if uuid in as_gdf.index:
-                    # Ignore class A and C
-                    if len(set(as_gdf.loc[uuid].classification) & set(["A", "C"])) == 0:
-                        service_dict[uuid].append(row)
 
-    # Loop over Information services
+                # check client airspace exists
+                if uuid in as_gdf.index:
+                    # check missing callsign
+                    if row.callSign is not None:
+                        # check unambiguous call sign <-> frequency
+                        if len(row.callSign) == len(row.radioCommunication_href):
+                            # Ignore class A and C
+                            if not set(as_gdf.loc[uuid].classification) & {"A", "C"}:
+                                service_dict[uuid].append(row)
+                        else:
+                            callsign[uuid] = "Ambiguous callsign/frequency"
+                    else:
+                        callsign[uuid] = "Missing callsign"
+
+    # loop over Information services
     for _, row in is_gdf.iterrows():
         if row.clientAirspace_href is not None:
             for href in row.clientAirspace_href:
@@ -113,64 +131,28 @@ def add_frequency(
                 if uuid in as_gdf.index:
                     service_dict[uuid].append(row)
 
-    # Channels and call signs
-    channel = {
-        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
-    }
-
-    callsign = {
-        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
-    }
-
-    # Find services for airspaces
+    # for each airspace
     for uuid, services in service_dict.items():
-        service = None
-        if len(services) == 1:
-            # Just one service
-            service = services[0]
-        elif len(services) > 1:
-            # Search for APPROACH service
-            approach_svc = [
-                s for s in services if [c for c in s.callSign if c.endswith("APPROACH")]
-            ]
-            if len(approach_svc) == 1:
-                service = approach_svc[0]
-            elif len(approach_svc) == 0:
-                # Search for RADAR service
-                radar_svc = [
-                    s
-                    for s in services
-                    if [c for c in s.callSign if c.endswith("RADAR")]
-                ]
-                if len(radar_svc) == 1:
-                    service = radar_svc[0]
-                elif len(radar_svc) > 1:
-                    callsign[uuid] = "Warning - multiple RADAR"
-                else:
-                    callsign[uuid] = "Warning - no APPROACH/RADAR"
-            else:
-                callsign[uuid] = "Warning - multiple APPROACH"
+        # build flat callsign list
+        csign = []
+        for n_svc, svc in enumerate(services):
+            for n_cs, cs in enumerate(svc.callSign):
+                csign.append((n_svc, n_cs, cs))
 
-        # Get frequency for service
-        if service is not None:
-            href = service.radioCommunication_href
-            if len(href) == 1:
-                # Exactly one frequency
-                rcc_uuid = str(UUID(href[0]))
-                freq = rcc_gdf.loc[str(UUID(href[0]))].frequencyTransmission
-                channel[uuid] = f"{freq:0.3f}"
+        # check services names in order of preference
+        for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
+            if callsign[uuid] != "":
+                break
 
-                for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
-                    for cs in service.callSign:
-                        if cs.endswith(svc):
-                            callsign[uuid] = cs
-                            break
+            for n_svc, n_cs, cs in csign:
+                if cs.endswith(svc):
+                    href = services[n_svc].radioCommunication_href[n_cs]
+                    rcc_uuid = str(UUID(href))
+                    freq = rcc_gdf.loc[rcc_uuid].frequencyTransmission
 
-                    if callsign[uuid] != "":
-                        break
-            else:
-                # More than one frequency
-                callsign[uuid] = "Warning - multiple frequency"
+                    callsign[uuid] = cs
+                    channel[uuid] = freq
+                    break
 
     df = DataFrame.from_dict(channel, orient="index", columns=["channel"])
     gdf = merge(as_gdf, df, left_index=True, right_index=True)
