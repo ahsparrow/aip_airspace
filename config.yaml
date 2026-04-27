@@ -1,8 +1,28 @@
 service:
- - id: b99df1df-db49-41b1-b0e9-3a71bb04209f
-   callsign: BRISTOL RADAR
-   rcc_href: adf772be-d044-404e-a3be-0958c08a8b72
+- identifier: b99df1df-db49-41b1-b0e9-3a71bb04209f
+  callsign: BRISTOL RADAR
+  rcc_href: 6db7de37-785a-4e2e-917b-6a86ded7ac38
 
+- identifier: 5608dec1-e150-4e5e-a20a-4166ad4858f2
+  callsign: PRESTWICK RADAR
+  rcc_href: 3825e483-f73a-46d3-b570-336897e0dc63
+
+- identifier: 4e074fd4-6bb6-4cf4-a825-c91cf0c33b26
+  callsign: MANCHESTER RADAR
+  rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
+
+- identifier: 4ea20eb1-9610-46b4-8dd5-45f988386fd1
+  callsign: MANCHESTER RADAR
+  rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
+ 
+- identifier: 4425a5d5-7931-44ee-af3c-c0bbeb89a6a0
+  callsign: BIRMINGHAM RADAR
+  rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
+
+- identifier: a3ef5b21-09d6-4f98-93b5-78896c9fadf0
+  callsign: BIRMINGHAM RADAR
+  rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
+ 
 matz:
 - name: BARKSTON HEATH
   atz_identifier: 7a1e90ed-a0bb-4a83-8d87-7ffc47bef49f

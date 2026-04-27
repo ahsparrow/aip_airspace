@@ -81,6 +81,17 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     return gdf
 
 
+# Override callsign/frequency in ATC service
+def override_ats(ats_df, override):
+    ats_df = ats_df.set_index("identifier")
+
+    for svc in override:
+        ats_df.loc[svc["identifier"], "callSign"] = [svc["callsign"]]
+        ats_df.loc[svc["identifier"], "radioCommunication_href"] = [svc["rcc_href"]]
+
+    return ats_df
+
+
 def add_frequency(
     as_gdf: GeoDataFrame,
     ats_df: GeoDataFrame,
@@ -113,13 +124,13 @@ def add_frequency(
                 if uuid in as_gdf.index:
                     # check missing callsign
                     if row.callSign is not None:
-                        # check unambiguous call sign <-> frequency
-                        if len(row.callSign) == len(row.radioCommunication_href):
-                            # Ignore class A and C
-                            if not set(as_gdf.loc[uuid].classification) & {"A", "C"}:
+                        # Ignore class A and C
+                        if not set(as_gdf.loc[uuid].classification) & {"A", "C"}:
+                            # check unambiguous call sign <-> frequency
+                            if len(row.callSign) == len(row.radioCommunication_href):
                                 service_dict[uuid].append(row)
-                        else:
-                            callsign[uuid] = "Ambiguous callsign/frequency"
+                            else:
+                                callsign[uuid] = "Ambiguous callsign/frequency"
                     else:
                         callsign[uuid] = "Missing callsign"
 
@@ -167,6 +178,9 @@ if __name__ == "__main__":
     from loadaip import load_aip
     from pathlib import Path
     import geopandas
+    import yaml
+
+    config = yaml.safe_load(open("config.yaml"))
 
     print("Load AIP")
     aip = load_aip("data/EG_AIP_DS_FULL_20260416.xml")
@@ -186,6 +200,8 @@ if __name__ == "__main__":
 
     print("Load Radio Communication Channel layer")
     rcc_df = read_file(aip, layer="RadioCommunicationChannel")
+
+    ats_df = override_ats(ats_df, config["service"])
 
     output_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
 
