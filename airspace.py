@@ -4,7 +4,6 @@ from pandas import DataFrame, concat, merge
 from uuid import UUID
 
 KEEP_COLUMNS = [
-    "gml_id",
     "identifier",
     "name",
     "classification",
@@ -178,13 +177,19 @@ if __name__ == "__main__":
     from loadaip import load_aip
     from matz import matz
     from pathlib import Path
+    import argparse
     import geopandas
     import yaml
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("aip_filename")
+    parser.add_argument("geojson_filename")
+    args = parser.parse_args()
 
     config = yaml.safe_load(open("config.yaml"))
 
     print("Load AIP")
-    aip = load_aip("data/20260416/EG_AIP_DS_FULL_20260416.xml")
+    aip = load_aip(args.aip_filename)
 
     print("Load Airspace layer")
     airspace_gdf = read_file(aip, layer="Airspace")
@@ -223,4 +228,4 @@ if __name__ == "__main__":
     matz_gdf = matz(config["matz"], airspace_gdf)
 
     output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf))
-    output_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
+    output_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
