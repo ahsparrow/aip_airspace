@@ -12,7 +12,7 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
 
     # Filter MATZ ATZs
     atz_ids = [m["atz_identifier"] for m in matz_list]
-    catz_gdf = catz_gdf[catz_gdf["identifier"].isin(atz_ids)]
+    catz_gdf = catz_gdf.loc[atz_ids]
 
     # Trim " ATZ" from end of name
     catz_gdf["name"] = [n[:-4] for n in catz_gdf["name"]]
@@ -23,9 +23,7 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # Create MATZ core geometries
     geom = []
     for md in matz_list:
-        centroid = (
-            catz_gdf[catz_gdf["identifier"] == md["atz_identifier"]].iloc[0].centroid
-        )
+        centroid = catz_gdf.loc[md["atz_identifier"]].centroid
 
         matz = centroid.buffer(md.get("radius", 5) * NM_M)
 
@@ -87,7 +85,7 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     names = []
     uppers = []
     for md in matz_list:
-        catz = catz_gdf[catz_gdf["identifier"] == md["atz_identifier"]].iloc[0]
+        catz = catz_gdf.loc[md["atz_identifier"]]
 
         for n, sd in enumerate(md["stubs"]):
             width = sd.get("width", 4)
@@ -116,7 +114,7 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
 
     stub_gdf = GeoDataFrame(
         {
-            "localType": ["MATZ"] * len(geom),
+            "stype": ["MATZ"] * len(geom),
             "name": names,
             "upperLimit": uppers,
             "upperLimit_uom": ["FT"] * len(geom),

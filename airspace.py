@@ -1,7 +1,6 @@
-from shapely import MultiPolygon, Polygon
+from shapely import MultiPolygon
 from geopandas import read_file, GeoDataFrame
 from pandas import DataFrame, concat, merge
-from shapely.affinity import rotate, translate
 from uuid import UUID
 
 KEEP_COLUMNS = [
@@ -99,7 +98,6 @@ def add_frequency(
     is_df: GeoDataFrame,
     rcc_df: GeoDataFrame,
 ) -> GeoDataFrame:
-    as_gdf = as_gdf.set_index("identifier")
     rcc_df = rcc_df.set_index("identifier")
 
     # list of services for each airspace
@@ -178,6 +176,7 @@ def add_frequency(
 if __name__ == "__main__":
     from ils import ils
     from loadaip import load_aip
+    from matz import matz
     from pathlib import Path
     import geopandas
     import yaml
@@ -190,6 +189,7 @@ if __name__ == "__main__":
     print("Load Airspace layer")
     airspace_gdf = read_file(aip, layer="Airspace")
     airspace_gdf.set_crs(epsg=4326, inplace=True)
+    airspace_gdf.set_index("identifier", inplace=True)
 
     airspace_gdf = remove_offshore(airspace_gdf)
     airspace_gdf = airspace(airspace_gdf)
@@ -206,7 +206,8 @@ if __name__ == "__main__":
     print("Load Radio Communication Channel layer")
     rcc_df = read_file(aip, layer="RadioCommunicationChannel")
 
-    output_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
+    # Add frequencies
+    airspace_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
 
     print("Loading Runway Centreline Point layer")
     rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
@@ -214,9 +215,12 @@ if __name__ == "__main__":
     print("Loading Runway Direction layer")
     rd_df = read_file(aip, layer="RunwayDirection")
 
-    atz_gdf = output_gdf[output_gdf["stype"] == "ATZ"]
+    # Add ILS
+    atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
     ils_gdf = ils(config["ils_rcp"], atz_gdf, rcp_gdf, rd_df)
 
-    output_gdf = concat((output_gdf, ils_gdf))
+    # Add MATZ
+    matz_gdf = matz(config["matz"], airspace_gdf)
 
+    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf))
     output_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
