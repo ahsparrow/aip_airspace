@@ -1,6 +1,7 @@
-import shapely
+from shapely import MultiPolygon, Polygon
 from geopandas import read_file, GeoDataFrame
-from pandas import DataFrame, merge
+from pandas import DataFrame, concat, merge
+from shapely.affinity import rotate, translate
 from uuid import UUID
 
 KEEP_COLUMNS = [
@@ -55,7 +56,7 @@ def remove_offshore(gdf, buffer=10000):
     coast["geometry"] = coast.buffer(buffer)
     coast.to_crs(epsg=4326, inplace=True)
 
-    mp = shapely.MultiPolygon(coast.geometry)
+    mp = MultiPolygon(coast.geometry)
 
     return gdf[gdf.overlaps(mp) | gdf.within(mp)]
 
@@ -72,7 +73,7 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     ]
 
     # Remove anything wholely inside a CTR
-    ctr_poly = shapely.MultiPolygon(gdf[gdf["stype"] == "CTR"].geometry)
+    ctr_poly = MultiPolygon(gdf[gdf["stype"] == "CTR"].geometry)
     gdf = gdf[~gdf.within(ctr_poly) | (gdf["stype"] == "CTR")]
 
     # Remove unused columns
@@ -175,6 +176,7 @@ def add_frequency(
 
 
 if __name__ == "__main__":
+    from ils import ils
     from loadaip import load_aip
     from pathlib import Path
     import geopandas
@@ -183,7 +185,7 @@ if __name__ == "__main__":
     config = yaml.safe_load(open("config.yaml"))
 
     print("Load AIP")
-    aip = load_aip("data/EG_AIP_DS_FULL_20260416.xml")
+    aip = load_aip("data/20260416/EG_AIP_DS_FULL_20260416.xml")
 
     print("Load Airspace layer")
     airspace_gdf = read_file(aip, layer="Airspace")
@@ -195,14 +197,26 @@ if __name__ == "__main__":
     print("Load ATC Service layer")
     ats_df = read_file(aip, layer="AirTrafficControlService")
 
+    # Service overrides
+    ats_df = override_ats(ats_df, config["service"])
+
     print("Load Information Service layer")
     is_df = read_file(aip, layer="InformationService")
 
     print("Load Radio Communication Channel layer")
     rcc_df = read_file(aip, layer="RadioCommunicationChannel")
 
-    ats_df = override_ats(ats_df, config["service"])
-
     output_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
+
+    print("Loading Runway Centreline Point layer")
+    rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
+
+    print("Loading Runway Direction layer")
+    rd_df = read_file(aip, layer="RunwayDirection")
+
+    atz_gdf = output_gdf[output_gdf["stype"] == "ATZ"]
+    ils_gdf = ils(config["ils_rcp"], atz_gdf, rcp_gdf, rd_df)
+
+    output_gdf = concat((output_gdf, ils_gdf))
 
     output_gdf.to_file(Path("airspace.geojson"), driver="GeoJSON")
