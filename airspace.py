@@ -214,10 +214,10 @@ if __name__ == "__main__":
     # Add frequencies
     airspace_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
 
-    print("Loading Runway Centreline Point layer")
+    print("Load Runway Centreline Point layer")
     rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
 
-    print("Loading Runway Direction layer")
+    print("Load Runway Direction layer")
     rd_df = read_file(aip, layer="RunwayDirection")
 
     # Add ILS
