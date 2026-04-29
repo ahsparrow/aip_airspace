@@ -31,6 +31,10 @@ ils_rcp:
 # Gloucestershire 27
 - 0f1b031b-af38-4b3c-aee2-ffde03ab18d3
 
+exclude:
+# Long Lartin restricted area
+- afed1fe6-b3d8-4ce0-90c8-57e0b16fca54
+
 matz:
 - name: BARKSTON HEATH
   atz_identifier: 7a1e90ed-a0bb-4a83-8d87-7ffc47bef49f

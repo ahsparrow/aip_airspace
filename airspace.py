@@ -59,6 +59,10 @@ def remove_offshore(gdf, buffer=10000):
     return gdf[gdf.overlaps(mp) | gdf.within(mp)]
 
 
+def remove_excluded(gdf, exclude):
+    return gdf.loc[gdf.index.difference(exclude)]
+
+
 def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     as_gdf["stype"] = as_gdf.apply(simple_type, axis=1)
 
@@ -197,6 +201,7 @@ if __name__ == "__main__":
     airspace_gdf.set_index("identifier", inplace=True)
 
     airspace_gdf = remove_offshore(airspace_gdf)
+    airspace_gdf = remove_excluded(airspace_gdf, config["exclude"])
     airspace_gdf = airspace(airspace_gdf)
 
     print("Load ATC Service layer")
