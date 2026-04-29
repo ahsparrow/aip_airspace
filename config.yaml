@@ -1,0 +1,188 @@
+service:
+- identifier: b99df1df-db49-41b1-b0e9-3a71bb04209f
+  callsign: BRISTOL RADAR
+  rcc_href: 6db7de37-785a-4e2e-917b-6a86ded7ac38
+
+- identifier: 5608dec1-e150-4e5e-a20a-4166ad4858f2
+  callsign: PRESTWICK RADAR
+  rcc_href: 3825e483-f73a-46d3-b570-336897e0dc63
+
+- identifier: 4e074fd4-6bb6-4cf4-a825-c91cf0c33b26
+  callsign: MANCHESTER RADAR
+  rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
+
+- identifier: 4ea20eb1-9610-46b4-8dd5-45f988386fd1
+  callsign: MANCHESTER RADAR
+  rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
+ 
+- identifier: 4425a5d5-7931-44ee-af3c-c0bbeb89a6a0
+  callsign: BIRMINGHAM RADAR
+  rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
+
+- identifier: a3ef5b21-09d6-4f98-93b5-78896c9fadf0
+  callsign: BIRMINGHAM RADAR
+  rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
+
+ils_rcp:
+# Oxford 19
+- 089b836c-2e39-46e7-b96e-3af08cd1508f
+# Gloucestershire 09
+- 6f9504b3-1381-4c88-beb0-961abab30c64 
+# Gloucestershire 27
+- 0f1b031b-af38-4b3c-aee2-ffde03ab18d3
+
+matz:
+- name: BARKSTON HEATH
+  atz_identifier: 7a1e90ed-a0bb-4a83-8d87-7ffc47bef49f
+  radius: 3
+  stubs:
+  - heading: 58
+    distance: 2
+
+- name: BENSON
+  atz_identifier: 5da6620a-6c81-4cfe-abad-6c9c7c7befcf
+  radius: 5
+  stubs:
+  - heading: 8
+  - heading: 188
+
+- name: BOSCOMBE DOWN
+  atz_identifier: d4c52ee0-1eba-48d3-9aea-d23144d4eea0
+  stubs:
+  - heading: 50
+  - heading: 230
+
+- name: CONINGSBY
+  atz_identifier: 3c55ed9f-8ca7-4319-8f6d-3722119a94ef
+  stubs:
+  - heading: 252
+
+- name: CRANWELL
+  atz_identifier: 3117d7ca-2537-4302-9006-4167c01c3dce
+  stubs:
+  - heading: 263
+
+- name: CULDROSE
+  atz_identifier: 795198ed-ea59-4f3c-a581-1604c17511ae
+  stubs:
+  - heading: 293
+
+- name: FAIRFORD
+  atz_identifier: d547b3d9-3f16-4337-92fd-b36370d4fbd6
+  stubs:
+  - heading: 268
+
+- name: LAKENHEATH
+  atz_identifier: 259f3e9d-cffe-4292-bb01-ade52c876606
+  stubs:
+  - heading: 236
+
+- name: LEEMING
+  atz_identifier: 5882268d-a805-4c58-aaa4-e93efb8b1cfb
+  stubs:
+  - heading: 156
+
+- name: LEUCHARS
+  atz_identifier: 3e7e55c3-3651-450c-b712-a90fd72e84fe
+  stubs:
+  - heading: 82
+  - heading: 262
+
+- name: LOSSIEMOUTH
+  atz_identifier: f222650a-5ebc-4729-b39a-2ca5b2968cb1
+  stubs:
+  - heading: 226
+
+- name: MARHAM
+  atz_identifier: 011e2d50-33ba-4960-8e63-938c0e115e15
+  stubs:
+  - heading: 57
+  - heading: 237
+
+- name: MERRYFIELD
+  atz_identifier: 6903c658-8448-4427-b6ff-403b04da4d59
+  radius: 3
+  stubs: []
+
+- name: MIDDLE WALLOP
+  atz_identifier: f99581bc-d4fa-4bb3-a9a2-7e45c1aa6c36
+  stubs:
+  - heading: 256
+    distance: 3
+
+- name: MILDENHALL
+  atz_identifier: 5ddfdbcd-4615-4193-b0b0-c9153c042bde
+  stubs:
+  - heading: 103
+    width: 6.999
+    offset: -1.5
+  - heading: 283
+    width: 6.999
+    offset: 1.5
+
+- name: MONA
+  atz_identifier: c9d90237-6459-46bc-96ac-015bbeca0fbc
+  stubs: []
+
+- name: ODIHAM
+  atz_identifier: c057fe04-08c4-470e-bd71-9f7c3b5ad60e
+  stubs:
+  - heading: 93
+
+- name: PREDANNACK
+  atz_identifier: 43caa1c8-8de8-4cc6-a8ff-3eaed2bf0136
+  stubs: []
+
+- name: SHAWBURY
+  atz_identifier: 8ddbb0fe-0774-4175-8e26-c7f83f525740
+  stubs:
+  - heading: 180
+  - heading: 360
+
+- name: TERNHILL
+  atz_identifier: a44e1f8a-7fa6-40cf-920a-20bbedb558c5
+  stubs: []
+
+- name: TOPCLIFFE
+  atz_identifier: 9844c41d-8d8a-4747-af37-9b9238fdd5d0
+  stubs: []
+
+- name: VALLEY
+  atz_identifier: 0c47e326-fcca-43c9-b613-5c64ae21c580
+  stubs:
+  - heading: 130
+
+- name: WADDINGTON
+  atz_identifier: f13c98da-7500-4eb5-921b-598826d2cdad
+  stubs:
+  - heading: 202
+
+- name: WARTON
+  atz_identifier: 8e7c5b0b-8c35-4ee4-8cb9-32f46bb4bb1e
+  stubs:
+  - heading: 71
+    distance: 5
+    width: 6
+    offset: -1
+  - heading: 251
+    distance: 5
+    width: 6
+    offset: 1
+
+- name: WATTISHAM
+  atz_identifier: 4a19a013-3ba7-4cca-b505-f90905c2922f
+  stubs:
+  - heading: 48
+  - heading: 228
+
+- name: WITTERING
+  atz_identifier: 02009984-ff7d-4eb5-8634-9fa5c8e98990
+  stubs:
+  - heading: 73
+  - heading: 253
+
+- name: YEOVILTON
+  atz_identifier: dd73d307-b05e-4489-9b90-0f464296e712
+  stubs:
+  - heading: 83
+  - heading: 263
