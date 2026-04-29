@@ -1,4 +1,4 @@
-from shapely import MultiPolygon
+from shapely import MultiPolygon, Point
 from geopandas import read_file, GeoDataFrame
 from pandas import DataFrame, concat, merge
 from uuid import UUID
@@ -61,6 +61,31 @@ def remove_offshore(gdf, buffer=10000):
 
 def remove_excluded(gdf, exclude):
     return gdf.loc[gdf.index.difference(exclude)]
+
+
+def extras(extra_list):
+    data = []
+    for e in extra_list:
+        data.append(
+            {
+                "name": e["name"],
+                "stype": e["stype"],
+                "upperLimit": e["upper_ft"],
+                "upperLimit_uom": "FT",
+                "upperLimitReference": "MSL",
+                "lowerLimit": 0,
+                "lowerLimit_uom": "FT",
+                "lowerLimitReference": "SFC",
+                "geometry": Point(e["centre"][0], e["centre"][1]),
+            }
+        )
+
+    gdf = GeoDataFrame(DataFrame(data), crs="EPSG:4326")
+    gdf.to_crs(epsg=27700, inplace=True)
+
+    gdf.geometry = gdf.geometry.buffer([e["radius_nm"] * 1852 for e in extra_list])
+
+    return gdf.to_crs(epsg=4326)
 
 
 def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
@@ -232,5 +257,8 @@ if __name__ == "__main__":
     # Add MATZ
     matz_gdf = matz(config["matz"], airspace_gdf)
 
-    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf))
+    # Extra airspace, gliding sites etc.
+    extra_gdf = extras(config["extra"])
+
+    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, extra_gdf))
     output_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
