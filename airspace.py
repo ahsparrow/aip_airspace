@@ -261,4 +261,9 @@ if __name__ == "__main__":
     extra_gdf = extras(config["extra"])
 
     output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, extra_gdf))
+
+    # Reduce output file size
+    output_gdf.geometry = output_gdf.geometry.make_valid()
+    output_gdf.geometry = output_gdf.geometry.set_precision(grid_size=0.000001)
+
     output_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
