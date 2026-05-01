@@ -35,15 +35,6 @@ exclude:
 # Long Lartin restricted area
 - afed1fe6-b3d8-4ce0-90c8-57e0b16fca54
 
-extra:
-- name: RIVAR HILL
-  stype: GLIDING
-  upper_ft: 3730
-  radius_nm: 1
-  centre:
-    - -1.543056
-    - 51.343889
-
 matz:
 - name: BARKSTON HEATH
   atz_identifier: 7a1e90ed-a0bb-4a83-8d87-7ffc47bef49f

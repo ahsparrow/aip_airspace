@@ -1,0 +1,1362 @@
+features:
+- geometry:
+    coordinates: 
+    - -2.8347222222222226
+    - 57.075
+    type: Point
+  properties:
+    callsign: ABOYNE RADIO
+    channel: 118.665
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: ABOYNE
+    stype: GLIDING
+    upperLimit: 2460
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.1305555555555555
+    - 51.70777777777778
+    type: Point
+  properties:
+    callsign: ASTON DOWN RADIO
+    channel: 118.665
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: ASTON DOWN
+    stype: GLIDING
+    upperLimit: 3600
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.1091666666666669
+    - 50.67805555555555
+    type: Point
+  properties:
+    callsign: BEMBRIDGE RADIO
+    channel: 123.255
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BEMBRIDGE
+    stype: GLIDING
+    upperLimit: 2055
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -6.965833333333333
+    - 55.14333333333333
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BELLARENA
+    stype: GLIDING
+    upperLimit: 2015
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.1322222222222222
+    - 51.91611111111111
+    type: Point
+  properties:
+    callsign: BICESTER RADIO
+    channel: 118.39
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BICESTER
+    stype: GLIDING
+    upperLimit: 2267
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.8508333333333333
+    - 52.134166666666665
+    type: Point
+  properties:
+    callsign: BIDFORD RADIO
+    channel: 118.685
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BIDFORD
+    stype: GLIDING
+    upperLimit: 2135
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.6594444444444445
+    - 50.801111111111105
+    type: Point
+  properties:
+    callsign: BOGNOR REGIS RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BOGNOR REGIS
+    stype: GLIDING
+    upperLimit: 2510
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -4.147222222222223
+    - 50.588055555555556
+    type: Point
+  properties:
+    callsign: BRENT TOR RADIO
+    channel: 129.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BRENT TOR
+    stype: GLIDING
+    upperLimit: 2820
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.0844444444444443
+    - 53.74583333333334
+    type: Point
+  properties:
+    callsign: BURN RADIO
+    channel: 130.29
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BURN
+    stype: GLIDING
+    upperLimit: 3020
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.731388888888889
+    - 53.305
+    type: Point
+  properties:
+    callsign: CAMPHILL RADIO
+    channel: 124.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CAMPHILL
+    stype: GLIDING
+    upperLimit: 3350
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.8291666666666666
+    - 51.208333333333336
+    type: Point
+  properties:
+    callsign: CHALLOCK RADIO
+    channel: 122.915
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CHALLOCK
+    stype: GLIDING
+    upperLimit: 2600
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.6205555555555557
+    - 53.88361111111111
+    type: Point
+  properties:
+    callsign: CHIPPING RADIO
+    channel: 118.685
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CHIPPING
+    stype: GLIDING
+    upperLimit: 3600
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.49333333333333335
+    - 53.04194444444444
+    type: Point
+  properties:
+    callsign: CRANWELL RADIO
+    channel: 129.06
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CRANWELL
+    stype: GLIDING
+    upperLimit: 3222
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.14277777777777778
+    - 52.70916666666667
+    type: Point
+  properties:
+    callsign: CROWLAND RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CROWLAND
+    stype: GLIDING
+    upperLimit: 2010
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -5.255833333333333
+    - 50.086111111111116
+    type: Point
+  properties:
+    callsign: CULDROSE RADIO
+    channel: 134.05
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CULDROSE
+    stype: GLIDING
+    upperLimit: 2267
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.845277777777778
+    - 54.93388888888889
+    type: Point
+  properties:
+    callsign: CURROCK HILL RADIO
+    channel: 125.185
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: CURROCK HILL
+    stype: GLIDING
+    upperLimit: 2800
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.8588888888888888
+    - 53.245555555555555
+    type: Point
+  properties:
+    callsign: DARLTON RADIO
+    channel: 118.685
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: DARLTON
+    stype: GLIDING
+    upperLimit: 2155
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.5483333333333333
+    - 51.86666666666667
+    type: Point
+  properties:
+    callsign: DUNSTABLE RADIO
+    channel: 119.905
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: DUNSTABLE
+    stype: GLIDING
+    upperLimit: 2500
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.9894444444444446
+    - 50.92833333333333
+    type: Point
+  properties:
+    callsign: EAGLESCOTT RADIO
+    channel: 123.0
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: EAGLESCOTT
+    stype: GLIDING
+    upperLimit: 2655
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.3113888888888887
+    - 57.58555555555556
+    type: Point
+  properties:
+    callsign: EASTERTON RADIO
+    channel: 130.29
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: EASTERTON
+    stype: GLIDING
+    upperLimit: 2361
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.4744444444444447
+    - 52.08527777777778
+    type: Point
+  properties:
+    callsign: EDGE HILL RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: EDGE HILL
+    stype: GLIDING
+    upperLimit: 3142
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.2194444444444446
+    - 50.70916666666667
+    type: Point
+  properties:
+    callsign: EYRES FIELD RADIO
+    channel: 132.91
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: EYRES FIELD
+    stype: GLIDING
+    upperLimit: 2205
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.74
+    - 54.943888888888885
+    type: Point
+  properties:
+    callsign: FALGUNZEON RADIO
+    channel: 129.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: FALGUNZEON
+    stype: GLIDING
+    upperLimit: 2600
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.8916666666666666
+    - 57.103611111111114
+    type: Point
+  properties:
+    callsign: FESHIEBRIDGE RADIO
+    channel: 118.685
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: FESHIEBRIDGE
+    stype: GLIDING
+    upperLimit: 2860
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.11472222222222223
+    - 52.17805555555555
+    type: Point
+  properties:
+    callsign: GRANSDEN LODGE RADIO
+    channel: 131.28
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: GRANSDEN LODGE
+    stype: GLIDING
+    upperLimit: 3254
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.7322222222222226
+    - 51.26222222222222
+    type: Point
+  properties:
+    callsign: HALESLAND RADIO
+    channel: 129.06
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: HALESLAND
+    stype: GLIDING
+    upperLimit: 2870
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.2080555555555554
+    - 52.02916666666667
+    type: Point
+  properties:
+    callsign: HINTON RADIO
+    channel: 119.455
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: HINTON-IN-THE-HEDGES
+    stype: GLIDING
+    upperLimit: 2500
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.78
+    - 52.343333333333334
+    type: Point
+  properties:
+    callsign: HONINGTON RADIO
+    channel: 124.105
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: HONINGTON
+    stype: GLIDING
+    upperLimit: 2174
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.043888888888889
+    - 52.440555555555555
+    type: Point
+  properties:
+    callsign: HUSBANDS BOSWORTH RADIO
+    channel: 127.58
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: HUSBANDS BOSWORTH
+    stype: GLIDING
+    upperLimit: 3505
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.1119444444444446
+    - 51.31388888888888
+    type: Point
+  properties:
+    callsign: KEEVIL RADIO
+    channel: 130.29
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: KEEVIL
+    stype: GLIDING
+    upperLimit: 3200
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.0319444444444443
+    - 51.18666666666666
+    type: Point
+  properties:
+    callsign: LASHAM RADIO
+    channel: 131.03
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LASHAM
+    stype: GLIDING
+    upperLimit: 3618
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.2208333333333337
+    - 53.04416666666666
+    type: Point
+  properties:
+    callsign: LLANTISILIO RADIO
+    channel: 133.565
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LLANTISILIO
+    stype: GLIDING
+    upperLimit: 3120
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.3866666666666667
+    - 53.21083333333333
+    type: Point
+  properties:
+    callsign: LLEWENI PARC RADIO
+    channel: 129.06
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LLEWENI PARC
+    stype: GLIDING
+    upperLimit: 3200
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.8758333333333335
+    - 52.51888888888889
+    type: Point
+  properties:
+    callsign: LONG MYND RADIO
+    channel: 123.815
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LONG MYND
+    stype: GLIDING
+    upperLimit: 4411
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.575
+    - 52.46611111111111
+    type: Point
+  properties:
+    callsign: LYVEDEN RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LYVEDEN
+    stype: GLIDING
+    upperLimit: 2279
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.5702777777777777
+    - 51.14944444444444
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: MIDDLE WALLOP
+    stype: GLIDING
+    upperLimit: 2297
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.0861111111111112
+    - 55.58722222222222
+    type: Point
+  properties:
+    callsign: MILFIELD RADIO
+    channel: 124.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: MILFIELD
+    stype: GLIDING
+    upperLimit: 2150
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.2775
+    - 50.85194444444445
+    type: Point
+  properties:
+    callsign: NORTH HILL RADIO
+    channel: 129.905
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: NORTH HILL
+    stype: GLIDING
+    upperLimit: 3921
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.283611111111111
+    - 51.71416666666667
+    type: Point
+  properties:
+    callsign: NYMPSFIELD RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: NYMPSFIELD
+    stype: GLIDING
+    upperLimit: 3700
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.47444444444444445
+    - 50.925555555555555
+    type: Point
+  properties:
+    callsign: PARHAM RADIO
+    channel: 124.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: PARHAM
+    stype: GLIDING
+    upperLimit: 2110
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -5.1775
+    - 50.32972222222222
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: PERRANPORTH
+    stype: GLIDING
+    upperLimit: 2330
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.7975
+    - 53.92805555555555
+    type: Point
+  properties:
+    callsign: POCKLINGTON RADIO
+    channel: 122.915
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: POCKLINGTON
+    stype: GLIDING
+    upperLimit: 2087
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.3291666666666666
+    - 56.189166666666665
+    type: Point
+  properties:
+    callsign: PORTMOAK RADIO
+    channel: 122.915
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: PORTMOAK
+    stype: GLIDING
+    upperLimit: 2360
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.8711111111111112
+    - 52.16694444444444
+    type: Point
+  properties:
+    callsign: RATTLESDEN RADIO
+    channel: 130.29
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: RATTLESDEN
+    stype: GLIDING
+    upperLimit: 2305
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.5583333333333333
+    - 52.04805555555556
+    type: Point
+  properties:
+    callsign: RIDGEWELL RADIO
+    channel: 132.91
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: RIDGEWELL
+    stype: GLIDING
+    upperLimit: 2273
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.10500000000000001
+    - 50.906388888888884
+    type: Point
+  properties:
+    callsign: RINGMER RADIO
+    channel: 129.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: RINGMER
+    stype: GLIDING
+    upperLimit: 2572
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.5430555555555554
+    - 51.34388888888889
+    type: Point
+  properties:
+    callsign: RIVAR HILL RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: RIVAR HILL
+    stype: GLIDING
+    upperLimit: 3730
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.4847222222222222
+    - 52.26416666666667
+    type: Point
+  properties:
+    callsign: SACKVILLE LODGE RADIO
+    channel: 135.48
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SACKVILLE LODGE
+    stype: GLIDING
+    upperLimit: 2250
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.7124999999999999
+    - 52.82972222222222
+    type: Point
+  properties:
+    callsign: SALTBY RADIO
+    channel: 129.965
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SALTBY
+    stype: GLIDING
+    upperLimit: 3480
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.6749999999999998
+    - 51.60388888888889
+    type: Point
+  properties:
+    callsign: SANDHILL FARM RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SANDHILL FARM
+    stype: GLIDING
+    upperLimit: 2350
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.2033333333333336
+    - 52.82777777777778
+    type: Point
+  properties:
+    callsign: SEIGHFORD RADIO
+    channel: 132.91
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SEIGHFORD
+    stype: GLIDING
+    upperLimit: 2321
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.881111111111111
+    - 52.24166666666667
+    type: Point
+  properties:
+    callsign: SHOBDON RADIO
+    channel: 118.155
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SHOBDON
+    stype: GLIDING
+    upperLimit: 2328
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.585
+    - 54.69777777777777
+    type: Point
+  properties:
+    callsign: SKELLING FARM RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SKELLING FARM
+    stype: GLIDING
+    upperLimit: 2610
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.7716666666666665
+    - 52.83388888888889
+    type: Point
+  properties:
+    callsign: SLEAP RADIO
+    channel: 122.455
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SLEAP
+    stype: GLIDING
+    upperLimit: 2275
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.7194444444444446
+    - 52.235
+    type: Point
+  properties:
+    callsign: SNITTERFIELD RADIO
+    channel: 125.185
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SNITTERFIELD
+    stype: GLIDING
+    upperLimit: 2375
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.1761111111111111
+    - 53.309999999999995
+    type: Point
+  properties:
+    callsign: STRUBBY RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: STRUBBY
+    stype: GLIDING
+    upperLimit: 3047
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.213611111111111
+    - 54.227222222222224
+    type: Point
+  properties:
+    callsign: SUTTON BANK RADIO
+    channel: 118.665
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SUTTON BANK
+    stype: GLIDING
+    upperLimit: 2920
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.204166666666667
+    - 51.980000000000004
+    type: Point
+  properties:
+    callsign: TALGARTH RADIO
+    channel: 122.915
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: TALGARTH
+    stype: GLIDING
+    upperLimit: 2970
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.2458333333333336
+    - 51.12833333333333
+    type: Point
+  properties:
+    callsign: THE PARK RADIO
+    channel: 133.565
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: THE PARK
+    stype: GLIDING
+    upperLimit: 3697
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 1.1541666666666666
+    - 52.45666666666667
+    type: Point
+  properties:
+    callsign: TIBENHAM RADIO
+    channel: 133.565
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: TIBENHAM
+    stype: GLIDING
+    upperLimit: 3186
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.14333333333333334
+    - 52.43666666666666
+    type: Point
+  properties:
+    callsign: UPWOOD RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: UPWOOD
+    stype: GLIDING
+    upperLimit: 2075
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.850277777777778
+    - 51.718333333333334
+    type: Point
+  properties:
+    callsign: USK RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: USK
+    stype: GLIDING
+    upperLimit: 2080
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.956111111111111
+    - 52.1275
+    type: Point
+  properties:
+    callsign: WATTISHAM RADIO
+    channel: 125.8
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: WATTISHAM
+    stype: GLIDING
+    upperLimit: 3284
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.2197222222222224
+    - 51.88027777777778
+    type: Point
+  properties:
+    callsign: WESTON RADIO
+    channel: 129.98
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: WESTON-ON-THE-GREEN
+    stype: GLIDING
+    upperLimit: 3282
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.0574999999999997
+    - 53.58166666666667
+    type: Point
+  properties:
+    callsign: WOODVALE APPROACH
+    channel: 121.0
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: WOODVALE
+    stype: GLIDING
+    upperLimit: 2037
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - 0.7897222222222222
+    - 51.94166666666666
+    type: Point
+  properties:
+    callsign: WORMINGFORD RADIO
+    channel: 123.815
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: WORMINGFORD
+    stype: GLIDING
+    upperLimit: 3236
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.8083333333333333
+    - 51.611666666666665
+    type: Point
+  properties:
+    callsign: BOOKER RADIO
+    channel: 126.555
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: BOOKER
+    stype: GLIDING
+    upperLimit: 2516
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.638888888888889
+    - 51.00944444444445
+    type: Point
+  properties:
+    callsign: YEOVILTON RADIO
+    channel: 127.35
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: YEOVILTON
+    stype: GLIDING
+    upperLimit: 2075
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.1877777777777778
+    - 53.9475
+    type: Point
+  properties:
+    callsign: RUFFORTH RADIO
+    channel: 123.815
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: RUFFORTH
+    stype: GLIDING
+    upperLimit: 2065
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.7377777777777778
+    - 51.7925
+    type: Point
+  properties:
+    callsign: HALTON RADIO
+    channel: 130.425
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: HALTON
+    stype: GLIDING
+    upperLimit: 2370
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.09388888888888888
+    - 51.30583333333333
+    type: Point
+  properties:
+    callsign: KENLEY RADIO
+    channel: 119.76
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: KENLEY
+    stype: GLIDING
+    upperLimit: 2256
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -3.4
+    - 55.876111111111115
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: KIRKNEWTON
+    stype: GLIDING
+    upperLimit: 3652
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.6941666666666666
+    - 51.86666666666667
+    type: Point
+  properties:
+    callsign: LITTLE RISSINGTON RADIO
+    channel: 120.78
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: LITTLE RISSINGTON
+    stype: GLIDING
+    upperLimit: 2722
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.9491666666666667
+    - 51.234722222222224
+    type: Point
+  properties:
+    callsign: ODIHAM RADIO
+    channel: 131.3
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: ODIHAM
+    stype: GLIDING
+    upperLimit: 2905
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -5.230833333333334
+    - 50.00194444444445
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: PREDANNACK
+    stype: GLIDING
+    upperLimit: 3295
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.667777777777778
+    - 52.79361111111111
+    type: Point
+  properties:
+    callsign: SHAWBURY ZONE
+    channel: 133.155
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SHAWBURY
+    stype: GLIDING
+    upperLimit: 2248
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -0.9116666666666667
+    - 53.02333333333333
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: SYERSTON
+    stype: GLIDING
+    upperLimit: 3228
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -2.533611111111111
+    - 52.87416666666667
+    type: Point
+  properties:
+    callsign: null
+    channel: null
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: TERNHILL
+    stype: GLIDING
+    upperLimit: 2272
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.3816666666666666
+    - 54.205555555555556
+    type: Point
+  properties:
+    callsign: TOPCLIFFE RADIO
+    channel: 121.455
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: TOPCLIFFE
+    stype: GLIDING
+    upperLimit: 2091
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
+    - -1.781111111111111
+    - 51.28611111111111
+    type: Point
+  properties:
+    callsign: UPAVON RADIO
+    channel: 124.105
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: UPAVON
+    stype: GLIDING
+    upperLimit: 3575
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+type: FeatureCollection

@@ -202,6 +202,7 @@ def add_frequency(
 
 
 if __name__ == "__main__":
+    from gliding import gliding
     from ils import ils
     from loadaip import load_aip
     from matz import matz
@@ -257,10 +258,13 @@ if __name__ == "__main__":
     # Add MATZ
     matz_gdf = matz(config["matz"], airspace_gdf)
 
-    # Extra airspace, gliding sites etc.
-    extra_gdf = extras(config["extra"])
+    # Gliding sites (with 1 nm buffer)
+    gliding_gdf = gliding_sites("assets/gliding.yaml")
+    gliding_gdf.to_crs(epsg=27700, inplace=True)
+    gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
+    gliding_gdf.to_crs(epsg=4326, inplace=True)
 
-    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, extra_gdf))
+    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, gliding_gdf))
 
     # Reduce output file size
     output_gdf.geometry = output_gdf.geometry.make_valid()
