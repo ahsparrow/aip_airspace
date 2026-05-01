@@ -49,7 +49,7 @@ def simple_type(row):
 
 
 def remove_offshore(gdf, buffer=10000):
-    coast = geopandas.read_file("coast.geojson")
+    coast = geopandas.read_file("assets/coast.geojson")
     coast.to_crs(epsg=27700, inplace=True)
     coast["geometry"] = coast.buffer(buffer)
     coast.to_crs(epsg=4326, inplace=True)
@@ -202,7 +202,7 @@ def add_frequency(
 
 
 if __name__ == "__main__":
-    from gliding import gliding
+    from gliding import gliding_sites
     from ils import ils
     from loadaip import load_aip
     from matz import matz
