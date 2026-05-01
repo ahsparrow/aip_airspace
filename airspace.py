@@ -252,13 +252,18 @@ if __name__ == "__main__":
     rd_df = read_file(aip, layer="RunwayDirection")
 
     # Add ILS
+    print("Add ILS")
     atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
     ils_gdf = ils(config["ils_rcp"], atz_gdf, rcp_gdf, rd_df)
 
     # Add MATZ
-    matz_gdf = matz(config["matz"], airspace_gdf)
+    print("Add MATZ")
+    with open("assets/matz.yaml") as matz_file:
+        data = yaml.safe_load(matz_file)
+    matz_gdf = matz(data["matz"], airspace_gdf)
 
     # Gliding sites (with 1 nm buffer)
+    print("Add gliding sites")
     gliding_gdf = gliding_sites("assets/gliding.yaml")
     gliding_gdf.to_crs(epsg=27700, inplace=True)
     gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
