@@ -264,7 +264,9 @@ if __name__ == "__main__":
 
     # Gliding sites (with 1 nm buffer)
     print("Add gliding sites")
-    gliding_gdf = gliding_sites("assets/gliding.yaml")
+    with open("assets/gliding.yaml") as gliding_file:
+        data = yaml.safe_load(gliding_file)
+    gliding_gdf = gliding_sites(data)
     gliding_gdf.to_crs(epsg=27700, inplace=True)
     gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
     gliding_gdf.to_crs(epsg=4326, inplace=True)
