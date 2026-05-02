@@ -48,8 +48,8 @@ def simple_type(row):
         return None
 
 
-def remove_offshore(gdf, buffer=10000):
-    coast = geopandas.read_file("assets/coast.geojson")
+def remove_offshore(gdf, coastline_filename, buffer=10000):
+    coast = geopandas.read_file(coastline_filename)
     coast.to_crs(epsg=27700, inplace=True)
     coast["geometry"] = coast.buffer(buffer)
     coast.to_crs(epsg=4326, inplace=True)
@@ -226,7 +226,7 @@ if __name__ == "__main__":
     airspace_gdf.set_crs(epsg=4326, inplace=True)
     airspace_gdf.set_index("identifier", inplace=True)
 
-    airspace_gdf = remove_offshore(airspace_gdf)
+    airspace_gdf = remove_offshore(airspace_gdf, config["files"]["coastline"])
     airspace_gdf = remove_excluded(airspace_gdf, config["exclude"])
     airspace_gdf = airspace(airspace_gdf)
 
@@ -234,7 +234,7 @@ if __name__ == "__main__":
     ats_df = read_file(aip, layer="AirTrafficControlService")
 
     # Service overrides
-    ats_df = override_ats(ats_df, config["service"])
+    ats_df = override_ats(ats_df, config["service_override"])
 
     print("Load Information Service layer")
     is_df = read_file(aip, layer="InformationService")
@@ -264,9 +264,12 @@ if __name__ == "__main__":
 
     # Gliding sites (with 1 nm buffer)
     print("Add gliding sites")
-    with open("assets/gliding.yaml") as gliding_file:
-        data = yaml.safe_load(gliding_file)
-    gliding_gdf = gliding_sites(data)
+    with open(config["files"]["gliding_site"]) as file:
+        data = yaml.safe_load(file)
+
+    gliding_gdf = GeoDataFrame.from_features(data)
+    gliding_gdf.set_crs(epsg=4326, inplace=True)
+
     gliding_gdf.to_crs(epsg=27700, inplace=True)
     gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
     gliding_gdf.to_crs(epsg=4326, inplace=True)
