@@ -88,6 +88,13 @@ def extras(extra_list):
     return gdf.to_crs(epsg=4326)
 
 
+def rename(row):
+    if row.stype in ["D", "P", "R"]:
+        return f"{row.designator[2:]} {row["name"]}"
+    else:
+        return row["name"]
+
+
 def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     as_gdf["stype"] = as_gdf.apply(simple_type, axis=1)
 
@@ -102,6 +109,9 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     # Remove anything wholely inside a CTR
     ctr_poly = MultiPolygon(gdf[gdf["stype"] == "CTR"].geometry)
     gdf = gdf[~gdf.within(ctr_poly) | (gdf["stype"] == "CTR")]
+
+    # Rename danger, prohibited and restricted areas
+    gdf["name"] = gdf.apply(rename, axis=1)
 
     # Remove unused columns
     gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
