@@ -254,11 +254,13 @@ if __name__ == "__main__":
     # Add ILS
     print("Add ILS")
     atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
-    ils_gdf = ils(config["ils_rcp"], atz_gdf, rcp_gdf, rd_df)
+    with open(config["files"]["ils"]) as file:
+        data = yaml.safe_load(file)
+    ils_gdf = ils(data["runway_centre_points"], atz_gdf, rcp_gdf, rd_df)
 
     # Add MATZ
     print("Add MATZ")
-    with open("assets/matz.yaml") as matz_file:
+    with open(config["files"]["matz"]) as matz_file:
         data = yaml.safe_load(matz_file)
     matz_gdf = matz(data["matz"], airspace_gdf)
 

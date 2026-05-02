@@ -1,0 +1,52 @@
+# ILS runway centre points
+runway_centre_points:
+# Biggin Hill 21
+- d1c970f7-f5d1-486f-b384-6a9204351901
+# Cambridge 05
+- 6636b7f9-5872-4fce-ab02-bb124496e58b
+# Cambridge 23
+- a8f9b41b-9f3c-4318-88d3-ff35313bba51
+# Cranfield 03
+- c2230f45-7e62-442f-b77c-b3832558375f
+# Cranfield 21
+- 82ab009d-ae44-444b-b132-68cfd33eedc7
+# Dundee 09
+- b5a6c5f4-f834-4de5-ae9d-c7d61e705e35
+# Exeter 08
+- fa05e69b-2440-4b2a-80d7-755486aa10cd
+# Exeter 26
+- 4b593f94-7208-408e-bb52-1c892a22c689
+# Gloucestershire 09
+- 6f9504b3-1381-4c88-beb0-961abab30c64 
+# Gloucestershire 27
+- 0f1b031b-af38-4b3c-aee2-ffde03ab18d3
+# Harwarden 04
+- 37114dbf-5a6f-4b6e-ab2e-93517de14572
+# Humberside 02
+- 835f6651-ea75-4540-9197-a970f29c4d7f
+# Humberside 20
+- 50c60341-4db5-4ebb-936c-d187c90fa11d
+# Inverness 05
+- 8f943655-befe-42d0-b715-429495939618
+# Inverness 23
+- 6c935ce5-83d3-48a0-9237-d53ad5901df8
+# Lydd 03
+- ed0aa6f3-d79d-4f00-8a13-c0ab0ca67d13
+# Lydd 21
+- c02dd7c9-c4f3-42ab-81c2-3b5f57296925
+# Newquay 12
+- 0050652b-7ad6-462a-aae5-bbdbe1fd1f67
+# Newquay 30
+- 1e77b864-0a21-4121-9cd1-7ce4b6c27cdb
+# Oxford 01
+- e9372767-9382-4ed3-b4e0-ed6d76e0cf8e
+# Oxford 19
+- 089b836c-2e39-46e7-b96e-3af08cd1508f
+# Shoreham 02
+- d790ee0d-0247-4d3b-bba5-a9ecfb7af5bf
+# Shoreham 20
+- 121bc738-5975-445a-ba9a-999501801d99
+# Yeovil 09
+- 65b812d1-6a6b-456c-afab-84d74854b119
+# Yeovil 27
+- 337e12ef-cc0e-4864-80eb-6b8efd8f7d58

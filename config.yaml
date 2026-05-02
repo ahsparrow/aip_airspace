@@ -2,6 +2,7 @@ files:
   coastline: assets/coast.geojson
   gliding_site: assets/gliding.yaml
   matz: assets/matz.yaml
+  ils: assets/ils.yaml
 
 service_override:
 - identifier: b99df1df-db49-41b1-b0e9-3a71bb04209f
@@ -27,14 +28,6 @@ service_override:
 - identifier: a3ef5b21-09d6-4f98-93b5-78896c9fadf0
   callsign: BIRMINGHAM RADAR
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
-
-ils_rcp:
-# Oxford 19
-- 089b836c-2e39-46e7-b96e-3af08cd1508f
-# Gloucestershire 09
-- 6f9504b3-1381-4c88-beb0-961abab30c64 
-# Gloucestershire 27
-- 0f1b031b-af38-4b3c-aee2-ffde03ab18d3
 
 exclude:
 # Long Lartin restricted area
