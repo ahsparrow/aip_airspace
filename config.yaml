@@ -30,6 +30,14 @@ service_override:
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
 exclude:
+# D218 Fairford
+- 3ecaefe3-e516-42d0-ab1e-320e3ba97adf
+- 6c3895e3-bf2f-4f1b-bff9-9ec0a3432233
+# D323 Southern Complex
+- d90ee524-6ad3-4ab4-bcbf-08245c8abb1d
+- b3f3b830-91a7-48ed-be4e-6eb59151fd84
+- f7b8e95a-d4e7-42a8-bc43-86adcc6f18e3
+- 7c83208b-f2e3-4d24-8a24-66c7bd8296b4
 # R157 Hyde Park
 - 775fbb40-7a5c-4d75-b53b-baaedb5eaace
 # R160 The Specified Area
