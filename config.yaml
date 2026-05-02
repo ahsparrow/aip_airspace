@@ -30,5 +30,29 @@ service_override:
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
 exclude:
-# Long Lartin restricted area
+# R157 Hyde Park
+- 775fbb40-7a5c-4d75-b53b-baaedb5eaace
+# R160 The Specified Area
+- 1024147e-01e5-41fe-8a0e-9504c1c2dd93
+# R162 SS Richard Montgommery
+- 4cd92076-0893-4899-a83e-3f21595af0dd
+# R204 Long Lartin
 - afed1fe6-b3d8-4ce0-90c8-57e0b16fca54
+# R212 Whitemoor
+- 8bc9efe3-dcf5-48dc-9151-0f93275258f4
+# R214 Woodhill 
+- 7f43668c-e92b-4466-8efc-bb7e5393bf2b
+# R315 Full Sutton
+- 81617147-63e0-4ac2-951a-a55f8d4620aa
+# R319 Manchester
+- daaa5d9a-6f7a-4a3e-9b35-0ccd8ff25733
+# R321 Wakefield
+- 2827a997-b05b-4978-abfa-01ed2aa2be7a
+# R323 North West Transit Corridor
+- 068bb27d-5831-44bb-b9b2-7516eee91ee8
+# R431 Maghaberry
+- 1ccdd48b-4e1d-4399-a003-c587c4a51406
+# R432 Frankland/Durham
+- 0cdd8060-bd86-4a0f-87fc-fd57724a8958
+# R504 Shotts
+- 80243909-ce0e-4b10-83fc-0054e8f2c84e
