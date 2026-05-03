@@ -63,31 +63,6 @@ def remove_excluded(gdf, exclude):
     return gdf.loc[gdf.index.difference(exclude)]
 
 
-def extras(extra_list):
-    data = []
-    for e in extra_list:
-        data.append(
-            {
-                "name": e["name"],
-                "stype": e["stype"],
-                "upperLimit": e["upper_ft"],
-                "upperLimit_uom": "FT",
-                "upperLimitReference": "MSL",
-                "lowerLimit": 0,
-                "lowerLimit_uom": "FT",
-                "lowerLimitReference": "SFC",
-                "geometry": Point(e["centre"][0], e["centre"][1]),
-            }
-        )
-
-    gdf = GeoDataFrame(DataFrame(data), crs="EPSG:4326")
-    gdf.to_crs(epsg=27700, inplace=True)
-
-    gdf.geometry = gdf.geometry.buffer([e["radius_nm"] * 1852 for e in extra_list])
-
-    return gdf.to_crs(epsg=4326)
-
-
 def rename(row):
     if row.stype in ["D", "P", "R"]:
         return f"{row.designator[2:]} {row["name"]}"
@@ -212,7 +187,6 @@ def add_frequency(
 
 
 if __name__ == "__main__":
-    from gliding import gliding_sites
     from ils import ils
     from loadaip import load_aip
     from matz import matz

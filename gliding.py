@@ -49,13 +49,6 @@ def make_gdf(gliding_sites, services):
     return gdf
 
 
-def gliding_sites(data):
-    gdf = GeoDataFrame.from_features(data)
-    gdf.set_crs(epsg=4326, inplace=True)
-
-    return gdf
-
-
 if __name__ == "__main__":
     import argparse
 
