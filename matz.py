@@ -6,6 +6,20 @@ from shapely import affinity, box, union_all, Point
 NM_M = 1852
 
 
+def get_channels(matz_list):
+    data = [
+        [m["atz_identifier"], m["channel"], m["callsign"]]
+        for m in matz_list
+        if "channel" in m
+    ]
+    data = [list(x) for x in zip(*data[:])]
+
+    df = pandas.DataFrame({"id": data[0], "channel": data[1], "callsign": data[2]})
+    df.set_index("id", inplace=True)
+
+    return df
+
+
 def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # ATS DataFrame with cartesian coordiates
     catz_gdf = atz_gdf.to_crs(epsg=27700)
@@ -131,7 +145,9 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     matz_gdf = GeoDataFrame(pandas.concat([core_gdf, stub_gdf]), crs="EPSG:27700")
     matz_gdf.to_crs(epsg=4326, inplace=True)
 
-    return matz_gdf
+    channel_df = get_channels(matz_list)
+
+    return matz_gdf, channel_df
 
 
 if __name__ == "__main__":

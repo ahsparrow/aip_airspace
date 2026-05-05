@@ -81,7 +81,7 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
         (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf.stype == "TRAG")
     ]
 
-    # Remove anything wholely inside a CTR
+    # Remove anything wholly inside a CTR
     ctr_poly = MultiPolygon(gdf[gdf["stype"] == "CTR"].geometry)
     gdf = gdf[~gdf.within(ctr_poly) | (gdf["stype"] == "CTR")]
 
@@ -220,6 +220,7 @@ if __name__ == "__main__":
     # Service overrides
     ats_df = override_ats(ats_df, config["service_override"])
 
+    # Get radio comms data
     print("Load Information Service layer")
     is_df = read_file(aip, layer="InformationService")
 
@@ -229,6 +230,7 @@ if __name__ == "__main__":
     # Add frequencies
     airspace_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
 
+    # Get runway data for ILS
     print("Load Runway Centreline Point layer")
     rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
 
@@ -246,7 +248,10 @@ if __name__ == "__main__":
     print("Add MATZ")
     with open(config["files"]["matz"]) as matz_file:
         data = yaml.safe_load(matz_file)
-    matz_gdf = matz(data["matz"], airspace_gdf)
+    matz_gdf, channel_df = matz(data["matz"], airspace_gdf)
+
+    # Set military ATZ channels
+    airspace_gdf.update(channel_df)
 
     # Gliding sites (with 1 nm buffer)
     print("Add gliding sites")
