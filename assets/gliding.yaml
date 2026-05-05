@@ -205,6 +205,21 @@ features:
   type: Feature
 - geometry:
     coordinates: 
+    - -2.283611
+    - 51.441944
+    type: Point
+  properties:
+    lowerLimit: 0
+    lowerLimitReference: SFC
+    lowerLimit_uom: FT
+    name: COLERNE
+    stype: GLIDING
+    upperLimit: 3591
+    upperLimitReference: MSL
+    upperLimit_uom: FT
+  type: Feature
+- geometry:
+    coordinates: 
     - -0.49333333333333335
     - 53.04194444444444
     type: Point
@@ -489,23 +504,6 @@ features:
     name: HUSBANDS BOSWORTH
     stype: GLIDING
     upperLimit: 3505
-    upperLimitReference: MSL
-    upperLimit_uom: FT
-  type: Feature
-- geometry:
-    coordinates: 
-    - -2.1119444444444446
-    - 51.31388888888888
-    type: Point
-  properties:
-    callsign: KEEVIL RADIO
-    channel: 130.29
-    lowerLimit: 0
-    lowerLimitReference: SFC
-    lowerLimit_uom: FT
-    name: KEEVIL
-    stype: GLIDING
-    upperLimit: 3200
     upperLimitReference: MSL
     upperLimit_uom: FT
   type: Feature
