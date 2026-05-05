@@ -186,6 +186,13 @@ def add_frequency(
     return gdf
 
 
+def override(airspace_gdf, overrides):
+    for o in overrides:
+        df = DataFrame({k: [o[k]] for k in o})
+        df.set_index("identifier", inplace=True)
+        airspace_gdf.update(df)
+
+
 if __name__ == "__main__":
     from ils import ils
     from loadaip import load_aip
@@ -265,10 +272,13 @@ if __name__ == "__main__":
     gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
     gliding_gdf.to_crs(epsg=4326, inplace=True)
 
-    output_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, gliding_gdf))
+    merged_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, gliding_gdf))
+
+    # Override attributes
+    override(merged_gdf, config["override"])
 
     # Reduce output file size
-    output_gdf.geometry = output_gdf.geometry.make_valid()
-    output_gdf.geometry = output_gdf.geometry.set_precision(grid_size=0.000001)
+    merged_gdf.geometry = merged_gdf.geometry.make_valid()
+    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
 
-    output_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    merged_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")

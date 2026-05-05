@@ -29,6 +29,12 @@ service_override:
   callsign: BIRMINGHAM RADAR
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
+override:
+# Brize Norton CTR
+- identifier: 358b6948-a579-4444-975a-248e65f3c9ab
+  callsign: BRIZE ZONE
+  channel: "119.005"
+
 exclude:
 # D218 Fairford
 - 3ecaefe3-e516-42d0-ab1e-320e3ba97adf
