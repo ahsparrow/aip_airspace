@@ -277,8 +277,22 @@ if __name__ == "__main__":
     # Override attributes
     override(merged_gdf, config["override"])
 
-    # Reduce output file size
+    # Fix up geometries and snap to 1 second grid
     merged_gdf.geometry = merged_gdf.geometry.make_valid()
+    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
+
+    # Discard any sliver polygons created by the fix up
+    gdf = merged_gdf[merged_gdf.geometry.geom_type == "MultiPolygon"]
+    gdf.geometry = gdf.geometry.apply(lambda g: max(g.geoms, key=lambda x: x.area))
+    merged_gdf.update(gdf)
+
+    # Reduce size of output file
     merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
+
+    # Final validity check
+    if merged_gdf.geometry.is_valid.all():
+        print("Geometry Valid: OK")
+    else:
+        print("WARNING: Invalid geometry")
 
     merged_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
