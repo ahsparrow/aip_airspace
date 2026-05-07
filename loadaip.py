@@ -86,8 +86,8 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def load_aip(aip) -> bytes:
-    et = ET.parse(aip)
+def load(aip_filename: str) -> str:
+    et = ET.parse(aip_filename)
 
     # Replace "[ft_i]" with "FT"
     fix_units(et)
@@ -96,7 +96,7 @@ def load_aip(aip) -> bytes:
     borders = geopandas.read_file(ET.tostring(et.getroot()), layer="GeoBorder")
     fix_links(et, borders)
 
-    return ET.tostring(et.getroot())
+    return ET.tostring(et.getroot(), encoding="unicode")
 
 
 if __name__ == "__main__":

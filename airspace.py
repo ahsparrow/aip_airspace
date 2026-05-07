@@ -195,7 +195,7 @@ def override(airspace_gdf, overrides):
 
 if __name__ == "__main__":
     from ils import ils
-    from loadaip import load_aip
+    from loadaip import load
     from matz import matz
     from pathlib import Path
     import argparse
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     config = yaml.safe_load(open("config.yaml"))
 
     print("Load AIP")
-    aip = load_aip(args.aip_filename)
+    aip = load(args.aip_filename).encode()
 
     print("Load Airspace layer")
     airspace_gdf = read_file(aip, layer="Airspace")
