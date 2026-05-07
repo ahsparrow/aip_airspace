@@ -8,3 +8,10 @@ dependencies = [
     "geopandas>=1.1.3",
     "pyyaml>=6.0.3",
 ]
+
+[project.scripts]
+gjson = "aip_airspace:cli.aip_to_geojson"
+
+[build-system]
+requires = ["uv_build>=0.11.11,<0.12"]
+build-backend = "uv_build"

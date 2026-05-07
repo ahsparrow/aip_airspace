@@ -1,5 +1,5 @@
 from shapely import MultiPolygon, Point
-from geopandas import read_file, GeoDataFrame
+from geopandas import GeoDataFrame
 from pandas import DataFrame, concat, merge
 from uuid import UUID
 
@@ -48,26 +48,27 @@ def simple_type(row):
         return None
 
 
-def remove_offshore(gdf, coastline_filename, buffer=10000):
-    coast = geopandas.read_file(coastline_filename)
-    coast.to_crs(epsg=27700, inplace=True)
-    coast["geometry"] = coast.buffer(buffer)
-    coast.to_crs(epsg=4326, inplace=True)
-
-    mp = MultiPolygon(coast.geometry)
-
-    return gdf[gdf.overlaps(mp) | gdf.within(mp)]
-
-
-def remove_excluded(gdf, exclude):
-    return gdf.loc[gdf.index.difference(exclude)]
-
-
 def rename(row):
     if row.stype in ["D", "P", "R"]:
         return f"{row.designator[2:]} {row["name"]}"
     else:
         return row["name"]
+
+
+def remove_offshore(
+    gdf: GeoDataFrame, coast_gdf: GeoDataFrame, buffer: int = 10000
+) -> GeoDataFrame:
+    coast_gdf.to_crs(epsg=27700, inplace=True)
+    coast_gdf.geometry = coast_gdf.buffer(buffer)
+    coast_gdf.to_crs(epsg=4326, inplace=True)
+
+    mp = MultiPolygon(coast_gdf.geometry)
+
+    return gdf[gdf.overlaps(mp) | gdf.within(mp)]
+
+
+def remove_excluded(gdf: GeoDataFrame, exclude: list[str]) -> GeoDataFrame:
+    return gdf.loc[gdf.index.difference(exclude)]
 
 
 def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
