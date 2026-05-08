@@ -86,14 +86,14 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def load(aip_filename: str) -> str:
-    et = ET.parse(aip_filename)
+def load(aip_data: str) -> str:
+    root_element = ET.fromstring(aip_data)
 
     # Replace "[ft_i]" with "FT"
-    fix_units(et)
+    fix_units(root_element)
 
     # Fix border links in the airspace
-    borders = geopandas.read_file(ET.tostring(et.getroot()), layer="GeoBorder")
-    fix_links(et, borders)
+    borders = geopandas.read_file(ET.tostring(root_element), layer="GeoBorder")
+    fix_links(root_element, borders)
 
-    return ET.tostring(et.getroot(), encoding="unicode")
+    return ET.tostring(root_element, encoding="unicode")
