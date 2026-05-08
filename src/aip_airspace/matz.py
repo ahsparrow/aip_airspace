@@ -1,6 +1,5 @@
-from geopandas import read_file, GeoDataFrame
-import pandas
-import yaml
+from geopandas import GeoDataFrame
+from pandas import DataFrame, concat
 from shapely import affinity, box, union_all, Point
 
 NM_M = 1852
@@ -14,13 +13,13 @@ def get_channels(matz_list):
     ]
     data = [list(x) for x in zip(*data[:])]
 
-    df = pandas.DataFrame({"id": data[0], "channel": data[1], "callsign": data[2]})
+    df = DataFrame({"id": data[0], "channel": data[1], "callsign": data[2]})
     df.set_index("id", inplace=True)
 
     return df
 
 
-def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
+def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> tuple[GeoDataFrame, DataFrame]:
     # ATS DataFrame with cartesian coordiates
     catz_gdf = atz_gdf.to_crs(epsg=27700)
 
@@ -142,26 +141,9 @@ def matz(matz_list: dict, atz_gdf: GeoDataFrame) -> GeoDataFrame:
     )
 
     # Concatenate cores and stubs and convert to WGS84
-    matz_gdf = GeoDataFrame(pandas.concat([core_gdf, stub_gdf]), crs="EPSG:27700")
+    matz_gdf = GeoDataFrame(concat([core_gdf, stub_gdf]), crs="EPSG:27700")
     matz_gdf.to_crs(epsg=4326, inplace=True)
 
     channel_df = get_channels(matz_list)
 
     return matz_gdf, channel_df
-
-
-if __name__ == "__main__":
-    from loadaip import load_aip
-    from pathlib import Path
-
-    with open("config.yaml") as f:
-        config = yaml.safe_load(f)
-
-    aip = load_aip("data/EG_AIP_DS_FULL_20260416.xml")
-
-    gdf = read_file(aip, layer="Airspace")
-    gdf.set_crs(epsg=4326, inplace=True)
-    atz_gdf = gdf[gdf["timeSlice|AirspaceTimeSlice|localType"] == "ATZ"]
-
-    matz_gdf = matz(config["matz"], atz_gdf)
-    matz_gdf.to_file(Path("matz.geojson"), driver="GeoJSON")

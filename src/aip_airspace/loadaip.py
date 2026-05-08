@@ -97,16 +97,3 @@ def load(aip_filename: str) -> str:
     fix_links(et, borders)
 
     return ET.tostring(et.getroot(), encoding="unicode")
-
-
-if __name__ == "__main__":
-    from zipfile import ZipFile
-
-    with ZipFile("data/EG_AIP_DS_20260416_XML.zip") as zf:
-        aip = zf.open("EG_AIP_DS_FULL_20260416.xml")
-
-    aip = load_aip(aip)
-
-    et = ET.ElementTree(ET.fromstring(aip))
-    ET.indent(et, "   ")
-    et.write("tmp.xml", encoding="unicode")

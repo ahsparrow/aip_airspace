@@ -14,7 +14,7 @@ from argparse import ArgumentParser
 from pathlib import Path
 
 from geopandas import GeoDataFrame, read_file
-from pandas import DataFrame, concat, merge
+from pandas import concat
 import yaml
 
 

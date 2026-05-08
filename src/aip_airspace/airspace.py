@@ -1,6 +1,6 @@
-from shapely import MultiPolygon, Point
+from shapely import MultiPolygon
 from geopandas import GeoDataFrame
-from pandas import DataFrame, concat, merge
+from pandas import DataFrame, Series
 from uuid import UUID
 
 KEEP_COLUMNS = [
@@ -18,7 +18,7 @@ KEEP_COLUMNS = [
 ]
 
 
-def simple_type(row):
+def simple_type(row: Series) -> str | None:
     if row["type"] in ["CTA", "CTR", "TMA", "D", "P"]:
         return row["type"]
     elif row["type"] == "R" and row["timeSlice|AirspaceTimeSlice|localType"] not in [
@@ -48,7 +48,7 @@ def simple_type(row):
         return None
 
 
-def rename(row):
+def rename(row: Series) -> str:
     if row.stype in ["D", "P", "R"]:
         return f"{row.designator[2:]} {row["name"]}"
     else:
@@ -96,7 +96,7 @@ def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
 
 
 # Override callsign/frequency in ATC service
-def override_ats(ats_df, override):
+def override_ats(ats_df: DataFrame, override: list[dict]) -> DataFrame:
     ats_df = ats_df.set_index("identifier")
 
     for svc in override:
@@ -108,9 +108,9 @@ def override_ats(ats_df, override):
 
 def add_frequency(
     as_gdf: GeoDataFrame,
-    ats_df: GeoDataFrame,
-    is_df: GeoDataFrame,
-    rcc_df: GeoDataFrame,
+    ats_df: DataFrame,
+    is_df: DataFrame,
+    rcc_df: DataFrame,
 ) -> GeoDataFrame:
     rcc_df = rcc_df.set_index("identifier")
 
@@ -179,121 +179,16 @@ def add_frequency(
                     break
 
     df = DataFrame.from_dict(channel, orient="index", columns=["channel"])
-    gdf = merge(as_gdf, df, left_index=True, right_index=True)
+    gdf = as_gdf.merge(df, left_index=True, right_index=True)
 
     df = DataFrame.from_dict(callsign, orient="index", columns=["callsign"])
-    gdf = merge(gdf, df, left_index=True, right_index=True)
+    gdf = gdf.merge(df, left_index=True, right_index=True)
 
-    return gdf
+    return gdf  # type: ignore
 
 
-def override(airspace_gdf, overrides):
+def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
     for o in overrides:
         df = DataFrame({k: [o[k]] for k in o})
         df.set_index("identifier", inplace=True)
         airspace_gdf.update(df)
-
-
-if __name__ == "__main__":
-    from ils import ils
-    from loadaip import load
-    from matz import matz
-    from pathlib import Path
-    import argparse
-    import geopandas
-    import yaml
-
-    parser = argparse.ArgumentParser()
-    parser.add_argument("aip_filename")
-    parser.add_argument("geojson_filename")
-    args = parser.parse_args()
-
-    config = yaml.safe_load(open("config.yaml"))
-
-    print("Load AIP")
-    aip = load(args.aip_filename).encode()
-
-    print("Load Airspace layer")
-    airspace_gdf = read_file(aip, layer="Airspace")
-    airspace_gdf.set_crs(epsg=4326, inplace=True)
-    airspace_gdf.set_index("identifier", inplace=True)
-
-    airspace_gdf = remove_offshore(airspace_gdf, config["files"]["coastline"])
-    airspace_gdf = remove_excluded(airspace_gdf, config["exclude"])
-    airspace_gdf = airspace(airspace_gdf)
-
-    print("Load ATC Service layer")
-    ats_df = read_file(aip, layer="AirTrafficControlService")
-
-    # Service overrides
-    ats_df = override_ats(ats_df, config["service_override"])
-
-    # Get radio comms data
-    print("Load Information Service layer")
-    is_df = read_file(aip, layer="InformationService")
-
-    print("Load Radio Communication Channel layer")
-    rcc_df = read_file(aip, layer="RadioCommunicationChannel")
-
-    # Add frequencies
-    airspace_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
-
-    # Get runway data for ILS
-    print("Load Runway Centreline Point layer")
-    rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
-
-    print("Load Runway Direction layer")
-    rd_df = read_file(aip, layer="RunwayDirection")
-
-    # Add ILS
-    print("Add ILS")
-    atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
-    with open(config["files"]["ils"]) as file:
-        data = yaml.safe_load(file)
-    ils_gdf = ils(data["runway_centre_points"], atz_gdf, rcp_gdf, rd_df)
-
-    # Add MATZ
-    print("Add MATZ")
-    with open(config["files"]["matz"]) as matz_file:
-        data = yaml.safe_load(matz_file)
-    matz_gdf, channel_df = matz(data["matz"], airspace_gdf)
-
-    # Set military ATZ channels
-    airspace_gdf.update(channel_df)
-
-    # Gliding sites (with 1 nm buffer)
-    print("Add gliding sites")
-    with open(config["files"]["gliding_site"]) as file:
-        data = yaml.safe_load(file)
-
-    gliding_gdf = GeoDataFrame.from_features(data)
-    gliding_gdf.set_crs(epsg=4326, inplace=True)
-
-    gliding_gdf.to_crs(epsg=27700, inplace=True)
-    gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
-    gliding_gdf.to_crs(epsg=4326, inplace=True)
-
-    merged_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, gliding_gdf))
-
-    # Override attributes
-    override(merged_gdf, config["override"])
-
-    # Fix up geometries and snap to 1 second grid
-    merged_gdf.geometry = merged_gdf.geometry.make_valid()
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
-
-    # Discard any sliver polygons created by the fix up
-    gdf = merged_gdf[merged_gdf.geometry.geom_type == "MultiPolygon"]
-    gdf.geometry = gdf.geometry.apply(lambda g: max(g.geoms, key=lambda x: x.area))
-    merged_gdf.update(gdf)
-
-    # Reduce size of output file
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
-
-    # Final validity check
-    if merged_gdf.geometry.is_valid.all():
-        print("Geometry Valid: OK")
-    else:
-        print("WARNING: Invalid geometry")
-
-    merged_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
