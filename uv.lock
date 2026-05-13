@@ -16,12 +16,14 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "geopandas" },
+    { name = "pyproj" },
     { name = "pyyaml" },
 ]
 
 [package.metadata]
 requires-dist = [
     { name = "geopandas", specifier = ">=1.1.3" },
+    { name = "pyproj", specifier = ">=3.7.2" },
     { name = "pyyaml", specifier = ">=6.0.3" },
 ]
 

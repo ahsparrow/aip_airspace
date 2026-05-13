@@ -1,5 +1,6 @@
 from aip_airspace.airspace import make_airspace
 from aip_airspace.loadaip import fix_up
+from aip_airspace.rat import make_rat_gdf
 
 from argparse import ArgumentParser
 from pathlib import Path
@@ -74,3 +75,16 @@ def aip_to_geojson() -> None:
         print("WARNING: Invalid geometry")
 
     airspace_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def rat_to_geojson() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("rat_filename")
+    parser.add_argument("geojson_filename")
+    args = parser.parse_args()
+
+    with open(args.rat_filename) as f:
+        rat_list = yaml.safe_load(f.read())
+
+    rat_gdf = make_rat_gdf(rat_list)
+    rat_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
