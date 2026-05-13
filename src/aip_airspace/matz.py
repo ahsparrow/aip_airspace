@@ -19,7 +19,7 @@ def get_channels(matz_list):
     return df
 
 
-def matz(
+def create_matz(
     matz_list: list[dict], atz_gdf: GeoDataFrame
 ) -> tuple[GeoDataFrame, DataFrame]:
     # ATS DataFrame with cartesian coordiates

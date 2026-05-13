@@ -5,8 +5,8 @@ from geopandas import GeoDataFrame, read_file
 from pandas import DataFrame, Series, concat
 from uuid import UUID
 
-from aip_airspace.ils import ils
-from aip_airspace.matz import matz
+from aip_airspace.ils import calculate_ils
+from aip_airspace.matz import create_matz
 
 KEEP_COLUMNS = [
     "identifier",
@@ -76,7 +76,7 @@ def remove_excluded(gdf: GeoDataFrame, exclude: list[str]) -> GeoDataFrame:
     return gdf.loc[gdf.index.difference(exclude)]
 
 
-def airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
+def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     as_gdf["stype"] = as_gdf.apply(simple_type, axis=1)
 
     # Drop unknown types
@@ -199,7 +199,7 @@ def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
         airspace_gdf.update(df)
 
 
-def assemble_airspace(
+def make_airspace(
     airspace_gdf: GeoDataFrame,
     rwy_centreline_pt_gdf: GeoDataFrame,
     air_traffic_service_df: DataFrame,
@@ -225,7 +225,7 @@ def assemble_airspace(
     airspace_gdf = remove_excluded(airspace_gdf, exclude_ids)
 
     # Adjust for airspace for ASSelect
-    airspace_gdf = airspace(airspace_gdf)
+    airspace_gdf = asselect_airspace(airspace_gdf)
 
     # Service overrides
     ats_df = override_ats(air_traffic_service_df, service_overrides)
@@ -237,12 +237,12 @@ def assemble_airspace(
 
     # Calculate ILS feathers
     atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
-    ils_gdf = ils(
+    ils_gdf = calculate_ils(
         ils_rwy_centreline_pt_ids, atz_gdf, rwy_centreline_pt_gdf, rwy_dirn_df
     )
 
-    # Calcualte MATZ's and get military ATZ frequencies
-    matz_gdf, channel_df = matz(matz_data, airspace_gdf)
+    # Calculate MATZ's and get military ATZ frequencies
+    matz_gdf, channel_df = create_matz(matz_data, airspace_gdf)
 
     # Add military ATZ frequencies
     airspace_gdf.update(channel_df)

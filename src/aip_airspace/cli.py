@@ -1,4 +1,4 @@
-from aip_airspace.airspace import assemble_airspace
+from aip_airspace.airspace import make_airspace
 from aip_airspace.loadaip import fix_up
 
 from argparse import ArgumentParser
@@ -19,7 +19,7 @@ def aip_to_geojson() -> None:
     with open(args.config_file, "rt") as f:
         config = yaml.safe_load(f.read())
 
-    print("Load AIP")
+    print("Loading AIP")
     with open(args.aip_filename, "rt") as aip_file:
         aip_str = aip_file.read()
 
@@ -27,7 +27,7 @@ def aip_to_geojson() -> None:
     aip_bytes = fix_up(aip_str).encode()
 
     # Data from AIP
-    print("Load data frames")
+    print("Loading data frames")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
     rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
     air_traffic_service_df = read_file(aip_bytes, layer="AirTrafficControlService")
@@ -50,8 +50,8 @@ def aip_to_geojson() -> None:
     with open(config["files"]["gliding_site"]) as gliding_file:
         gliding_data = yaml.safe_load(gliding_file)
 
-    print("Processing...")
-    airspace_gdf = assemble_airspace(
+    print("Making airspace")
+    airspace_gdf = make_airspace(
         airspace_gdf,
         rwy_centreline_pt_gdf,
         air_traffic_service_df,
