@@ -250,6 +250,12 @@ def make_airspace(
     # Gliding sites (with 1 nm buffer)
     gliding_gdf = GeoDataFrame.from_features(gliding_data)
     gliding_gdf.set_crs(epsg=4326, inplace=True)
+    gliding_gdf["stype"] = "GLIDING"
+    gliding_gdf["upperLimit_uom"] = "FT"
+    gliding_gdf["upperLimitReference"] = "MSL"
+    gliding_gdf["lowerLimit"] = 0
+    gliding_gdf["lowerLimit_uom"] = "FT"
+    gliding_gdf["lowerLimitReference"] = "SFC"
 
     gliding_gdf.to_crs(epsg=27700, inplace=True)
     gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
