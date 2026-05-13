@@ -1,16 +1,23 @@
-from geopandas import GeoDataFrame
 from math import sin, cos
+
+from geopandas import GeoDataFrame
+from pandas import DataFrame
 from shapely import Polygon
 from shapely.affinity import rotate, translate
 from uuid import UUID
 
 
-def ils(runway_centrepoint_refs, atz_gdf, runway_centrepoint_gdf, runway_dirn_df):
+def ils(
+    runway_centreline_pt_ids: list[str],
+    atz_gdf: GeoDataFrame,
+    runway_centreline_pt_gdf: GeoDataFrame,
+    runway_dirn_df: DataFrame,
+) -> GeoDataFrame:
     # Set runway centre point index
-    rcp_gdf = runway_centrepoint_gdf.set_index("identifier")
+    rcp_gdf = runway_centreline_pt_gdf.set_index("identifier")
 
     # Filter and convert to cartesian geometry
-    rcp_gdf = rcp_gdf.loc[runway_centrepoint_refs]
+    rcp_gdf = rcp_gdf.loc[runway_centreline_pt_ids]
     rcp_gdf.to_crs(epsg=27700, inplace=True)
 
     # Set runway direction index
@@ -61,4 +68,4 @@ def ils(runway_centrepoint_refs, atz_gdf, runway_centrepoint_gdf, runway_dirn_df
     ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
     ils_gdf = ils_gdf.assign(lowerLimitReference="MSL")
 
-    return ils_gdf
+    return ils_gdf  # ty: ignore[invalid-return-type]

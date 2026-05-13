@@ -4,7 +4,7 @@ files:
   matz: assets/matz.yaml
   ils: assets/ils.yaml
 
-service_override:
+service_overrides:
 - identifier: b99df1df-db49-41b1-b0e9-3a71bb04209f
   callsign: BRISTOL RADAR
   rcc_href: 6db7de37-785a-4e2e-917b-6a86ded7ac38
@@ -29,13 +29,13 @@ service_override:
   callsign: BIRMINGHAM RADAR
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
-override:
+overrides:
 # Brize Norton CTR
 - identifier: 358b6948-a579-4444-975a-248e65f3c9ab
   callsign: BRIZE ZONE
   channel: "119.005"
 
-exclude:
+exclude_ids:
 # D218 Fairford
 - 3ecaefe3-e516-42d0-ab1e-320e3ba97adf
 - 6c3895e3-bf2f-4f1b-bff9-9ec0a3432233

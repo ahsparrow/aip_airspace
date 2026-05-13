@@ -1,14 +1,5 @@
-from aip_airspace.airspace import (
-    airspace,
-    add_frequency,
-    override,
-    override_ats,
-    remove_excluded,
-    remove_offshore,
-)
-from aip_airspace.ils import ils
-from aip_airspace.loadaip import load
-from aip_airspace.matz import matz
+from aip_airspace.airspace import assemble_airspace
+from aip_airspace.loadaip import fix_up
 
 from argparse import ArgumentParser
 from pathlib import Path
@@ -16,82 +7,6 @@ from pathlib import Path
 from geopandas import GeoDataFrame, read_file
 from pandas import concat
 import yaml
-
-
-def assemble_airspace(aip_data: str, config: dict) -> GeoDataFrame:
-    aip = load(aip_data).encode()
-
-    airspace_gdf = read_file(aip, layer="Airspace")
-    airspace_gdf.set_crs(epsg=4326, inplace=True)
-    airspace_gdf.set_index("identifier", inplace=True)
-
-    coast_gdf = read_file(config["files"]["coastline"])
-    airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)
-
-    airspace_gdf = remove_excluded(airspace_gdf, config["exclude"])
-    airspace_gdf = airspace(airspace_gdf)
-
-    ats_df = read_file(aip, layer="AirTrafficControlService")
-
-    # Service overrides
-    ats_df = override_ats(ats_df, config["service_override"])
-
-    # Get radio comms data
-    is_df = read_file(aip, layer="InformationService")
-
-    rcc_df = read_file(aip, layer="RadioCommunicationChannel")
-
-    # Add frequencies
-    airspace_gdf = add_frequency(airspace_gdf, ats_df, is_df, rcc_df)
-
-    # Get runway data for ILS
-    rcp_gdf = read_file(aip, layer="RunwayCentrelinePoint")
-
-    rd_df = read_file(aip, layer="RunwayDirection")
-
-    # Add ILS
-    atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
-    with open(config["files"]["ils"]) as file:
-        data = yaml.safe_load(file)
-    ils_gdf = ils(data["runway_centre_points"], atz_gdf, rcp_gdf, rd_df)
-
-    # Add MATZ
-    with open(config["files"]["matz"]) as matz_file:
-        data = yaml.safe_load(matz_file)
-    matz_gdf, channel_df = matz(data["matz"], airspace_gdf)
-
-    # Set military ATZ channels
-    airspace_gdf.update(channel_df)
-
-    # Gliding sites (with 1 nm buffer)
-    with open(config["files"]["gliding_site"]) as file:
-        data = yaml.safe_load(file)
-
-    gliding_gdf = GeoDataFrame.from_features(data)
-    gliding_gdf.set_crs(epsg=4326, inplace=True)
-
-    gliding_gdf.to_crs(epsg=27700, inplace=True)
-    gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
-    gliding_gdf.to_crs(epsg=4326, inplace=True)
-
-    merged_gdf = concat((airspace_gdf, ils_gdf, matz_gdf, gliding_gdf))
-
-    # Override attributes
-    override(merged_gdf, config["override"])
-
-    # Fix up geometries and snap to 1 second grid
-    merged_gdf.geometry = merged_gdf.geometry.make_valid()
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
-
-    # Discard any sliver polygons created by the fix up
-    gdf = merged_gdf[merged_gdf.geometry.geom_type == "MultiPolygon"]
-    gdf.geometry = gdf.geometry.apply(lambda g: max(g.geoms, key=lambda x: x.area))
-    merged_gdf.update(gdf)
-
-    # Reduce size of output file
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
-
-    return merged_gdf
 
 
 def aip_to_geojson() -> None:
@@ -108,8 +23,49 @@ def aip_to_geojson() -> None:
     with open(args.aip_filename, "rt") as aip_file:
         aip_str = aip_file.read()
 
+    # Fix "problems" in raw XML data
+    aip_bytes = fix_up(aip_str).encode()
+
+    # Data from AIP
+    print("Load data frames")
+    airspace_gdf = read_file(aip_bytes, layer="Airspace")
+    rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
+    air_traffic_service_df = read_file(aip_bytes, layer="AirTrafficControlService")
+    info_service_df = read_file(aip_bytes, layer="InformationService")
+    radio_comm_channel_df = read_file(aip_bytes, layer="RadioCommunicationChannel")
+    rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
+
+    # Coastline data
+    coastline_gdf = read_file(config["files"]["coastline"])
+
+    # ILS runway centreline points
+    with open(config["files"]["ils"]) as ils_file:
+        ils_rwy_centreline_pt_ids = yaml.safe_load(ils_file)
+
+    # MATZ configurations
+    with open(config["files"]["matz"]) as matz_file:
+        matz_data = yaml.safe_load(matz_file)
+
+    # Gliding site data
+    with open(config["files"]["gliding_site"]) as gliding_file:
+        gliding_data = yaml.safe_load(gliding_file)
+
     print("Processing...")
-    airspace_gdf = assemble_airspace(aip_str, config)
+    airspace_gdf = assemble_airspace(
+        airspace_gdf,
+        rwy_centreline_pt_gdf,
+        air_traffic_service_df,
+        info_service_df,
+        radio_comm_channel_df,
+        rwy_dirn_df,
+        coastline_gdf,
+        config["exclude_ids"],
+        config["service_overrides"],
+        ils_rwy_centreline_pt_ids,
+        matz_data,
+        gliding_data,
+        config["overrides"],
+    )
 
     # Final validity check
     if airspace_gdf.geometry.is_valid.all():

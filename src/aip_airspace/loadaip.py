@@ -86,7 +86,7 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def load(aip_data: str) -> str:
+def fix_up(aip_data: str) -> str:
     root_element = ET.fromstring(aip_data)
 
     # Replace "[ft_i]" with "FT"

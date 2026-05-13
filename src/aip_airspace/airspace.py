@@ -1,7 +1,12 @@
+from typing import cast
+
 from shapely import MultiPolygon
-from geopandas import GeoDataFrame
-from pandas import DataFrame, Series
+from geopandas import GeoDataFrame, read_file
+from pandas import DataFrame, Series, concat
 from uuid import UUID
+
+from aip_airspace.ils import ils
+from aip_airspace.matz import matz
 
 KEEP_COLUMNS = [
     "identifier",
@@ -192,3 +197,81 @@ def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
         df = DataFrame({k: [o[k]] for k in o})
         df.set_index("identifier", inplace=True)
         airspace_gdf.update(df)
+
+
+def assemble_airspace(
+    airspace_gdf: GeoDataFrame,
+    rwy_centreline_pt_gdf: GeoDataFrame,
+    air_traffic_service_df: DataFrame,
+    info_service_df: DataFrame,
+    radio_comm_channel_df: DataFrame,
+    rwy_dirn_df: DataFrame,
+    coastline_gdf: GeoDataFrame,
+    exclude_ids: list[str],
+    service_overrides: list[dict],
+    ils_rwy_centreline_pt_ids: list[str],
+    matz_data: list[dict],
+    gliding_data: list[dict],
+    override_data: list[dict],
+) -> GeoDataFrame:
+    # Set CRS and set AIXM identifier as index
+    airspace_gdf.set_crs(epsg=4326, inplace=True)
+    airspace_gdf.set_index("identifier", inplace=True)
+
+    # Remove offshore airspace
+    airspace_gdf = remove_offshore(airspace_gdf, coastline_gdf)
+
+    # Remove other excluded airspace
+    airspace_gdf = remove_excluded(airspace_gdf, exclude_ids)
+
+    # Adjust for airspace for ASSelect
+    airspace_gdf = airspace(airspace_gdf)
+
+    # Service overrides
+    ats_df = override_ats(air_traffic_service_df, service_overrides)
+
+    # Add frequencies
+    airspace_gdf = add_frequency(
+        airspace_gdf, ats_df, info_service_df, radio_comm_channel_df
+    )
+
+    # Calculate ILS feathers
+    atz_gdf = airspace_gdf[airspace_gdf["stype"] == "ATZ"]
+    ils_gdf = ils(
+        ils_rwy_centreline_pt_ids, atz_gdf, rwy_centreline_pt_gdf, rwy_dirn_df
+    )
+
+    # Calcualte MATZ's and get military ATZ frequencies
+    matz_gdf, channel_df = matz(matz_data, airspace_gdf)
+
+    # Add military ATZ frequencies
+    airspace_gdf.update(channel_df)
+
+    # Gliding sites (with 1 nm buffer)
+    gliding_gdf = GeoDataFrame.from_features(gliding_data)
+    gliding_gdf.set_crs(epsg=4326, inplace=True)
+
+    gliding_gdf.to_crs(epsg=27700, inplace=True)
+    gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
+    gliding_gdf.to_crs(epsg=4326, inplace=True)
+
+    # Merge airspace, ILS, MATZ and gliding
+    merged_gdf = concat([airspace_gdf, ils_gdf, matz_gdf, gliding_gdf])
+    merged_gdf = cast(GeoDataFrame, merged_gdf)
+
+    # Override attributes
+    override(merged_gdf, override_data)
+
+    # Fix up geometries and snap to 1 second grid
+    merged_gdf.geometry = merged_gdf.geometry.make_valid()
+    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
+
+    # Discard any sliver polygons created by the fix up
+    gdf = merged_gdf[merged_gdf.geometry.geom_type == "MultiPolygon"]
+    gdf.geometry = gdf.geometry.apply(lambda g: max(g.geoms, key=lambda x: x.area))
+    merged_gdf.update(gdf)
+
+    # Reduce size of output file
+    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
+
+    return merged_gdf
