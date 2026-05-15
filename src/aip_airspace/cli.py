@@ -1,4 +1,5 @@
-from aip_airspace.airspace import make_airspace
+from aip_airspace.airspace import make_airspace_gdf
+from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
 from aip_airspace.rat import make_rat_gdf
 
@@ -52,7 +53,7 @@ def aip_to_geojson() -> None:
         gliding_data = yaml.safe_load(gliding_file)
 
     print("Making airspace")
-    airspace_gdf = make_airspace(
+    airspace_gdf = make_airspace_gdf(
         airspace_gdf,
         rwy_centreline_pt_gdf,
         air_traffic_service_df,
@@ -87,4 +88,35 @@ def rat_to_geojson() -> None:
         rat_list = yaml.safe_load(f.read())
 
     rat_gdf = make_rat_gdf(rat_list)
+
+    # Final validity check
+    if rat_gdf.geometry.is_valid.all():
+        print("Geometry Valid: OK")
+    else:
+        print("WARNING: Invalid geometry")
+
     rat_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def loa_to_geojson() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("loa_filename")
+    parser.add_argument("airspace_filename")
+    parser.add_argument("geojson_filename")
+    args = parser.parse_args()
+
+    with open(args.loa_filename) as f:
+        loa_list = yaml.safe_load(f.read())
+
+    airspace_gdf = read_file(args.airspace_filename)
+    airspace_gdf.set_index("index", inplace=True)
+
+    loa_gdf = make_loa_gdf(loa_list, airspace_gdf)
+
+    # Final validity check
+    if loa_gdf.geometry.is_valid.all():
+        print("Geometry Valid: OK")
+    else:
+        print("WARNING: Invalid geometry")
+
+    loa_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")

@@ -1,0 +1,227 @@
+#
+# UK Temporary Restricted Airspace
+# Alan Sparrow (airspace@freeflight.org.uk)
+#
+# To the extent possible under law, Alan Sparrow has waived all copyright
+# and related or neighbouring rights to this file. The data is originally
+# sourced from the UK Aeronautical Information Package (AIP).
+#
+# The format of this file is a greatly simplified version of the
+# FAA/EUROCONTROL's Aeronautical Information Exchange Model (AIXM). More
+# details (including a data schema and a validator) can be found in the
+# YAXIM project on GitLab at https://gitlab.com/ahsparrow/airspace.
+
+- name: KING'S BIRTHDAY REHEARSAL (2-3 JUN)
+  type: P
+  geometry:
+  - upper: 10000 ft
+    lower: SFC
+    boundary:
+    - line:
+      - 530000N 0023500E
+      - 530000N 0031300E
+      - 521300N 0023400E
+      - 520500N 0015000E
+      - 522200N 0012000E
+  - upper: 7000 ft
+    lower: SFC
+    boundary:
+    - line:
+      - 524111N 0003539E
+      - 522605N 0012753E
+      - 522200N 0012000E
+      - 523636N 0003222E
+  - upper: 3000 ft
+    lower: SFC
+    boundary:
+    - line:
+      - 531619N 0004034W
+      - 531514N 0002624W
+      - 530114N 0002114W
+      - 524111N 0003539E
+      - 523636N 0003222E
+      - 530332N 0004246W
+      - 531459N 0004230W
+
+- name: IOW FESTIVAL (17-22 JUN)
+  type: P
+  geometry:
+  - lower: SFC
+    upper: 2000 ft
+    boundary:
+    - circle:
+        radius: 2 nm
+        centre: 504318N 0011557W
+
+- name: HEADCORN AIRSHOW (26-28 JUN)
+  type: P
+  geometry:
+  - lower: SFC
+    upper: 3500 ft
+    boundary:
+    - circle:
+        radius: 3.5 nm
+        centre: 510924N 0003845E
+
+- name: FAIRFORD RIAT (15-19 JUL)
+  type: P
+  geometry:
+  - upper: FL85
+    lower: SFC
+    boundary:
+    - line:
+      - 514433N 0020502W
+      - 514733N 0014405W
+      - 515006N 0012925W
+    - arc:
+        dir: cw
+        radius: 5.5 nm
+        centre: 514513N 0013334W
+        to: 514737N 0012537W
+    - line:
+      - 514834N 0011958W
+      - 514349N 0011753W
+      - 513621N 0012737W
+      - 514124N 0021027W
+    - arc:
+        dir: cw
+        radius: 4.6 nm
+        centre: 514005N 0020322W
+        to: 514433N 0020502W
+  - upper: FL65
+    lower: SFC
+    boundary:
+    - line:
+      - 514124N 0021027W
+      - 513621N 0012737W
+      - 513600N 0012800W
+      - 513500N 0014600W
+      - 513530N 0020341W
+    - arc:
+        dir: cw
+        radius: 4.6 nm
+        centre: 514005N 0020322W
+        to: 514124N 0021027W
+
+- name: FAIRFORD RIAT(20 JUL)
+  type: P
+  geometry:
+  - upper: FL65
+    lower: SFC
+    boundary:
+    - line:
+      - 514457N 0015713W
+      - 514751N 0014134W
+      - 514420N 0013754W
+      - 513732N 0013728W
+      - 513747N 0015652W
+
+- name:  FAIRFORD TMZ
+  id: fairford-tmz
+  type: OTHER
+  localtype: TMZ
+  rules:
+    - TMZ
+  geometry:
+  - lower: SFC
+    upper: FL100
+    boundary:
+    - line:
+      - 513544N 0014246W
+      - 513350N 0014147W
+    - arc:
+        dir: cw
+        radius: 8 nm
+        centre: 514101N 0014724W
+        to: 513647N 0013630W
+    - line:
+      - 513724N 0013859W
+    - arc:
+        dir: ccw
+        radius: 1.5 nm
+        centre: 513614N 0014030W
+        to:  513544N 0014246W
+
+- name: KEMBLE CLASS D (NOTAM)
+  type: CTA
+  class: D
+  geometry:
+  # CTR 5NM radius Kemble
+  - name: KEMBLE CTR (NOTAM)
+    upper: 4000 ft
+    lower: SFC
+    boundary:
+    - circle:
+        radius: 5 nm
+        centre: 514005N 0020325W
+  # CTR 1 (over Kemble)
+  - name: KEMBLE CTR-1 (NOTAM)
+    lower: SFC
+    upper: 5000 ft
+    boundary:
+    - line:
+      - 514117N 0020916W
+      - 514028N 0020214W
+      - 513928N 0015338W
+      - 513840N 0014648W
+      - 513519N 0014558W
+      - 513208N 0021806W
+      - 513217N 0021925W
+      - 514016N 0022132W
+      - 514117N 0020916W
+  # CTR 2 (over Tetbury)
+  - name: KEMBLE CTR-2 (NOTAM)
+    lower: SFC
+    upper: 4000 ft
+    boundary:
+    - line:
+      - 514706N 0020509W
+      - 514314N 0015058W
+      - 514313N 0015050W
+      - 514120N 0015001W
+      - 514144N 0014743W
+      - 513840N 0014648W
+      - 513928N 0015338W
+      - 514028N 0020214W
+      - 514056N 0020619W
+      - 514706N 0020509W
+  # CTA 1 (over Fairford)
+  - name: KEMBLE CTA-1 (NOTAM)
+    lower: 4000 ft
+    upper: FL095
+    boundary:
+    - line:
+      - 514454N 0014947W
+      - 514412N 0014010W
+      - 513945N 0012646W
+      - 513911N 0012629W
+      - 513640N 0013011W
+      - 513928N 0015338W
+      - 514454N 0014947W
+  # CTA 2 (over Brize Norton)
+  - name: KEMBLE CTA-2 (NOTAM)
+    lower: 4000 ft
+    upper: FL105
+    boundary:
+    - line:
+      - 515242N 0015604W
+      - 514951N 0013158W
+      - 513945N 0012646W
+      - 514412N 0014010W
+      - 514454N 0014947W
+      - 513928N 0015338W
+      - 514028N 0020214W
+      - 514117N 0020916W
+      - 514707N 0020509W
+      - 515242N 0015604W
+  # CTA 3 (over Cheltenham)
+  - name: KEMBLE CTA-3 (NOTAM)
+    lower: FL75
+    upper: FL195
+    boundary:
+    - line:
+      - 520412N 0020545W
+      - 515242N 0015604W
+      - 514707N 0020509W
+      - 515703N 0021633W
+      - 520412N 0020545W

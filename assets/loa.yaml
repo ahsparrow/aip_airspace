@@ -1,0 +1,75 @@
+#----------------------------------------------------------------------
+- name: AMPIT TRIANGLE
+  add:
+  - stype: CTA
+    classification: [C]
+    geometry:
+    - upper: FL185
+      lower: FL145
+      boundary:
+      - line:
+        - 531957N 0033954W
+        - 531855N 0031647W
+        - 530813N 0031736W
+
+  replace:
+    # Holyhead CTA 1
+  - aref: 25004c3d-8a15-4590-8105-1818396f9a49
+    geometry:
+    - upper: FL195
+      lower: FL185
+      boundary:
+      - line:
+        - 531957N 0033954W
+        - 531855N 0031647W
+        - 530813N 0031736W
+
+#----------------------------------------------------------------------
+- name: DAVENTRY BOX
+  add:
+  - stype: CTA
+    classification: [A]
+    geometry:
+    - upper: 5500 ft
+      lower: 4500 ft
+      boundary:
+      - line:
+        - 520835N 0011700W
+        - 522048N 0010740W
+        - 521355N 0010026W
+        - 521049N 0010650W
+
+  replace:
+  # DAVENTRY CTA 9
+  - aref: 5f1999a0-908e-40cd-a68e-fb088e237c45
+    geometry:
+    - name: DAVENTRY CTA 9A
+      upper: FL195
+      lower: 5500 ft
+      boundary:
+      - line:
+        - 520835N 0011700W
+        - 522048N 0010740W
+        - 521355N 0010026W
+        - 521049N 0010650W
+
+    - name: DAVENTRY CTA 9B
+      upper: FL195
+      lower: 4500 ft
+      boundary:
+      - line:
+        - 525833N 0014948W
+        - 524702N 0013541W
+        - 522048N 0010740W
+        - 520835N 0011700W
+        - 520633N 0012617W
+        - 521135N 0013450W
+      - arc:
+          dir: cw
+          radius: 17 nm
+          centre: 522722N 0014502W
+          to: 521039N 0014012W
+      - line:
+        - 521431N 0014159W
+        - 524216N 0021343W
+        - 524800N 0015216W

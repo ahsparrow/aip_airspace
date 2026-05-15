@@ -11,8 +11,9 @@ dependencies = [
 ]
 
 [project.scripts]
-gjson = "aip_airspace:cli.aip_to_geojson"
+airspace = "aip_airspace:cli.aip_to_geojson"
 rat = "aip_airspace:cli.rat_to_geojson"
+loa = "aip_airspace:cli.loa_to_geojson"
 
 [build-system]
 requires = ["uv_build>=0.11.11,<0.12"]

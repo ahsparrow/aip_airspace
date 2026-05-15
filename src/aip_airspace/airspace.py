@@ -199,7 +199,7 @@ def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
         airspace_gdf.update(df)
 
 
-def make_airspace(
+def make_airspace_gdf(
     airspace_gdf: GeoDataFrame,
     rwy_centreline_pt_gdf: GeoDataFrame,
     air_traffic_service_df: DataFrame,
