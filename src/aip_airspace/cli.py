@@ -1,6 +1,7 @@
 from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
+from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
 
 from argparse import ArgumentParser
@@ -120,3 +121,28 @@ def loa_to_geojson() -> None:
         print("WARNING: Invalid geometry")
 
     loa_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def sporting_to_geojson() -> None:
+    import datetime
+    import requests
+
+    parser = ArgumentParser()
+    parser.add_argument("geojson_filename")
+    parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
+    args = parser.parse_args()
+
+    airac_date = datetime.date(2026, 5, 14)
+    today = datetime.date.today()
+    while airac_date < today:
+        airac_date += datetime.timedelta(days=28)
+
+    if args.prev:
+        airac_date += datetime.timedelta(days=-28)
+
+    url = f"https://www.aurora.nats.co.uk/htmlAIP/Publications/{airac_date.isoformat()}-AIRAC/html/eAIP/EG-ENR-5.5-en-GB.html#ENR-5.5"
+    request = requests.get(url)
+
+    gdf = parse_sporting(request.content)
+
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")

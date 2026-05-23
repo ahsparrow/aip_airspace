@@ -6,14 +6,17 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "geopandas>=1.1.3",
+    "lxml>=6.1.1",
     "pyproj>=3.7.2",
     "pyyaml>=6.0.3",
+    "requests>=2.34.2",
 ]
 
 [project.scripts]
 airspace = "aip_airspace:cli.aip_to_geojson"
 rat = "aip_airspace:cli.rat_to_geojson"
 loa = "aip_airspace:cli.loa_to_geojson"
+sport = "aip_airspace:cli.sporting_to_geojson"
 
 [build-system]
 requires = ["uv_build>=0.11.11,<0.12"]
