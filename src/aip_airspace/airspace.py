@@ -1,7 +1,7 @@
 from typing import cast
 
 from shapely import MultiPolygon
-from geopandas import GeoDataFrame, read_file
+from geopandas import GeoDataFrame
 from pandas import DataFrame, Series, concat
 from uuid import UUID
 
@@ -211,7 +211,7 @@ def make_airspace_gdf(
     service_overrides: list[dict],
     ils_rwy_centreline_pt_ids: list[str],
     matz_data: list[dict],
-    gliding_data: list[dict],
+    sporting_activity_gdf: GeoDataFrame,
     override_data: list[dict],
 ) -> GeoDataFrame:
     # Set CRS and set AIXM identifier as index
@@ -247,22 +247,13 @@ def make_airspace_gdf(
     # Add military ATZ frequencies
     airspace_gdf.update(channel_df)
 
-    # Gliding sites (with 1 nm buffer)
-    gliding_gdf = GeoDataFrame.from_features(gliding_data)
-    gliding_gdf.set_crs(epsg=4326, inplace=True)
-    gliding_gdf["stype"] = "GLIDER"
-    gliding_gdf["upperLimit_uom"] = "FT"
-    gliding_gdf["upperLimitReference"] = "MSL"
-    gliding_gdf["lowerLimit"] = 0
-    gliding_gdf["lowerLimit_uom"] = "FT"
-    gliding_gdf["lowerLimitReference"] = "SFC"
-
-    gliding_gdf.to_crs(epsg=27700, inplace=True)
-    gliding_gdf.geometry = gliding_gdf.geometry.buffer(1852)
-    gliding_gdf.to_crs(epsg=4326, inplace=True)
+    # Sporting activities (with 1 nm buffer)
+    sporting_activity_gdf.to_crs(epsg=27700, inplace=True)
+    sporting_activity_gdf["geometry"] = sporting_activity_gdf["geometry"].buffer(1852)
+    sporting_activity_gdf.to_crs(epsg=4326, inplace=True)
 
     # Merge airspace, ILS, MATZ and gliding
-    merged_gdf = concat([airspace_gdf, ils_gdf, matz_gdf, gliding_gdf])
+    merged_gdf = concat([airspace_gdf, ils_gdf, matz_gdf, sporting_activity_gdf])
     merged_gdf = cast(GeoDataFrame, merged_gdf)
 
     # Override attributes

@@ -7,8 +7,7 @@ from aip_airspace.rat import make_rat_gdf
 from argparse import ArgumentParser
 from pathlib import Path
 
-from geopandas import GeoDataFrame, read_file
-from pandas import concat
+from geopandas import read_file
 import yaml
 
 
@@ -49,9 +48,8 @@ def aip_to_geojson() -> None:
     with open(config["files"]["matz"]) as matz_file:
         matz_data = yaml.safe_load(matz_file)
 
-    # Gliding site data
-    with open(config["files"]["gliding_site"]) as gliding_file:
-        gliding_data = yaml.safe_load(gliding_file)
+    # Sporting activities
+    sporting_activity_gdf = read_file(config["files"]["sporting_activity"])
 
     print("Making airspace")
     airspace_gdf = make_airspace_gdf(
@@ -66,7 +64,7 @@ def aip_to_geojson() -> None:
         config["service_overrides"],
         ils_rwy_centreline_pt_ids,
         matz_data,
-        gliding_data,
+        sporting_activity_gdf,
         config["overrides"],
     )
 
