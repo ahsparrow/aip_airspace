@@ -1,4 +1,5 @@
 from math import sin, cos
+import uuid
 
 from geopandas import GeoDataFrame
 from pandas import DataFrame
@@ -34,7 +35,13 @@ def calculate_ils(
     # Get nearast ATZ for each runway centrepoint
     atc_rcp_gdf = rcp_gdf.sjoin_nearest(atz_gdf, how="left")
 
-    ils_data = {"name": [], "upperLimit": [], "lowerLimit": [], "geometry": []}
+    ils_data = {
+        "identifier": [],
+        "name": [],
+        "upperLimit": [],
+        "lowerLimit": [],
+        "geometry": [],
+    }
     for _, atc_rcp in atc_rcp_gdf.iterrows():
         atz_radius = atc_rcp["radius"]
         x1 = atz_radius * sin(0.05)
@@ -45,6 +52,8 @@ def calculate_ils(
         rd = rd_df.loc[str(UUID(atc_rcp.onRunway_href))]
         bearing = float(rd.trueBearing)
 
+        name = atc_rcp["name"].replace("ATZ", "ILS") + f" {bearing / 10:02.0f}"
+
         # Calculate ILS feathers
         ils_poly = Polygon(
             ((-x1, y1), (-x2, y2), (0, y2 - 1000), (x2, y2), (x1, y1), (-x1, y1))
@@ -54,9 +63,12 @@ def calculate_ils(
 
         # ILS data
         ils_data["geometry"].append(ils_poly)
-        ils_data["name"].append(atc_rcp["name"].replace("ATZ", "ILS"))
+        ils_data["name"].append(name)
         ils_data["upperLimit"].append(atc_rcp.upperLimit)
         ils_data["lowerLimit"].append(atc_rcp.upperLimit - 1000)
+        ils_data["identifier"].append(
+            uuid.uuid5(uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/ils/{name}")
+        )
 
     # Build ILS GeoDataFrame
     ils_gdf = GeoDataFrame(ils_data, crs="EPSG:27700")
@@ -67,5 +79,7 @@ def calculate_ils(
     ils_gdf = ils_gdf.assign(upperLimitReference="MSL")
     ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
     ils_gdf = ils_gdf.assign(lowerLimitReference="MSL")
+
+    ils_gdf.set_index("identifier", inplace=True)
 
     return ils_gdf  # ty: ignore[invalid-return-type]
