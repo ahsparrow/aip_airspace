@@ -1,4 +1,5 @@
 import re
+import uuid
 
 from geopandas import GeoDataFrame
 from lxml import html
@@ -24,21 +25,24 @@ def parse_sporting(text: str) -> GeoDataFrame:
     stypes = []
     upper_limits = []
     channels = []
+    identifiers = []
 
     name_tags = root.xpath("//tbody/tr/td[1]/p[1]")
     for tag in name_tags:
         txt = tag.text_content().strip()
 
         if name_match := NAME_RE.match(txt):
-            names.append(name_match.group(1))
+            name = name_match.group(1)
+            names.append(name)
 
             match name_match.group(2):
                 case "GLIDER SITE":
-                    stypes.append("GLIDER")
+                    stype = "GLIDER"
                 case "MICROLIGHT SITE":
-                    stypes.append("MICROLIGHT")
+                    stype = "MICROLIGHT"
                 case "TRAINING AERODROME":
-                    stypes.append("TRAINING")
+                    stype = "TRAINING"
+            stypes.append(stype)
 
             # Lat/lon
             lat_lon = tag.xpath("following-sibling::p")[0].text_content()
@@ -68,8 +72,16 @@ def parse_sporting(text: str) -> GeoDataFrame:
                 upper_limit = elevation + 1000
             upper_limits.append(upper_limit)
 
+            # UUID identifier
+            identifiers.append(
+                uuid.uuid5(
+                    uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/{stype}/{name}"
+                )
+            )
+
     gdf = GeoDataFrame(
         {
+            "identifier": identifiers,
             "name": names,
             "stype": stypes,
             "upperLimit": upper_limits,
@@ -83,14 +95,5 @@ def parse_sporting(text: str) -> GeoDataFrame:
         },
         crs="EPSG:4326",
     )
+    gdf.set_index("identifier", inplace=True)
     return gdf
-
-
-if __name__ == "__main__":
-    import requests
-
-    request = requests.get(
-        "https://www.aurora.nats.co.uk/htmlAIP/Publications/2026-06-11-AIRAC/html/eAIP/EG-ENR-5.5-en-GB.html#ENR-5.5"
-    )
-
-    parse_sporting(request.content)

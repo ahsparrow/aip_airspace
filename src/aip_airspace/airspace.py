@@ -126,10 +126,10 @@ def add_frequency(
 
     # channels and call signs for each airspace
     channel = {
-        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+        k: v for k, v in zip(as_gdf.index, [None for _ in range(len(as_gdf.index))])
     }
     callsign = {
-        k: v for k, v in zip(as_gdf.index, ["" for _ in range(len(as_gdf.index))])
+        k: v for k, v in zip(as_gdf.index, [None for _ in range(len(as_gdf.index))])
     }
 
     # loop over ATC services
@@ -248,6 +248,7 @@ def make_airspace_gdf(
     airspace_gdf.update(channel_df)
 
     # Sporting activities (with 1 nm buffer)
+    sporting_activity_gdf.set_index("identifier", inplace=True)
     sporting_activity_gdf.to_crs(epsg=27700, inplace=True)
     sporting_activity_gdf["geometry"] = sporting_activity_gdf["geometry"].buffer(1852)
     sporting_activity_gdf.to_crs(epsg=4326, inplace=True)
