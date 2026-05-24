@@ -1,3 +1,5 @@
+import uuid
+
 from geopandas import GeoDataFrame
 from pandas import DataFrame, concat
 from shapely import affinity, box, union_all, Point
@@ -145,6 +147,15 @@ def create_matz(
     # Concatenate cores and stubs and convert to WGS84
     matz_gdf = GeoDataFrame(concat([core_gdf, stub_gdf]), crs="EPSG:27700")
     matz_gdf.to_crs(epsg=4326, inplace=True)
+
+    # Add uuids
+    matz_gdf["identifier"] = matz_gdf.apply(
+        lambda row: uuid.uuid5(
+            uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/matz/{row['name']}"
+        ),
+        axis=1,
+    )
+    matz_gdf.set_index("identifier", inplace=True)
 
     channel_df = get_channels(matz_list)
 
