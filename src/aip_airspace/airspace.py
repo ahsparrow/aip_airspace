@@ -63,7 +63,7 @@ def rename(row: Series) -> str:
 def remove_offshore(
     gdf: GeoDataFrame, coast_gdf: GeoDataFrame, buffer: int = 10000
 ) -> GeoDataFrame:
-    coast_gdf.to_crs(epsg=27700, inplace=True)
+    coast_gdf.to_crs(epsg=32630, inplace=True)
     coast_gdf.geometry = coast_gdf.buffer(buffer)
     coast_gdf.to_crs(epsg=4326, inplace=True)
 
@@ -249,7 +249,7 @@ def make_airspace_gdf(
 
     # Sporting activities (with 1 nm buffer)
     sporting_activity_gdf.set_index("identifier", inplace=True)
-    sporting_activity_gdf.to_crs(epsg=27700, inplace=True)
+    sporting_activity_gdf.to_crs(epsg=32630, inplace=True)
     sporting_activity_gdf["geometry"] = sporting_activity_gdf["geometry"].buffer(1852)
     sporting_activity_gdf.to_crs(epsg=4326, inplace=True)
 

@@ -19,13 +19,13 @@ def calculate_ils(
 
     # Filter and convert to cartesian geometry
     rcp_gdf = rcp_gdf.loc[runway_centreline_pt_ids]
-    rcp_gdf.to_crs(epsg=27700, inplace=True)
+    rcp_gdf.to_crs(epsg=32630, inplace=True)
 
     # Set runway direction index
     rd_df = runway_dirn_df.set_index("identifier")
 
     # Convert ATZ to cartesian geometry
-    atz_gdf = atz_gdf.to_crs(epsg=27700)
+    atz_gdf = atz_gdf.to_crs(epsg=32630)
 
     # Calculate ATZ centre and size, and set centre as geometry
     atz_gdf["centroid"] = atz_gdf.geometry.centroid
@@ -71,7 +71,7 @@ def calculate_ils(
         )
 
     # Build ILS GeoDataFrame
-    ils_gdf = GeoDataFrame(ils_data, crs="EPSG:27700")
+    ils_gdf = GeoDataFrame(ils_data, crs="EPSG:32630")
     ils_gdf.to_crs(epsg=4326, inplace=True)
 
     ils_gdf = ils_gdf.assign(stype="ILS")

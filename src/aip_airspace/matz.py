@@ -25,7 +25,7 @@ def create_matz(
     matz_list: list[dict], atz_gdf: GeoDataFrame
 ) -> tuple[GeoDataFrame, DataFrame]:
     # ATS DataFrame with cartesian coordiates
-    catz_gdf = atz_gdf.to_crs(epsg=27700)
+    catz_gdf = atz_gdf.to_crs(epsg=32630)
 
     # Filter MATZ ATZs
     atz_ids = [m["atz_identifier"] for m in matz_list]
@@ -94,7 +94,7 @@ def create_matz(
             "lowerLimitReference": "SFC",
             "geometry": geom,
         },
-        crs="EPSG:27700",
+        crs="EPSG:32630",
     )
 
     # Stubs
@@ -141,11 +141,11 @@ def create_matz(
             "lowerLimitReference": "MSL",
             "geometry": geom,
         },
-        crs="EPSG:27700",
+        crs="EPSG:32630",
     )
 
     # Concatenate cores and stubs and convert to WGS84
-    matz_gdf = GeoDataFrame(concat([core_gdf, stub_gdf]), crs="EPSG:27700")
+    matz_gdf = GeoDataFrame(concat([core_gdf, stub_gdf]), crs="EPSG:32630")
     matz_gdf.to_crs(epsg=4326, inplace=True)
 
     # Add uuids

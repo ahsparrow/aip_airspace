@@ -15,7 +15,7 @@ def do_line(line):
 
 
 def do_circle(circle, resolution):
-    transformer = TransformerFromCrs(4326, 27700)
+    transformer = TransformerFromCrs(4326, 32630)
 
     centre_x, centre_y = transformer.transform(*parse_latlon(circle["centre"]))
     delta = 90 / resolution
@@ -35,7 +35,7 @@ def do_circle(circle, resolution):
 
 
 def do_arc(arc, from_latlon, resolution):
-    transformer = TransformerFromCrs(4326, 27700)
+    transformer = TransformerFromCrs(4326, 32630)
 
     from_x, from_y = transformer.transform(*from_latlon)
     to_x, to_y = transformer.transform(*parse_latlon(arc["to"]))
