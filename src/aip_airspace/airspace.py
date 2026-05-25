@@ -1,6 +1,6 @@
 from typing import cast
 
-from shapely import MultiPolygon
+from shapely import MultiPolygon, Polygon
 from geopandas import GeoDataFrame
 from pandas import DataFrame, Series, concat
 from uuid import UUID
@@ -67,9 +67,8 @@ def remove_offshore(
     coast_gdf.geometry = coast_gdf.buffer(buffer)
     coast_gdf.to_crs(epsg=4326, inplace=True)
 
-    mp = MultiPolygon(coast_gdf.geometry)
-
-    return gdf[gdf.overlaps(mp) | gdf.within(mp)]
+    geom = coast_gdf.unary_union
+    return gdf[gdf.overlaps(geom) | gdf.within(geom)]
 
 
 def remove_excluded(gdf: GeoDataFrame, exclude: list[str]) -> GeoDataFrame:
