@@ -28,7 +28,7 @@ def make_loa_add(loa: dict, feature: dict, volume: dict) -> dict:
 
 def make_loa_replace(
     loa: dict, feature: dict, volume: dict, airspace_gdf: GeoDataFrame
-) -> GeoDataFrame:
+) -> dict:
     upper = parse_level(volume["upper"])
     lower = parse_level(volume["lower"])
 

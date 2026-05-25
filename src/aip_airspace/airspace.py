@@ -1,6 +1,6 @@
 from typing import cast
 
-from shapely import MultiPolygon, Polygon
+from shapely import MultiPolygon
 from geopandas import GeoDataFrame
 from pandas import DataFrame, Series, concat
 from uuid import UUID

@@ -13,7 +13,7 @@ UPPER_LIMIT_RE = re.compile(r"Upper limit: (\d+) FT AGL")
 CHANNEL_RE = re.compile(r"(?:Freq|Channel): (\d{3}\.\d{3})")
 
 
-def parse_sporting(text: str) -> GeoDataFrame:
+def parse_sporting(text: bytes) -> GeoDataFrame:
     root = html.fromstring(text)
 
     # Drop hidden content
@@ -52,7 +52,9 @@ def parse_sporting(text: str) -> GeoDataFrame:
             # Elevation
             elev_channel_tag = tag.xpath("../following-sibling::td[3]/p[1]")[0]
             elev_match = ELEVATION_RE.search(elev_channel_tag.text_content())
-            if (elev_str := elev_match.group(1)) == "SL":
+            if (
+                elev_str := elev_match.group(1)  # ty: ignore[unresolved-attribute]
+            ) == "SL":
                 elevation = 0
             else:
                 elevation = int(elev_str.split()[0])
@@ -67,7 +69,10 @@ def parse_sporting(text: str) -> GeoDataFrame:
             # Upper limit
             if upper_limit_tag := tag.xpath("../following-sibling::td[1]/p[1]"):
                 upper_match = UPPER_LIMIT_RE.match(upper_limit_tag[0].text_content())
-                upper_limit = int(upper_match.group(1)) + elevation
+                upper_limit = (
+                    int(upper_match.group(1))  # ty: ignore[unresolved-attribute]
+                    + elevation
+                )
             else:
                 upper_limit = elevation + 1000
             upper_limits.append(upper_limit)
