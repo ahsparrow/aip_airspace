@@ -205,7 +205,7 @@ def make_airspace_gdf(
     info_service_df: DataFrame,
     radio_comm_channel_df: DataFrame,
     rwy_dirn_df: DataFrame,
-    coastline_gdf: GeoDataFrame,
+    coast_gdf: GeoDataFrame,
     exclude_ids: list[str],
     service_overrides: list[dict],
     ils_rwy_centreline_pt_ids: list[str],
@@ -218,7 +218,7 @@ def make_airspace_gdf(
     airspace_gdf.set_index("identifier", inplace=True)
 
     # Remove offshore airspace
-    airspace_gdf = remove_offshore(airspace_gdf, coastline_gdf)
+    airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)
 
     # Remove other excluded airspace
     airspace_gdf = remove_excluded(airspace_gdf, exclude_ids)

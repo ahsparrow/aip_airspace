@@ -1,6 +1,7 @@
 from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
+from aip_airspace.obstacle import make_obstacle_gdf
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
 
@@ -37,8 +38,8 @@ def aip_to_geojson() -> None:
     radio_comm_channel_df = read_file(aip_bytes, layer="RadioCommunicationChannel")
     rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
 
-    # Coastline data
-    coastline_gdf = read_file(config["files"]["coastline"])
+    # Coast data
+    coast_gdf = read_file(config["files"]["coast"])
 
     # ILS runway centreline points
     with open(config["files"]["ils"]) as ils_file:
@@ -59,7 +60,7 @@ def aip_to_geojson() -> None:
         info_service_df,
         radio_comm_channel_df,
         rwy_dirn_df,
-        coastline_gdf,
+        coast_gdf,
         config["exclude_ids"],
         config["service_overrides"],
         ils_rwy_centreline_pt_ids,
@@ -143,4 +144,23 @@ def sporting_to_geojson() -> None:
 
     gdf = parse_sporting(request.content)
 
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def obstacle_to_geojson() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("obstacle_filename")
+    parser.add_argument("airspace_filename")
+    parser.add_argument("geojson_filename")
+    parser.add_argument("--config_file", default="config.yaml")
+    args = parser.parse_args()
+
+    with open(args.config_file, "rt") as f:
+        config = yaml.safe_load(f.read())
+
+    obstacle_gdf = read_file(args.obstacle_filename, layer="VerticalStructure")
+    airspace_gdf = read_file(args.airspace_filename)
+    coast_gdf = read_file(config["files"]["coast"])
+
+    gdf = make_obstacle_gdf(obstacle_gdf, airspace_gdf, coast_gdf)
     gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")

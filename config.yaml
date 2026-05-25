@@ -1,5 +1,5 @@
 files:
-  coastline: assets/coast.geojson
+  coast: assets/coast.geojson
   sporting_activity: assets/sporting.geojson
   matz: assets/matz.yaml
   ils: assets/ils.yaml
