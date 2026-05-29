@@ -10,6 +10,5 @@ wheels/
 .venv
 
 # Project files
+build
 data
-*.xml
-*.geojson
