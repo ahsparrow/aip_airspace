@@ -189,14 +189,14 @@ def add_frequency(
 
         # check services names in order of preference
         for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
-            if callsign[uuid] != "":
+            if callsign[uuid] is not None:
                 break
 
             for n_svc, n_cs, cs in csign:
                 if cs.endswith(svc):
                     href = services[n_svc].radioCommunication_href[n_cs]
                     rcc_uuid = str(UUID(href))
-                    freq = rcc_df.loc[rcc_uuid].frequencyTransmission
+                    freq = f"{rcc_df.loc[rcc_uuid].frequencyTransmission:.3f}"
 
                     callsign[uuid] = cs
                     channel[uuid] = freq
