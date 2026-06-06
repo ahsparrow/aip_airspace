@@ -55,7 +55,7 @@ def simple_type(row: Series) -> str | None:
 
 def rename(row: Series) -> str:
     if row.stype in ["D", "P", "R"]:
-        return f"{row.designator[2:]} {row["name"]}"
+        return f"{row.designator[2:]} {row['name']}"
     else:
         return row["name"]
 
@@ -96,7 +96,15 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     # Remove unused columns
     gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
 
-    return gdf
+    gdf.sort_values(by="stype", inplace=True)
+    out_gdf = gdf[
+        ~(
+            (gdf[["geometry", "upperLimit", "lowerLimit"]].duplicated(keep="last"))
+            & ((gdf["stype"] == "CTA") | (gdf["stype"] == "CTR"))
+        )
+    ]
+
+    return out_gdf
 
 
 # Override callsign/frequency in ATC service
