@@ -267,6 +267,9 @@ def make_airspace_gdf(
     # Override attributes
     override(merged_gdf, override_data)
 
+    # Sort by stype then name
+    merged_gdf.sort_values(["stype", "name"], inplace=True)
+
     # Fix up geometries and snap to 1 second grid
     merged_gdf.geometry = merged_gdf.geometry.make_valid()
     merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
