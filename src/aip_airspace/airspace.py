@@ -96,6 +96,17 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     # Remove unused columns
     gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
 
+    # Convert classification from array to scalar
+    gc = gdf["classification"]
+    gc[gc.notna()] = gc[gc.notna()].apply(lambda x: x[0])
+
+    # Remove ATZ classification and all class G
+    gc[gdf["stype"] == "ATZ"] = None
+    gc[gc == "G"] = None
+
+    gdf["classification"] = gc.astype(str)
+
+    # Remove CTAs and CTRs duplicated by TMZs
     gdf.sort_values(by="stype", inplace=True)
     out_gdf = gdf[
         ~(
@@ -150,7 +161,8 @@ def add_frequency(
                     # check missing callsign
                     if row.callSign is not None:
                         # Ignore class A and C
-                        if not set(as_gdf.loc[uuid].classification) & {"A", "C"}:
+                        classification = as_gdf.loc[uuid].classification
+                        if classification != "A" and classification != "C":
                             # check unambiguous call sign <-> frequency
                             if len(row.callSign) == len(row.radioCommunication_href):
                                 service_dict[uuid].append(row)
