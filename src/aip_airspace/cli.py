@@ -32,17 +32,33 @@ def aip_to_geojson() -> None:
     # Data from AIP
     print("Loading data frames")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
+    airspace_gdf.set_index("identifier", inplace=True)
+    airspace_gdf.set_crs(epsg=4326, inplace=True)
+
     rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
+    rwy_centreline_pt_gdf.set_crs(epsg=4326, inplace=True)
+    rwy_centreline_pt_gdf.set_index("identifier", inplace=True)
+
+    rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
+    rwy_dirn_df.set_index("identifier", inplace=True)
+
     air_traffic_control_df = read_file(aip_bytes, layer="AirTrafficControlService")
+    air_traffic_control_df.set_index("identifier", inplace=True)
+
     air_traffic_management_df = read_file(
         aip_bytes, layer="AirTrafficManagementService"
     )
+    air_traffic_management_df.set_index("identifier", inplace=True)
+
     info_service_df = read_file(aip_bytes, layer="InformationService")
+    info_service_df.set_index("identifier", inplace=True)
+
     radio_comm_channel_df = read_file(aip_bytes, layer="RadioCommunicationChannel")
-    rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
+    radio_comm_channel_df.set_index("identifier", inplace=True)
 
     # Coast data
     coast_gdf = read_file(config["files"]["coast"])
+    coast_gdf.set_crs(epsg=4326, inplace=True)
 
     # ILS runway centreline points
     with open(config["files"]["ils"]) as ils_file:
@@ -54,6 +70,8 @@ def aip_to_geojson() -> None:
 
     # Sporting activities
     sporting_activity_gdf = read_file(config["files"]["sporting_activity"])
+    sporting_activity_gdf.set_crs(epsg=4326, inplace=True)
+    sporting_activity_gdf.set_index("identifier", inplace=True)
 
     print("Making airspace")
     airspace_gdf = make_airspace_gdf(

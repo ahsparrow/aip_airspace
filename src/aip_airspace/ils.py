@@ -11,18 +11,12 @@ from uuid import UUID
 def calculate_ils(
     runway_centreline_pt_ids: list[str],
     atz_gdf: GeoDataFrame,
-    runway_centreline_pt_gdf: GeoDataFrame,
-    runway_dirn_df: DataFrame,
+    rwy_centreline_pt_gdf: GeoDataFrame,
+    rwy_dirn_df: DataFrame,
 ) -> GeoDataFrame:
-    # Set runway centre point index
-    rcp_gdf = runway_centreline_pt_gdf.set_index("identifier")
-
     # Filter and convert to cartesian geometry
-    rcp_gdf = rcp_gdf.loc[runway_centreline_pt_ids]
+    rcp_gdf = rwy_centreline_pt_gdf.loc[runway_centreline_pt_ids]
     rcp_gdf.to_crs(epsg=32630, inplace=True)
-
-    # Set runway direction index
-    rd_df = runway_dirn_df.set_index("identifier")
 
     # Convert ATZ to cartesian geometry
     atz_gdf = atz_gdf.to_crs(epsg=32630)
@@ -49,7 +43,7 @@ def calculate_ils(
         x2 = 8 * 1852 * sin(0.05)
         y2 = 8 * 1852 * cos(0.05)
 
-        rd = rd_df.loc[str(UUID(atc_rcp.onRunway_href))]
+        rd = rwy_dirn_df.loc[str(UUID(atc_rcp.onRunway_href))]
         bearing = float(rd.trueBearing)
 
         name = atc_rcp["name"].replace("ATZ", "ILS") + f" {bearing / 10:02.0f}"

@@ -120,8 +120,6 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
 
 # Override callsign/frequency in ATC service
 def override_ats(ats_df: DataFrame, override: list[dict]) -> DataFrame:
-    ats_df = ats_df.set_index("identifier")
-
     for svc in override:
         ats_df.loc[svc["identifier"], "callSign"] = [svc["callsign"]]
         ats_df.loc[svc["identifier"], "radioCommunication_href"] = [svc["rcc_href"]]
@@ -165,8 +163,6 @@ def add_frequency(
     is_df: DataFrame,
     rcc_df: DataFrame,
 ) -> GeoDataFrame:
-    rcc_df = rcc_df.set_index("identifier")
-
     # Get service information from various data frames
     uuid_services = {}
     get_services(atc_df, uuid_services)
@@ -229,10 +225,6 @@ def make_airspace_gdf(
     sporting_activity_gdf: GeoDataFrame,
     override_data: list[dict],
 ) -> GeoDataFrame:
-    # Set CRS and set AIXM identifier as index
-    airspace_gdf.set_crs(epsg=4326, inplace=True)
-    airspace_gdf.set_index("identifier", inplace=True)
-
     # Remove offshore airspace
     airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)
 
@@ -261,7 +253,6 @@ def make_airspace_gdf(
     matz_gdf = create_matz(matz_data, airspace_gdf)
 
     # Sporting activities (with 1 nm buffer)
-    sporting_activity_gdf.set_index("identifier", inplace=True)
     sporting_activity_gdf.to_crs(epsg=32630, inplace=True)
     sporting_activity_gdf["geometry"] = sporting_activity_gdf["geometry"].buffer(1852)
     sporting_activity_gdf.to_crs(epsg=4326, inplace=True)
