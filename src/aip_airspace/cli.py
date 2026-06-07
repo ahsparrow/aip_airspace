@@ -33,7 +33,10 @@ def aip_to_geojson() -> None:
     print("Loading data frames")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
     rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
-    air_traffic_service_df = read_file(aip_bytes, layer="AirTrafficControlService")
+    air_traffic_control_df = read_file(aip_bytes, layer="AirTrafficControlService")
+    air_traffic_management_df = read_file(
+        aip_bytes, layer="AirTrafficManagementService"
+    )
     info_service_df = read_file(aip_bytes, layer="InformationService")
     radio_comm_channel_df = read_file(aip_bytes, layer="RadioCommunicationChannel")
     rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
@@ -56,7 +59,8 @@ def aip_to_geojson() -> None:
     airspace_gdf = make_airspace_gdf(
         airspace_gdf,
         rwy_centreline_pt_gdf,
-        air_traffic_service_df,
+        air_traffic_control_df,
+        air_traffic_management_df,
         info_service_df,
         radio_comm_channel_df,
         rwy_dirn_df,

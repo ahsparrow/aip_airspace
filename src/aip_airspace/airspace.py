@@ -2,7 +2,7 @@ from typing import cast
 
 from shapely import MultiPolygon
 from geopandas import GeoDataFrame
-from pandas import DataFrame, Series, concat
+from pandas import DataFrame, Series, StringDtype, concat
 from uuid import UUID
 
 from aip_airspace.ils import calculate_ils
@@ -129,84 +129,79 @@ def override_ats(ats_df: DataFrame, override: list[dict]) -> DataFrame:
     return ats_df
 
 
+def get_services(df: DataFrame, uuid_services: dict):
+    # Ignore services without client airspace, call sign and radio comms
+    for _, row in df[
+        df.clientAirspace_href.notna()
+        & df.callSign.notna()
+        & df.radioCommunication_href.notna()
+    ].iterrows():
+        for href in row.clientAirspace_href:
+            uuid = str(UUID(href))
+
+            # Call sign and radio comms can be either string or array of strings
+            callsign = (
+                [row.callSign]
+                if type(df.dtypes.callSign) is StringDtype
+                else row.callSign
+            )
+            rc_href = (
+                [row.radioCommunication_href]
+                if type(df.dtypes.radioCommunication_href) is StringDtype
+                else row.radioCommunication_href
+            )
+
+            # Ignore services without 1:1 call sign/radio channel
+            if len(callsign) == len(rc_href):
+                uuid_services[uuid] = uuid_services.get(uuid, []) + [
+                    {"callsign": callsign, "rc_href": rc_href}
+                ]
+
+
 def add_frequency(
     as_gdf: GeoDataFrame,
-    ats_df: DataFrame,
+    atc_df: DataFrame,
+    atm_df: DataFrame,
     is_df: DataFrame,
     rcc_df: DataFrame,
 ) -> GeoDataFrame:
     rcc_df = rcc_df.set_index("identifier")
 
-    # list of services for each airspace
-    service_dict = {
-        k: v for k, v in zip(as_gdf.index, [[] for _ in range(len(as_gdf.index))])
-    }
+    # Get service information from various data frames
+    uuid_services = {}
+    get_services(atc_df, uuid_services)
+    get_services(atm_df, uuid_services)
+    get_services(is_df, uuid_services)
 
-    # channels and call signs for each airspace
-    channel = {
-        k: v for k, v in zip(as_gdf.index, [None for _ in range(len(as_gdf.index))])
-    }
-    callsign = {
-        k: v for k, v in zip(as_gdf.index, [None for _ in range(len(as_gdf.index))])
-    }
-
-    # loop over ATC services
-    for _, row in ats_df.iterrows():
-        if row.clientAirspace_href is not None:
-            for href in row.clientAirspace_href:
-                uuid = str(UUID(href))
-
-                # check client airspace exists
-                if uuid in as_gdf.index:
-                    # check missing callsign
-                    if row.callSign is not None:
-                        # Ignore class A and C
-                        classification = as_gdf.loc[uuid].classification
-                        if classification != "A" and classification != "C":
-                            # check unambiguous call sign <-> frequency
-                            if len(row.callSign) == len(row.radioCommunication_href):
-                                service_dict[uuid].append(row)
-                            else:
-                                callsign[uuid] = "Ambiguous callsign/frequency"
-                    else:
-                        callsign[uuid] = "Missing callsign"
-
-    # loop over Information services
-    for _, row in is_df.iterrows():
-        if row.clientAirspace_href is not None:
-            for href in row.clientAirspace_href:
-                uuid = str(UUID(href))
-                if uuid in as_gdf.index:
-                    service_dict[uuid].append(row)
+    channel = {}
+    callsign = {}
 
     # for each airspace
-    for uuid, services in service_dict.items():
-        # build flat callsign list
-        csign = []
-        for n_svc, svc in enumerate(services):
-            for n_cs, cs in enumerate(svc.callSign):
-                csign.append((n_svc, n_cs, cs))
+    for uuid, services in uuid_services.items():
+        if uuid in as_gdf.index and as_gdf.loc[uuid].classification not in ["A", "C"]:
+            # build flat callsign list
+            csign = []
+            for n_svc, svc in enumerate(services):
+                for n_cs, cs in enumerate(svc["callsign"]):
+                    csign.append((n_svc, n_cs, cs))
 
-        # check services names in order of preference
-        for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
-            if callsign[uuid] is not None:
-                break
+            # check services names in order of preference
+            for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
+                for n_svc, n_cs, cs in csign:
+                    if cs.endswith(svc):
+                        href = services[n_svc]["rc_href"][n_cs]
+                        rcc_uuid = str(UUID(href))
+                        freq = f"{rcc_df.loc[rcc_uuid].frequencyTransmission:.3f}"
 
-            for n_svc, n_cs, cs in csign:
-                if cs.endswith(svc):
-                    href = services[n_svc].radioCommunication_href[n_cs]
-                    rcc_uuid = str(UUID(href))
-                    freq = f"{rcc_df.loc[rcc_uuid].frequencyTransmission:.3f}"
-
-                    callsign[uuid] = cs
-                    channel[uuid] = freq
-                    break
+                        callsign[uuid] = cs
+                        channel[uuid] = freq
+                        break
 
     df = DataFrame.from_dict(channel, orient="index", columns=["channel"])
-    gdf = as_gdf.merge(df, left_index=True, right_index=True)
+    gdf = as_gdf.merge(df, how="left", left_index=True, right_index=True)
 
     df = DataFrame.from_dict(callsign, orient="index", columns=["callsign"])
-    gdf = gdf.merge(df, left_index=True, right_index=True)
+    gdf = gdf.merge(df, how="left", left_index=True, right_index=True)
 
     return gdf  # type: ignore
 
@@ -221,7 +216,8 @@ def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
 def make_airspace_gdf(
     airspace_gdf: GeoDataFrame,
     rwy_centreline_pt_gdf: GeoDataFrame,
-    air_traffic_service_df: DataFrame,
+    air_traffic_control_df: DataFrame,
+    air_traffic_management_df: DataFrame,
     info_service_df: DataFrame,
     radio_comm_channel_df: DataFrame,
     rwy_dirn_df: DataFrame,
@@ -247,11 +243,12 @@ def make_airspace_gdf(
     airspace_gdf = asselect_airspace(airspace_gdf)
 
     # Service overrides
-    ats_df = override_ats(air_traffic_service_df, service_overrides)
+    atc_df = override_ats(air_traffic_control_df, service_overrides)
+    atm_df = override_ats(air_traffic_management_df, service_overrides)
 
     # Add frequencies
     airspace_gdf = add_frequency(
-        airspace_gdf, ats_df, info_service_df, radio_comm_channel_df
+        airspace_gdf, atc_df, atm_df, info_service_df, radio_comm_channel_df
     )
 
     # Calculate ILS feathers
@@ -262,9 +259,6 @@ def make_airspace_gdf(
 
     # Calculate MATZ's and get military ATZ frequencies
     matz_gdf, channel_df = create_matz(matz_data, airspace_gdf)
-
-    # Add military ATZ frequencies
-    airspace_gdf.update(channel_df)
 
     # Sporting activities (with 1 nm buffer)
     sporting_activity_gdf.set_index("identifier", inplace=True)
