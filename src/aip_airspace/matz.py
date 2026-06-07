@@ -7,20 +7,6 @@ from shapely import affinity, box, union_all, Point
 NM_M = 1852
 
 
-def get_channels(matz_list):
-    data = [
-        [m["atz_identifier"], m["channel"], m["callsign"]]
-        for m in matz_list
-        if "channel" in m
-    ]
-    data = [list(x) for x in zip(*data[:])]
-
-    df = DataFrame({"id": data[0], "channel": data[1], "callsign": data[2]})
-    df.set_index("id", inplace=True)
-
-    return df
-
-
 def create_matz(
     matz_list: list[dict], atz_gdf: GeoDataFrame
 ) -> tuple[GeoDataFrame, DataFrame]:
@@ -121,7 +107,7 @@ def create_matz(
 
             geom.append(stub)
 
-            name = f"{catz["name"]} STUB" + (
+            name = f"{catz['name']} STUB" + (
                 "" if len(md["stubs"]) != 2 else f" {n + 1}"
             )
             names.append(name)
@@ -157,6 +143,4 @@ def create_matz(
     )
     matz_gdf.set_index("identifier", inplace=True)
 
-    channel_df = get_channels(matz_list)
-
-    return matz_gdf, channel_df
+    return matz_gdf

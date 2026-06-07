@@ -258,7 +258,7 @@ def make_airspace_gdf(
     )
 
     # Calculate MATZ's and get military ATZ frequencies
-    matz_gdf, channel_df = create_matz(matz_data, airspace_gdf)
+    matz_gdf = create_matz(matz_data, airspace_gdf)
 
     # Sporting activities (with 1 nm buffer)
     sporting_activity_gdf.set_index("identifier", inplace=True)
