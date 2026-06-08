@@ -182,7 +182,7 @@ def add_frequency(
                     csign.append((n_svc, n_cs, cs))
 
             # check services names in order of preference
-            for svc in ["APPROACH", "RADAR", "INFORMATION", "RADIO"]:
+            for svc in ["APPROACH", "RADAR", "INFORMATION", "ZONE", "TOWER", "RADIO"]:
                 for n_svc, n_cs, cs in csign:
                     if cs.endswith(svc):
                         href = services[n_svc]["rc_href"][n_cs]
@@ -236,11 +236,12 @@ def make_airspace_gdf(
 
     # Service overrides
     atc_df = override_ats(air_traffic_control_df, service_overrides)
+    info_df = override_ats(info_service_df, service_overrides)
     atm_df = override_ats(air_traffic_management_df, service_overrides)
 
     # Add frequencies
     airspace_gdf = add_frequency(
-        airspace_gdf, atc_df, atm_df, info_service_df, radio_comm_channel_df
+        airspace_gdf, atc_df, atm_df, info_df, radio_comm_channel_df
     )
 
     # Calculate ILS feathers

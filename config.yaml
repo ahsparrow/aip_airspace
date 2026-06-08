@@ -35,6 +35,59 @@ overrides:
   callsign: BRIZE ZONE
   channel: "119.005"
 
+# Hawarden
+- identifier: 7e6b43d7-6a0d-499a-b541-bf4182688aea
+  callsign: HAWARDEN RADAR
+  channel: "120.055"
+
+# Farnborough  CTA
+- identifier: 16fa246e-0938-43af-83e1-2b34112f88a9
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: 379395e7-d803-4a67-9030-6ee053e650df
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: a9fe5f16-f6ff-45c5-803b-fd516d073a48
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: f5902e3c-8631-42eb-8d07-aa218bf67431
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: 1f8a72de-f588-435a-9e37-6d2d9fa2c751
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: 2dd40fc1-1950-4384-99d5-8f1b815bc334
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: 4f9b31a9-2890-452c-8f71-4ccc1dfe4141
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+# Farnborough TMZ
+- identifier: 4c898ed8-5158-4b3c-8b30-aed655aa3a84
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+- identifier: 934c26e9-0f2d-413c-b0d8-dedcd0c59387
+  callsign: FARNBOROUGH RADAR
+  channel: "133.440"
+
+# Humberside
+- identifier: fc9f89ff-7e73-4e78-9f68-7c11eaf3e0d6
+  callsign: HUMBERSIDE RADAR
+  channel: "119.130"
+
+# Lydd
+- identifier: 055fe92b-8ef1-4535-b4ac-12e8561a460e
+  callsign: LYDD APPROACH
+  channel: "120.705"
+
 exclude_ids:
 # D218 Fairford
 - 3ecaefe3-e516-42d0-ab1e-320e3ba97adf
