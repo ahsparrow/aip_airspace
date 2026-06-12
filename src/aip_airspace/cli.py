@@ -7,6 +7,7 @@ from aip_airspace.rat import make_rat_gdf
 
 from argparse import ArgumentParser
 from pathlib import Path
+import json
 
 from geopandas import read_file
 import yaml
@@ -27,7 +28,7 @@ def aip_to_geojson() -> None:
         aip_str = aip_file.read()
 
     # Fix "problems" in raw XML data
-    aip_bytes = fix_up(aip_str).encode()
+    aip_bytes, airac_date = fix_up(aip_str)
 
     # Data from AIP
     print("Loading data frames")
@@ -97,7 +98,10 @@ def aip_to_geojson() -> None:
     else:
         print("WARNING: Invalid geometry")
 
-    airspace_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    geo_dict = airspace_gdf.to_geo_dict()
+    geo_dict["airac_date"] = airac_date
+    with open(args.geojson_filename, "wt") as f:
+        json.dump(geo_dict, f)
 
 
 def rat_to_geojson() -> None:

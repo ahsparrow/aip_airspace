@@ -4,6 +4,7 @@ import xml.etree.ElementTree as ET
 
 ns = {
     "aixm": "http://www.aixm.aero/schema/5.1",
+    "gmd": "http://www.isotc211.org/2005/gmd",
     "gml": "http://www.opengis.net/gml/3.2",
     "message": "http://www.aixm.aero/schema/5.1/message",
     "xlink": "http://www.w3.org/1999/xlink",
@@ -86,7 +87,7 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def fix_up(aip_data: str) -> str:
+def fix_up(aip_data: str) -> tuple[str, str]:
     root_element = ET.fromstring(aip_data)
 
     # Replace "[ft_i]" with "FT"
@@ -96,4 +97,9 @@ def fix_up(aip_data: str) -> str:
     borders = geopandas.read_file(ET.tostring(root_element), layer="GeoBorder")
     fix_links(root_element, borders)
 
-    return ET.tostring(root_element, encoding="unicode")
+    # Get AIRAC data
+    airac_date = root_element.find(
+        ".//gmd:identificationInfo//gml:beginPosition", ns
+    ).text[:10]
+
+    return ET.tostring(root_element), airac_date
