@@ -18,7 +18,6 @@ def do_circle(circle, resolution):
     transformer = TransformerFromCrs(4326, 32630)
 
     centre_x, centre_y = transformer.transform(*parse_latlon(circle["centre"]))
-    delta = 90 / resolution
 
     # Get radius (assume in nm)
     radius_str = circle["radius"]

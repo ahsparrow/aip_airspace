@@ -135,7 +135,7 @@ def loa_to_geojson() -> None:
         loa_list = yaml.safe_load(f.read())
 
     airspace_gdf = read_file(args.airspace_filename)
-    airspace_gdf.set_index("index", inplace=True)
+    airspace_gdf.set_index("identifier", inplace=True)
 
     loa_gdf = make_loa_gdf(loa_list, airspace_gdf)
 

@@ -2,7 +2,7 @@
 - name: AMPIT TRIANGLE
   add:
   - stype: CTA
-    classification: [C]
+    classification: C
     geometry:
     - upper: FL185
       lower: FL145
@@ -28,7 +28,7 @@
 - name: DAVENTRY BOX
   add:
   - stype: CTA
-    classification: [A]
+    classification: A
     geometry:
     - upper: 5500 ft
       lower: 4500 ft
@@ -73,3 +73,126 @@
         - 521431N 0014159W
         - 524216N 0021343W
         - 524800N 0015216W
+
+#----------------------------------------------------------------------
+- name: DUNSTABLE (HG/PG)
+  add:
+  - stype: CTA
+    classification: D
+    geometry:
+    - upper: 3500 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 515227N 0004006W
+        - 515511N 0002426W
+        - 515239N 0002710W
+        - 515133N 0003327W
+        - 515135N 0003730W
+        - 515114N 0003938W
+
+  replace:
+    # LUTON CTR
+  - aref: de74edf3-11c3-47f7-9369-b7dc6cafd13e
+    geometry:
+    - upper: 3500 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 515131N 0003754W
+        - 515135N 0003730W
+        - 515133N 0003327W
+        - 515240N 0002705W
+        - 515511N 0002426W
+        - 515743N 0002145W
+        - 515857N 0001434W
+      - arc:
+          dir: cw
+          radius: 8 nm
+          centre: 515229N 0002206W
+          to: 515042N 0000931W
+      - line:
+        - 514830N 0001506W
+        - 514503N 0003457W
+
+    # LUTON CTA3
+  - aref: f4cb7258-b996-4c12-83c9-a771a842a94f 
+    geometry:
+    - name: LUTON CTA 3A
+      upper: 5500 ft
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 514810N 0004155W
+        - 515150N 0004336W
+        - 515227N 0004006W
+        - 515114N 0003938W
+        - 515131N 0003754W
+        - 514905N 0003647W
+    - name: LUTON CTA 3B
+      upper: 5500 ft
+      lower: 3500 ft
+      boundary:
+      - line:
+        - 515244N 0003828W
+        - 515227N 0004006W
+        - 515114N 0003938W
+        - 515131N 0003754W
+
+#----------------------------------------------------------------------
+- name: DUNSTABLE COMPS
+  add: []
+
+  replace:
+    # LUTON CTR
+  - aref: de74edf3-11c3-47f7-9369-b7dc6cafd13e
+    geometry:
+    - upper: 3500 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 515131N 0003754W
+        - 515135N 0003730W
+        - 515133N 0003327W
+        - 515148N 0003202W
+        - 515241N 0002901W
+        - 515332N 0002611W
+        - 515743N 0002145W
+        - 515857N 0001434W
+      - arc:
+          dir: cw
+          radius: 8 nm
+          centre: 515229N 0002206W
+          to: 515042N 0000931W
+      - line:
+        - 514830N 0001506W
+        - 514503N 0003457W
+
+  - aref: f4cb7258-b996-4c12-83c9-a771a842a94f 
+    geometry:
+    - upper: 5500 ft
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 514810N 0004155W
+        - 515150N 0004336W
+        - 515227N 0004006W
+        - 515114N 0003938W
+        - 515131N 0003754W
+        - 514905N 0003647W
+
+  - aref: 0fdbc6bc-130e-4e47-b052-7ba4c73abc65
+    geometry:
+    - upper: 5500 ft
+      lower: 3500 ft
+      boundary:
+      - line:
+        - 520038N 0002832W
+        - 515743N 0002145W
+        - 515021N 0002931W
+        - 514905N 0003647W
+        - 515131N 0003754W
+        - 515114N 0003938W
+        - 515227N 0004006W
+        - 515244N 0003828W
+        - 515258N 0003709W
