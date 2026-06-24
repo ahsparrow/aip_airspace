@@ -1,5 +1,7 @@
+from math import pi
 from typing import cast
 
+import numpy as np
 from shapely import MultiPolygon
 from geopandas import GeoDataFrame
 from pandas import DataFrame, Series, StringDtype, concat
@@ -209,6 +211,28 @@ def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
         airspace_gdf.update(df)
 
 
+def thinness(poly):
+    return 4 * pi * poly.area / poly.length**2
+
+
+def circles_to_points(xy_gdf):
+    collapse_gdf = xy_gdf.assign(radius=None)
+
+    # convert circle to point/radius
+    gdf = collapse_gdf[thinness(collapse_gdf.geometry) > 0.999]
+    gdf.radius = 2 * gdf.geometry.area / gdf.geometry.length
+    gdf.geometry = gdf.geometry.centroid
+
+    # Round radius < ~0.5 nm to nearest 0.1 nm
+    big_gdf = gdf[gdf.radius > 920]
+    big_gdf.radius = np.round(big_gdf.radius / 185.2) * 185.2
+    gdf.update(big_gdf)
+    gdf.radius = np.round(gdf.radius)
+
+    collapse_gdf.update(gdf)
+    return collapse_gdf
+
+
 def make_airspace_gdf(
     airspace_gdf: GeoDataFrame,
     rwy_centreline_pt_gdf: GeoDataFrame,
@@ -268,16 +292,22 @@ def make_airspace_gdf(
     # Sort by stype then name
     merged_gdf.sort_values(["stype", "name"], inplace=True)
 
-    # Fix up geometries and snap to 1 second grid
+    # Fix up geometries and discard any resulting "sliver" polygons
+    merged_gdf.to_crs(epsg=32630, inplace=True)
     merged_gdf.geometry = merged_gdf.geometry.make_valid()
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=1 / 3600)
 
-    # Discard any sliver polygons created by the fix up
     gdf = merged_gdf[merged_gdf.geometry.geom_type == "MultiPolygon"]
     gdf.geometry = gdf.geometry.apply(lambda g: max(g.geoms, key=lambda x: x.area))
     merged_gdf.update(gdf)
 
-    # Reduce size of output file
-    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
+    # convert "circle" polygons to points
+    final_gdf = circles_to_points(merged_gdf)
+    final_gdf.to_crs(epsg=4326, inplace=True)
 
-    return merged_gdf
+    # Snap to one second grid
+    final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=1 / 3600)
+
+    # Reduce size of output file
+    final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=0.000001)
+
+    return final_gdf
