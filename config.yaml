@@ -88,6 +88,99 @@ overrides:
   callsign: LYDD APPROACH
   channel: "120.705"
 
+# Drop zones
+- identifier: 78ec1c2c-50bf-414c-927c-f1c55b579542
+  name: BECCLES DZ
+
+- identifier: fdacfab2-8fe7-4e5a-b23b-ba839a8bea18
+  name: BOSCOMBE DOWN DZ
+
+- identifier: 665d156a-58ab-4a6c-9ce8-c02fba5287c2
+  name: BRIDLINGTON DZ
+
+- identifier: ee31fe5d-45ba-4df8-9c70-13e2475adc8f
+  name: CARK DZ
+
+- identifier: d0966786-387f-47d6-b907-786acec1d0df
+  name: CHALGROVE DZ
+
+- identifier: b4dfa8f4-2a83-40dd-8868-67081db32ba4
+  name: CHATTERIS DZ
+  stype: P
+
+- identifier: 60070e64-5228-4d73-8da0-9671c9bd0a5e
+  name: COCKERHAM DZ
+
+- identifier: 325d9ed5-734f-4778-8a4e-7dd32b2bb316
+  name: DUNKESWELL DZ
+  stype: P
+
+- identifier: c8de3bc5-8c5f-478c-bee9-f2ed7ed215ba
+  name: ERROL DZ
+
+- identifier: f0c97505-0d7d-4517-94d0-c4785216f062
+  name: FIFE DZ
+
+- identifier: ae9153f7-c458-4c03-ba43-d56a7c1c3c7b
+  name: HIBALDSTOW DZ
+
+- identifier: 89ede616-5632-4e35-9e4d-16180b06e3bd
+  name: HINTON-IN-THE-HEDGES DZ
+  stype: P
+
+- identifier: 2efdb90c-fca9-4581-b32e-e99e3cbf524f
+  name: KEEVIL DZ
+
+- identifier: 9780b63a-6755-44fe-a007-a1e2df835275
+  name: KILLYKERGAN DZ
+
+- identifier: 69189821-e974-465c-b6e0-a6dbc6e2be77
+  name: LANGAR DZ
+  stype: P
+
+- identifier: e0d78503-60eb-4209-a222-d2589ab2bd7a
+  name: HEADCORN DZ
+
+- identifier: c9ef8ea4-475b-4bd9-994e-f735983b0b5f
+  name: LLANBEDR DZ
+
+- identifier: 1b2f3e4c-fc2b-447d-b694-e5536d482404
+  name: MOVENIS DZ
+
+- identifier: fee1ffb7-483d-4c0e-aa3a-17bd31f414aa
+  name: NETHERAVON DZ
+  stype: P
+
+- identifier: 4366f29c-92cd-4d06-9d99-12dc50d83e5c
+  name: OLD SARUM DZ
+  stype: P
+
+- identifier: 008e3bc1-e1f2-4e0f-8717-0a0448b1acdf
+  name: PERRANPORTH DZ
+
+- identifier: 86c5b50a-a72d-4b94-9249-18d57eba72ae
+  name: SIBSON DZ
+  stype: P
+
+- identifier: 66dbc527-aed9-4af2-b31c-ff0f6fb07b8f
+  name: PETERLEE DZ
+
+- identifier: 52f34b1e-e951-4098-a9bb-96eceb14aff1
+  name: SOUTH CERNEY DZ
+
+- identifier: 8129e69b-97f7-48a7-aa59-d12ae0d44539
+  name: STRATHALLAN DZ
+
+- identifier: 85923dbc-b0f0-4407-86a0-0888047c00e5
+  name: SWANSEA DZ
+
+- identifier: 921a5aa6-ec8c-486c-9567-0c9ce736564c
+  name: TILSTOCK DZ
+
+- identifier: 70f0b51b-e745-4c6b-96c6-3871f0fae0db
+  name: WESTON-ON-THE-GREEN DZ
+  stype: P
+
 exclude_ids:
 # D218 Fairford
 - 3ecaefe3-e516-42d0-ab1e-320e3ba97adf
