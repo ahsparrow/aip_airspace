@@ -304,6 +304,10 @@ def make_airspace_gdf(
     final_gdf = circles_to_points(merged_gdf)
     final_gdf.to_crs(epsg=4326, inplace=True)
 
+    # Convert limits to integer
+    final_gdf.lowerLimit = final_gdf.lowerLimit.astype(int)
+    final_gdf.upperLimit = final_gdf.upperLimit.astype(int)
+
     # Snap to one second grid
     final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=1 / 3600)
 
