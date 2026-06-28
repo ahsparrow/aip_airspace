@@ -9,9 +9,9 @@ def make_rat(rat: dict, geometry: dict) -> dict:
     lower = parse_level(geometry["lower"])
 
     return {
-        "group_name": rat["name"],
+        "rat_name": rat["name"],
         "name": geometry.get("name", rat["name"]),
-        "stype:": "P",
+        "atype:": "P",
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
         "upperLimitReference": upper["reference"],
