@@ -13,6 +13,22 @@ from geopandas import read_file
 import yaml
 
 
+def aip_fixup() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("aip_filename")
+    parser.add_argument("fixup_filename")
+    args = parser.parse_args()
+
+    with open(args.aip_filename, "rt") as aip_file:
+        aip_str = aip_file.read()
+
+    # Fix "problems" in raw XML data
+    aip_bytes, _ = fix_up(aip_str)
+
+    with open(args.fixup_filename, "wb") as fixup_file:
+        fixup_file.write(aip_bytes)
+
+
 def aip_to_geojson() -> None:
     parser = ArgumentParser()
     parser.add_argument("aip_filename")
