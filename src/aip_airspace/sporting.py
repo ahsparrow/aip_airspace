@@ -22,7 +22,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
 
     names = []
     geoms = []
-    stypes = []
+    atypes = []
     upper_limits = []
     channels = []
     identifiers = []
@@ -37,12 +37,12 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
 
             match name_match.group(2):
                 case "GLIDER SITE":
-                    stype = "GLIDER"
+                    atype = "GLIDER"
                 case "MICROLIGHT SITE":
-                    stype = "MICROLIGHT"
+                    atype = "MICROLIGHT"
                 case "TRAINING AERODROME":
-                    stype = "TRAINING"
-            stypes.append(stype)
+                    atype = "TRAINING"
+            atypes.append(atype)
 
             # Lat/lon
             lat_lon = tag.xpath("following-sibling::p")[0].text_content()
@@ -81,7 +81,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
             identifiers.append(
                 uuid.uuid5(
                     uuid.NAMESPACE_URL,
-                    f"freeflight.org.uk/airspace/{stype.lower()}/{name}",
+                    f"freeflight.org.uk/airspace/{atype.lower()}/{name}",
                 )
             )
 
@@ -89,7 +89,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         {
             "identifier": identifiers,
             "name": names,
-            "stype": stypes,
+            "atype": atypes,
             "upperLimit": upper_limits,
             "upperLimit_uom": "FT",
             "upperLimitReference": "MSL",

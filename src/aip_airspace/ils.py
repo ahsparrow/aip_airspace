@@ -68,7 +68,7 @@ def calculate_ils(
     ils_gdf = GeoDataFrame(ils_data, crs="EPSG:32630")
     ils_gdf.to_crs(epsg=4326, inplace=True)
 
-    ils_gdf = ils_gdf.assign(stype="ILS")
+    ils_gdf = ils_gdf.assign(atype="ILS")
     ils_gdf = ils_gdf.assign(upperLimit_uom="FT")
     ils_gdf = ils_gdf.assign(upperLimitReference="MSL")
     ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
