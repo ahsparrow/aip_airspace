@@ -12,9 +12,9 @@ def make_loa_add(loa: dict, feature: dict, volume: dict) -> dict:
     lower = parse_level(volume["lower"])
 
     return {
-        "group_name": loa["name"],
+        "loa_name": loa["name"],
         "name": volume.get("name", feature.get("name", loa["name"])),
-        "stype:": feature["stype"],
+        "atype:": feature["type"],
         "classification": feature.get("classification"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
@@ -35,10 +35,10 @@ def make_loa_replace(
     airspace = airspace_gdf.loc[feature["aref"]]
 
     return {
-        "group_name": loa["name"],
+        "loa_name": loa["name"],
         "aref": feature["aref"],
         "name": volume.get("name", feature.get("name", airspace["name"])),
-        "stype:": airspace["stype"],
+        "atype:": airspace["atype"],
         "classification": airspace.get("classification"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
