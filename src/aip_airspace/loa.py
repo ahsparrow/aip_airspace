@@ -15,7 +15,7 @@ def make_loa_add(loa: dict, feature: dict, volume: dict) -> dict:
         "loa_name": loa["name"],
         "name": volume.get("name", feature.get("name", loa["name"])),
         "atype:": feature["type"],
-        "classification": feature.get("classification"),
+        "classification": feature.get("class"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
         "upperLimitReference": upper["reference"],

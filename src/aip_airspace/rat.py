@@ -11,7 +11,8 @@ def make_rat(rat: dict, geometry: dict) -> dict:
     return {
         "rat_name": rat["name"],
         "name": geometry.get("name", rat["name"]),
-        "atype:": "P",
+        "atype:": rat["type"],
+        "classification": rat.get("class"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
         "upperLimitReference": upper["reference"],

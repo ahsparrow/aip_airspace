@@ -2,7 +2,7 @@
 - name: AMPIT TRIANGLE
   add:
   - type: CTA
-    classification: C
+    class: C
     geometry:
     - upper: FL185
       lower: FL145
@@ -28,7 +28,7 @@
 - name: DAVENTRY BOX
   add:
   - type: CTA
-    classification: A
+    class: A
     geometry:
     - upper: 5500 ft
       lower: 4500 ft
@@ -78,7 +78,7 @@
 - name: DUNSTABLE (HG/PG)
   add:
   - type: CTA
-    classification: D
+    class: D
     geometry:
     - upper: 3500 ft
       lower: SFC
