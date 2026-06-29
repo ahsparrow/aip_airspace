@@ -27,7 +27,9 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
     channels = []
     identifiers = []
 
-    name_tags = root.xpath("//tbody/tr/td[1]/p[1]")
+    name_tags = root.xpath(
+        "//tbody/tr[not(@class) or @class!=' AmdtDeletedAIRAC']/td[1]/p[1]"
+    )
     for tag in name_tags:
         txt = tag.text_content().strip()
 
