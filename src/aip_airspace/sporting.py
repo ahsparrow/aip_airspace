@@ -28,6 +28,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
     identifiers = []
 
     name_tags = root.xpath(
+        # Ignore if marked as deleted
         "//tbody/tr[not(@class) or @class!=' AmdtDeletedAIRAC']/td[1]/p[1]"
     )
     for tag in name_tags:
@@ -84,7 +85,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
                 str(
                     uuid.uuid5(
                         uuid.NAMESPACE_URL,
-                        f"freeflight.org.uk/airspace/{atype.lower()}/{name}",
+                        f"asselect.uk/airspace/{atype.lower()}/{name}",
                     )
                 )
             )
