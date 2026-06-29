@@ -61,7 +61,9 @@ def calculate_ils(
         ils_data["upperLimit"].append(atc_rcp.upperLimit)
         ils_data["lowerLimit"].append(atc_rcp.upperLimit - 1000)
         ils_data["identifier"].append(
-            uuid.uuid5(uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/ils/{name}")
+            str(
+                uuid.uuid5(uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/ils/{name}")
+            )
         )
 
     # Build ILS GeoDataFrame

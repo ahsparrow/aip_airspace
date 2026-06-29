@@ -81,9 +81,11 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
 
             # UUID identifier
             identifiers.append(
-                uuid.uuid5(
-                    uuid.NAMESPACE_URL,
-                    f"freeflight.org.uk/airspace/{atype.lower()}/{name}",
+                str(
+                    uuid.uuid5(
+                        uuid.NAMESPACE_URL,
+                        f"freeflight.org.uk/airspace/{atype.lower()}/{name}",
+                    )
                 )
             )
 

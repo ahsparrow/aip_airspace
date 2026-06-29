@@ -113,8 +113,10 @@ def aip_to_geojson() -> None:
         print("Geometry Valid: OK")
     else:
         print("WARNING: Invalid geometry")
+    airspace_gdf.to_file(Path("foo.geojson"), driver="GeoJSON")
 
-    geo_dict = airspace_gdf.to_geo_dict()
+    airspace_gdf.reset_index(inplace=True)
+    geo_dict = airspace_gdf.to_geo_dict(drop_id=True)
     geo_dict["airac_date"] = airac_date
     with open(args.geojson_filename, "wt") as f:
         json.dump(geo_dict, f)

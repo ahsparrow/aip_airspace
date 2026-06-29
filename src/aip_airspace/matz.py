@@ -136,8 +136,10 @@ def create_matz(
 
     # Add uuids
     matz_gdf["identifier"] = matz_gdf.apply(
-        lambda row: uuid.uuid5(
-            uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/matz/{row['name']}"
+        lambda row: str(
+            uuid.uuid5(
+                uuid.NAMESPACE_URL, f"freeflight.org.uk/airspace/matz/{row['name']}"
+            )
         ),
         axis=1,
     )
