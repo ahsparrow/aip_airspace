@@ -2,6 +2,7 @@ from typing import cast
 
 from geopandas import GeoDataFrame
 from pandas import concat
+from uuid import NAMESPACE_URL, uuid5
 
 from aip_airspace.boundary import boundary_polygon
 from aip_airspace.util import parse_level
@@ -12,9 +13,10 @@ def make_loa_add(loa: dict, feature: dict, volume: dict) -> dict:
     lower = parse_level(volume["lower"])
 
     return {
+        "identifier": uuid5(NAMESPACE_URL, f"asselect.uk/loa/add/{volume['name']}"),
         "loa_name": loa["name"],
-        "name": volume.get("name", feature.get("name", loa["name"])),
-        "atype:": feature["type"],
+        "name": volume["name"],
+        "atype": feature["type"],
         "classification": feature.get("class"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],
@@ -35,10 +37,11 @@ def make_loa_replace(
     airspace = airspace_gdf.loc[feature["aref"]]
 
     return {
+        "identifier": uuid5(NAMESPACE_URL, f"asselect.uk/loa/replace/{volume['name']}"),
         "loa_name": loa["name"],
         "aref": feature["aref"],
-        "name": volume.get("name", feature.get("name", airspace["name"])),
-        "atype:": airspace["atype"],
+        "name": volume["name"],
+        "atype": airspace["atype"],
         "classification": airspace.get("classification"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],

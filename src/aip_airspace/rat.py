@@ -1,4 +1,5 @@
 from geopandas import GeoDataFrame
+from uuid import NAMESPACE_URL, uuid5
 
 from aip_airspace.boundary import boundary_polygon
 from aip_airspace.util import parse_level
@@ -9,9 +10,10 @@ def make_rat(rat: dict, geometry: dict) -> dict:
     lower = parse_level(geometry["lower"])
 
     return {
+        "identifier": uuid5(NAMESPACE_URL, f"asselect.uk/rat/{geometry['name']}"),
         "rat_name": rat["name"],
-        "name": geometry.get("name", rat["name"]),
-        "atype:": rat["type"],
+        "name": geometry["name"],
+        "atype": rat["type"],
         "classification": rat.get("class"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],

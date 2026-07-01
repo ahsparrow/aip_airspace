@@ -4,7 +4,8 @@
   - type: CTA
     class: C
     geometry:
-    - upper: FL185
+    - name: AMPIT TRIANGLE
+      upper: FL185
       lower: FL145
       boundary:
       - line:
@@ -16,7 +17,8 @@
     # Holyhead CTA 1
   - aref: 25004c3d-8a15-4590-8105-1818396f9a49
     geometry:
-    - upper: FL195
+    - name: HOLYHEAD CTA 1
+      upper: FL195
       lower: FL185
       boundary:
       - line:
@@ -30,7 +32,8 @@
   - type: CTA
     class: A
     geometry:
-    - upper: 5500 ft
+    - name: DAVENTRY BOX
+      upper: 5500 ft
       lower: 4500 ft
       boundary:
       - line:
@@ -80,7 +83,8 @@
   - type: CTA
     class: D
     geometry:
-    - upper: 3500 ft
+    - name: DUNSTABLE GLIDING AREA
+      upper: 3500 ft
       lower: SFC
       boundary:
       - line:
@@ -95,7 +99,8 @@
     # LUTON CTR
   - aref: de74edf3-11c3-47f7-9369-b7dc6cafd13e
     geometry:
-    - upper: 3500 ft
+    - name: LONDON LUTON CTR
+      upper: 3500 ft
       lower: SFC
       boundary:
       - line:
@@ -118,7 +123,7 @@
     # LUTON CTA3
   - aref: f4cb7258-b996-4c12-83c9-a771a842a94f 
     geometry:
-    - name: LUTON CTA 3A
+    - name: LONDON LUTON CTA 3A
       upper: 5500 ft
       lower: 2500 ft
       boundary:
@@ -129,7 +134,7 @@
         - 515114N 0003938W
         - 515131N 0003754W
         - 514905N 0003647W
-    - name: LUTON CTA 3B
+    - name: LONDON LUTON CTA 3B
       upper: 5500 ft
       lower: 3500 ft
       boundary:
@@ -147,7 +152,8 @@
     # LUTON CTR
   - aref: de74edf3-11c3-47f7-9369-b7dc6cafd13e
     geometry:
-    - upper: 3500 ft
+    - name: LONDON LUTON CTR
+      upper: 3500 ft
       lower: SFC
       boundary:
       - line:
@@ -170,7 +176,8 @@
 
   - aref: f4cb7258-b996-4c12-83c9-a771a842a94f 
     geometry:
-    - upper: 5500 ft
+    - name: LONDON LUTON CTA 3
+      upper: 5500 ft
       lower: 2500 ft
       boundary:
       - line:
@@ -183,7 +190,8 @@
 
   - aref: 0fdbc6bc-130e-4e47-b052-7ba4c73abc65
     geometry:
-    - upper: 5500 ft
+    - name: LONDON LUTON CTA 5
+      upper: 5500 ft
       lower: 3500 ft
       boundary:
       - line:
