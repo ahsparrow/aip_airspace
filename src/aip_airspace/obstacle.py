@@ -1,5 +1,5 @@
 from geopandas import GeoDataFrame
-from shapely import MultiPolygon
+from shapely import MultiPolygon, Point
 
 KEEP_COLUMNS = ["identifier", "type", "elevation", "elevation_uom", "geometry"]
 
@@ -21,16 +21,26 @@ def make_obstacle_gdf(
     coast_gdf.set_index("name", inplace=True)
     gdf = obstacle_gdf[obstacle_gdf.within(coast_gdf.loc["uk_coast", "geometry"])]
 
+    # Buffer point geometries
+    point_gdf = airspace_gdf[airspace_gdf.geom_type == "Point"]
+    point_gdf.to_crs(epsg=32630, inplace=True)
+    point_gdf.geometry = point_gdf.buffer(point_gdf.radius)
+    point_gdf.to_crs(4326, inplace=True)
+    airspace_gdf.update(point_gdf)
+
     # Filter low airspace
     a = MultiPolygon(
         airspace_gdf[
-            (airspace_gdf.stype == "CTR")
-            | (
-                ((airspace_gdf.stype == "CTA") | (airspace_gdf.stype == "TMA"))
-                & (
+            (
+                (airspace_gdf.classification == "A")
+                | (airspace_gdf.classification == "D")
+            )
+            & (
+                (
                     (airspace_gdf.lowerLimitReference == "MSL")
                     & (airspace_gdf.lowerLimit < 2000)
                 )
+                | (airspace_gdf.lowerLimitReference == "SFC")
             )
         ].geometry
     )
@@ -47,6 +57,6 @@ def make_obstacle_gdf(
     gdf["lowerLimit"] = 0
     gdf["lowerLimit_uom"] = "FT"
     gdf["lowerLimitReference"] = "SFC"
-    gdf["stype"] = "OBST"
+    gdf["atype"] = "OBST"
 
     return gdf
