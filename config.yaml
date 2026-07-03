@@ -106,14 +106,12 @@ overrides:
 
 - identifier: b4dfa8f4-2a83-40dd-8868-67081db32ba4
   name: CHATTERIS DZ
-  stype: P
 
 - identifier: 60070e64-5228-4d73-8da0-9671c9bd0a5e
   name: COCKERHAM DZ
 
 - identifier: 325d9ed5-734f-4778-8a4e-7dd32b2bb316
   name: DUNKESWELL DZ
-  stype: P
 
 - identifier: c8de3bc5-8c5f-478c-bee9-f2ed7ed215ba
   name: ERROL DZ
@@ -126,7 +124,6 @@ overrides:
 
 - identifier: 89ede616-5632-4e35-9e4d-16180b06e3bd
   name: HINTON-IN-THE-HEDGES DZ
-  stype: P
 
 - identifier: 2efdb90c-fca9-4581-b32e-e99e3cbf524f
   name: KEEVIL DZ
@@ -136,7 +133,6 @@ overrides:
 
 - identifier: 69189821-e974-465c-b6e0-a6dbc6e2be77
   name: LANGAR DZ
-  stype: P
 
 - identifier: e0d78503-60eb-4209-a222-d2589ab2bd7a
   name: HEADCORN DZ
@@ -149,18 +145,15 @@ overrides:
 
 - identifier: fee1ffb7-483d-4c0e-aa3a-17bd31f414aa
   name: NETHERAVON DZ
-  stype: P
 
 - identifier: 4366f29c-92cd-4d06-9d99-12dc50d83e5c
   name: OLD SARUM DZ
-  stype: P
 
 - identifier: 008e3bc1-e1f2-4e0f-8717-0a0448b1acdf
   name: PERRANPORTH DZ
 
 - identifier: 86c5b50a-a72d-4b94-9249-18d57eba72ae
   name: SIBSON DZ
-  stype: P
 
 - identifier: 66dbc527-aed9-4af2-b31c-ff0f6fb07b8f
   name: PETERLEE DZ
@@ -179,7 +172,6 @@ overrides:
 
 - identifier: 70f0b51b-e745-4c6b-96c6-3871f0fae0db
   name: WESTON-ON-THE-GREEN DZ
-  stype: P
 
 exclude_ids:
 # D218 Fairford

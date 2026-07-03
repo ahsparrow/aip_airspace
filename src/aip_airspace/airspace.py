@@ -20,6 +20,7 @@ KEEP_COLUMNS = [
     "lowerLimit",
     "lowerLimit_uom",
     "lowerLimitReference",
+    "status",
     "geometry",
     "radius",
     "atype",
