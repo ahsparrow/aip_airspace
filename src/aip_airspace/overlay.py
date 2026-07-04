@@ -1,6 +1,5 @@
 from importlib.resources import files
 from math import sqrt
-from pathlib import Path
 
 from freetype import Face, FT_LOAD_DEFAULT, FT_LOAD_NO_BITMAP
 from geopandas import GeoDataFrame, GeoSeries
@@ -173,7 +172,6 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
         & (airspace_gdf.normlower <= max_alt)
         & (airspace_gdf.name != "BRIZE NORTON CTR")
     ]
-    cta_gdf.to_file(Path("overlay.geojson"), driver="GeoJSON")
 
     # Create polygons from union of CTA geometries
     cta_union = cta_gdf.geometry.exterior.unary_union
@@ -316,5 +314,14 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
                     ignore_index=False,
                 )
 
-    # Convert to WGS84
+    # Add type
+    annotation = annotation.assign(atype="TEXT")
+
+    # Convert float limits to int
+    annotation.lowerLimit = annotation.lowerLimit.astype(int)
+    annotation.upperLimit = annotation.upperLimit.astype(int)
+
+    # Flatten the geometry
+    annotation = annotation.explode()
+
     return annotation.to_crs(epsg=4326)
