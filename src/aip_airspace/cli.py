@@ -2,6 +2,7 @@ from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
 from aip_airspace.obstacle import make_obstacle_gdf
+from aip_airspace.overlay import overlay
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
 
@@ -207,4 +208,22 @@ def obstacle_to_geojson() -> None:
     coast_gdf = read_file(config["files"]["coast"])
 
     gdf = make_obstacle_gdf(obstacle_gdf, airspace_gdf, coast_gdf)
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def overlay_to_geojson() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("airspace_filename")
+    parser.add_argument("geojson_filename")
+    parser.add_argument(
+        "--max_alt", type=int, default=10400, help="maximum base altitude"
+    )
+    parser.add_argument(
+        "--atzdz", action="store_true", help="add ATZ upper limits and DZ"
+    )
+    args = parser.parse_args()
+
+    airspace_gdf = read_file(args.airspace_filename)
+
+    gdf = overlay(airspace_gdf, args.max_alt, args.atzdz)
     gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
