@@ -2,6 +2,7 @@ from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
 from aip_airspace.obstacle import make_obstacle_gdf
+from aip_airspace.openair import make_openair
 from aip_airspace.overlay import overlay
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
@@ -227,3 +228,16 @@ def overlay_to_geojson() -> None:
 
     gdf = overlay(airspace_gdf, args.max_alt, args.atzdz)
     gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+
+
+def overlay_to_openair() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("geojson_filename")
+    parser.add_argument("openair_filename")
+    args = parser.parse_args()
+
+    gdf = read_file(args.geojson_filename)
+
+    oa = make_openair(gdf)
+    with open(args.openair_filename, "wt") as f:
+        f.write(oa)

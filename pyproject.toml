@@ -20,6 +20,7 @@ fixup = "aip_airspace:cli.aip_fixup"
 loa = "aip_airspace:cli.loa_to_geojson"
 obstacle = "aip_airspace:cli.obstacle_to_geojson"
 overlay = "aip_airspace:cli.overlay_to_geojson"
+overlay_openair = "aip_airspace:cli.overlay_to_openair"
 rat = "aip_airspace:cli.rat_to_geojson"
 sporting = "aip_airspace:cli.sporting_to_geojson"
 
