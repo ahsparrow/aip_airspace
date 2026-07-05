@@ -324,4 +324,9 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
     # Flatten the geometry
     annotation = annotation.explode()
 
-    return annotation.to_crs(epsg=4326)
+    # Snap to one second grid and reduce unecessary floating point precision
+    annotation = annotation.to_crs(epsg=4326)
+    annotation.geometry = annotation.geometry.set_precision(grid_size=1 / 3600)
+    annotation.geometry = annotation.geometry.set_precision(grid_size=0.000001)
+
+    return annotation
