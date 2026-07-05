@@ -29,5 +29,7 @@ def make_rat_gdf(rat_list: list[dict]) -> GeoDataFrame:
     data = [make_rat(rat, geometry) for rat in rat_list for geometry in rat["geometry"]]
     gdf = GeoDataFrame(data)
     gdf.set_crs(epsg=4326, inplace=True)
+    gdf.geometry = gdf.geometry.set_precision(grid_size=0.000001)
 
     return gdf
+

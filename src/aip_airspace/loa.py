@@ -76,4 +76,6 @@ def make_loa_gdf(loa_list: list[dict], airspace_gdf: GeoDataFrame) -> GeoDataFra
     merged_gdf = concat([add_gdf, replace_gdf])
     merged_gdf = cast(GeoDataFrame, merged_gdf)
 
+    merged_gdf.geometry = merged_gdf.geometry.set_precision(grid_size=0.000001)
+
     return merged_gdf
