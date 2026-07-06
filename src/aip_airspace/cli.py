@@ -1,3 +1,10 @@
+from argparse import ArgumentParser
+from pathlib import Path
+import json
+
+from geopandas import read_file
+import yaml
+
 from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
@@ -6,13 +13,6 @@ from aip_airspace.openair import make_openair
 from aip_airspace.overlay import overlay
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
-
-from argparse import ArgumentParser
-from pathlib import Path
-import json
-
-from geopandas import read_file
-import yaml
 
 
 def aip_fixup() -> None:
@@ -212,10 +212,10 @@ def obstacle_to_geojson() -> None:
     gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
 
 
-def overlay_to_geojson() -> None:
+def make_overlay() -> None:
     parser = ArgumentParser()
     parser.add_argument("airspace_filename")
-    parser.add_argument("geojson_filename")
+    parser.add_argument("output_filename", help="GeoJSON (.geojson) or OpenAir (.txt)")
     parser.add_argument(
         "--max_alt", type=int, default=10400, help="maximum base altitude"
     )
@@ -227,17 +227,16 @@ def overlay_to_geojson() -> None:
     airspace_gdf = read_file(args.airspace_filename)
 
     gdf = overlay(airspace_gdf, args.max_alt, args.atzdz)
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
 
+    if Path(args.output_filename).suffix == ".geojson":
+        gdf.to_file(Path(args.output_filename), driver="GeoJSON")
+    else:
+        with open(args.airspace_filename) as f:
+            airspace = json.load(f)
 
-def overlay_to_openair() -> None:
-    parser = ArgumentParser()
-    parser.add_argument("geojson_filename")
-    parser.add_argument("openair_filename")
-    args = parser.parse_args()
-
-    gdf = read_file(args.geojson_filename)
-
-    oa = make_openair(gdf)
-    with open(args.openair_filename, "wt") as f:
-        f.write(oa)
+        oa = make_openair(gdf)
+        with open(args.output_filename, "wt") as f:
+            f.write(
+                f"*\n* Height Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
+            )
+            f.write(oa)
