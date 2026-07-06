@@ -1,5 +1,5 @@
 from geopandas import GeoDataFrame
-from shapely import MultiPolygon, Point
+from shapely import MultiPolygon
 
 KEEP_COLUMNS = ["identifier", "type", "elevation", "elevation_uom", "geometry"]
 
@@ -58,5 +58,6 @@ def make_obstacle_gdf(
     gdf["lowerLimit_uom"] = "FT"
     gdf["lowerLimitReference"] = "SFC"
     gdf["atype"] = "OBST"
+    gdf["radius"] = 500
 
     return gdf
