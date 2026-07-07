@@ -1,5 +1,6 @@
 from math import pi
 from typing import cast
+import re
 
 import numpy as np
 from shapely import MultiPolygon
@@ -26,10 +27,18 @@ KEEP_COLUMNS = [
     "atype",
 ]
 
+SI_RE = re.compile(r"SI \d\d\d\d\/\d")
+
 
 def simple_type(row: Series) -> str | None:
-    if row["type"] in ["CTA", "CTR", "TMA", "D", "P"]:
+    if row["type"] in ["CTA", "CTR", "TMA", "P"]:
         return row["type"]
+    elif row["type"] == "D":
+        print("".join(row["note"]))
+        if SI_RE.search("".join(row["note"])):
+            return "D*"
+        else:
+            return "D"
     elif row["type"] == "R" and row["timeSlice|AirspaceTimeSlice|localType"] not in [
         "RPZ",
         "FRZ",
