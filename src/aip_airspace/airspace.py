@@ -34,7 +34,6 @@ def simple_type(row: Series) -> str | None:
     if row["type"] in ["CTA", "CTR", "TMA", "P"]:
         return row["type"]
     elif row["type"] == "D":
-        print("".join(row["note"]))
         if SI_RE.search("".join(row["note"])):
             return "D*"
         else:
@@ -67,7 +66,7 @@ def simple_type(row: Series) -> str | None:
 
 
 def rename(row: Series) -> str:
-    if row.atype in ["D", "P", "R"]:
+    if row.atype in ["D", "D*", "P", "R"]:
         return f"{row.designator[2:]} {row['name']}"
     else:
         return row["name"]
