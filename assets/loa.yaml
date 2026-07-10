@@ -659,6 +659,86 @@
         - 524558N 0010733W
 
 #----------------------------------------------------------------------
+- name: CHIPPING BOX
+  add:
+  - type: CTA
+    class: A
+    geometry:
+    - name: CHIPPING BOX A FL100
+      upper: FL100
+      lower: FL65
+      boundary:
+      - line:
+        - 535734N 0023258W
+        - 535023N 0023250W
+        - 534741N 0024502W
+        - 535329N 0024913W
+
+    - name: CHIPPING BOX B FL100
+      upper: FL100
+      lower: FL95
+      boundary:
+      - line:
+        - 540234N 0023858W
+        - 535747N 0023258W
+        - 535734N 0023258W
+        - 535329N 0024913W
+        - 535859N 0025312W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: CHIPPING BOX FL140
+      upper: FL140
+      lower: FL100
+      boundary:
+      - line:
+        - 540234N 0023858W
+        - 535747N 0023258W
+        - 535734N 0023258W
+        - 535023N 0023250W
+        - 534741N 0024502W
+        - 535329N 0024913W
+        - 535859N 0025312W
+
+  replace:
+  - aref: 4ddc2f1a-62a1-41bd-9094-fe189450879f
+    geometry:
+    - name: YORKSHIRE CTA 5A
+      upper: FL195
+      lower: FL65
+      boundary:
+      - line:
+        - 535023N 0023250W
+        - 534529N 0023244W
+        - 534127N 0023240W
+        - 533918N 0023900W
+        - 534741N 0024502W
+
+    - name: YORKSHIRE CTA 5B
+      upper: FL195
+      lower: FL140
+      boundary:
+      - line:
+        - 535734N 0023258W
+        - 535023N 0023250W
+        - 534741N 0024502W
+        - 535329N 0024913W
+
+  - aref: b3e9fbb9-1350-4baa-9570-c4881a1762c0
+    geometry:
+    - name: YORKSHIRE CTA 6
+      upper: FL195
+      lower: FL140
+      boundary:
+      - line:
+        - 540234N 0023858W
+        - 535747N 0023258W
+        - 535734N 0023258W
+        - 535329N 0024913W
+        - 535859N 0025312W
+
+#----------------------------------------------------------------------
 - name: DAVENTRY BOX
   add:
   - type: CTA
