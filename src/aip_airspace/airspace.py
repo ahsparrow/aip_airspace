@@ -66,8 +66,10 @@ def simple_type(row: Series) -> str | None:
 
 
 def rename(row: Series) -> str:
-    if row.atype in ["D", "D*", "P", "R"]:
+    if row.atype in ["D", "P", "R"]:
         return f"{row.designator[2:]} {row['name']}"
+    elif row.atype == "D*":
+        return f"*{row.designator[2:]} {row['name']}"
     else:
         return row["name"]
 
