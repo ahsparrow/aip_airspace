@@ -479,6 +479,186 @@
         - 541528N 0020852W
 
 #----------------------------------------------------------------------
+- name: CAMPHILL EAST MIDLANDS
+  add:
+  - type: CTA
+    class: D
+    geometry:
+    - name: NORTHERN BOX A
+      upper: 5000 ft
+      lower: 4000 ft
+      boundary:
+      - line:
+        - 530410N 0013110W
+        - 530402N 0011422W
+        - 525901N 0010918W
+        - 525911N 0012801W
+
+    - name: NORTHERN BOX B
+      upper: 6000 ft
+      lower: 5500 ft
+      boundary:
+      - line:
+        - 530900N 0013146W
+        - 530854N 0011918W
+        - 530402N 0011422W
+        - 530410N 0013110W
+        - 530517N 0013152W
+
+  - type: CTA
+    class: D
+    geometry:
+    - name: NOTTINGHAM BOX
+      upper: 5000 ft
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 525901N 0010918W
+        - 525537N 0010600W
+        - 525746N 0011600W
+        - 525906N 0011906W
+
+  - type: CTA
+    class: D
+    geometry:
+    - name: NOTTINGHAM/KEYWORTH BOX
+      upper: 5000 ft
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 525421N 0010006W
+        - 525901N 0010918W
+        - 525537N 0010600W
+
+  - type: CTA
+    class: D
+    geometry:
+    - name: KEYWORTH BOX A
+      upper: 6000 ft
+      lower: 5000 ft
+      boundary:
+      - line:
+        - 525421N 0010006W
+        - 525901N 0010918W
+        - 525537N 0010600W
+
+    - name: KEYWORTH BOX B
+      upper: 6000 ft
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 525537N 0010600W
+        - 525421N 0010006W
+        - 525121N 0005725W
+        - 525057N 0005724W
+        - 525155N 0010225W
+
+    - name: KEYWORTH BOX C
+      upper: 6000 ft
+      lower: 1500 ft
+      boundary:
+      - line:
+        - 525155N 0010225W
+        - 525057N 0005724W
+        - 525014N 0005722W
+        - 524705N 0005743W
+
+  replace:
+  - aref: 711151fa-649a-4052-8108-5023c0edf8b8
+    geometry:
+    - name: EAST MIDLANDS CTA 7 
+      upper: FL105
+      lower: 5000 ft
+      boundary:
+      - line:
+        - 530410N 0013110W
+        - 530402N 0011422W
+        - 525901N 0010918W
+        - 525911N 0012801W
+
+  - aref: 710a177b-cae4-4f41-bef8-fab457228f07
+    geometry:
+    - name: EAST MIDLANDS CTA 19 
+      upper: FL105
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 530900N 0013146W
+        - 530854N 0011918W
+        - 530402N 0011422W
+        - 530410N 0013110W
+        - 530517N 0013152W
+
+  - aref: bce5185a-2aed-4ec5-b783-4f4ccaa548c9
+    geometry:
+    - name: EAST MIDLANDS CTA 1A
+      upper: FL105
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 525421N 0010006W
+        - 525901N 0010918W
+        - 525537N 0010600W
+
+    - name: EAST MIDLANDS CTA 1B
+      upper: FL105
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 525537N 0010600W
+        - 525421N 0010006W
+        - 525121N 0005725W
+        - 525057N 0005724W
+        - 525155N 0010225W
+
+    - name: EAST MIDLANDS CTA 1C
+      upper: FL105
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 525911N 0012801W
+        - 525906N 0011906W
+        - 525746N 0011600W
+        - 525537N 0010600W
+        - 525155N 0010225W
+        - 525255N 0010733W
+        - 525456N 0011804W
+        - 525510N 0012530W
+
+    - name: EAST MIDLANDS CTA 1D
+      upper: FL105
+      lower: 5000 ft
+      boundary:
+      - line:
+        - 525901N 0010918W
+        - 525537N 0010600W
+        - 525746N 0011600W
+        - 525906N 0011906W
+
+  - aref: d1fe7d3a-e47e-4148-88b3-6f7a5e18d62f
+    geometry:
+    - name: EAST MIDLANDS CTA 2A
+      upper: FL105
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 525155N 0010225W
+        - 525057N 0005724W
+        - 525014N 0005722W
+        - 524705N 0005743W
+
+    - name: EAST MIDLANDS CTA 2B
+      upper: FL105
+      lower: 1500 ft
+      boundary:
+      - line:
+        - 525255N 0010733W
+        - 525155N 0010225W
+        - 524705N 0005743W
+        - 524619N 0005748W
+        - 524558N 0010733W
+
+#----------------------------------------------------------------------
 - name: DAVENTRY BOX
   add:
   - type: CTA
