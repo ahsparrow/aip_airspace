@@ -257,6 +257,228 @@
   replace: []
  
 #----------------------------------------------------------------------
+- name: CAMPHILL BOX/L975
+  add:
+  - type: GLIDER
+    geometry:
+    - name: CAMPHILL BOX FL100
+      upper: FL100
+      lower: FL85
+      boundary:
+      - line:
+        - 532719N 0014617W
+        - 533017N 0011641W
+        - 531938N 0011532W
+        - 532012N 0011840W
+        - 532110N 0012901W
+        - 531930N 0013131W
+        - 531244N 0013141W
+        - 531137N 0013631W
+
+  - type: GLIDER
+    geometry:
+    - name: CAMPHILL BOX FL190
+      upper: FL190
+      lower: FL100
+      boundary:
+      - line:
+        - 532719N 0014617W
+        - 533017N 0011641W
+        - 531938N 0011532W
+        - 532012N 0011840W
+        - 532110N 0012901W
+        - 532003N 0013042W
+        - 531418N 0012449W
+        - 531137N 0013631W
+
+  - type: GLIDER
+    localtype: GLIDER
+    geometry:
+    - name: L975 CROSSING FL120
+      upper: FL120
+      lower: FL55
+      boundary:
+      - line:
+        - 534030N 0011550W
+        - 533038N 0011307W
+        - 532845N 0013215W
+        - 533835N 0013503W
+    - name: L975 CROSSING FL120
+      upper: FL120
+      lower: FL65
+      boundary:
+      - line:
+        - 534140N 0010347W
+        - 533059N 0010932W
+        - 533038N 0011307W
+        - 534030N 0011550W
+
+  - name: L975 CROSSING FL190
+    type: GLIDER
+    geometry:
+    - name: L975 CROSSING A FL190
+      upper: FL190
+      lower: FL120
+      boundary:
+      - line:
+        - 534030N 0011550W
+        - 533038N 0011307W
+        - 532845N 0013215W
+        - 533835N 0013503W
+    - name: L975 CROSSING B FL190
+      upper: FL190
+      lower: FL120
+      boundary:
+      - line:
+        - 534140N 0010347W
+        - 533059N 0010932W
+        - 533038N 0011307W
+        - 534030N 0011550W
+    - name: L975 CROSSING C FL190
+      upper: FL190
+      lower: FL125
+      boundary:
+      - line:
+        - 534007N 0011937W
+        - 534610N 0011937W
+        - 534312N 0011636W
+        - 534134N 0010443W
+
+  replace:
+  - aref: 28990699-b3f7-47cc-8f8f-b5588ae53bc7
+    geometry:
+    - name: YORKSHIRE CTA 14A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 532719N 0014617W
+        - 533017N 0011641W
+        - 531938N 0011532W
+        - 532012N 0011840W
+        - 532227N 0014315W
+
+    - name: YORKSHIRE CTA 14B
+      upper: FL195
+      lower: FL85
+      boundary:
+      - line:
+        - 533059N 0010929W
+        - 531938N 0011532W
+        - 533017N 0011641W
+
+  - aref: 304a4307-b364-4638-b231-a7663c9c5dc7
+    geometry:
+    - name: DAVENTRY CTA 11A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 532110N 0012901W
+        - 531930N 0013131W
+        - 531244N 0013141W
+        - 531137N 0013631W
+        - 532227N 0014315W
+    - name: DAVENTRY CTA 11B
+      upper: FL195
+      lower: FL85
+      boundary:
+      - line:
+        - 531244N 0013141W
+        - 530517N 0013152W
+        - 531145N 0013558W
+
+  - aref: 5957bc49-9608-447a-8642-bb2ed63a9097
+    geometry:
+    - name: DAVENTRY CTA 12A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 532003N 0013042W
+        - 531418N 0012449W
+        - 531244N 0013141W
+        - 531930N 0013131W
+
+    - name: DAVENTRY CTA 12B
+      upper: FL195
+      lower: FL105
+      boundary:
+      - line:
+        - 531418N 0012449W
+        - 531139N 0012206W
+        - 521126N 0002220W
+        - 521002N 0002427W
+        - 521118N 0003323W
+        - 523406N 0011224W
+        - 530517N 0013152W
+        - 531143N 0013142W
+        - 531244N 0013141W
+
+  - aref: 6059c97a-8f7d-4c9e-b8de-0d0765819399
+    geometry:
+    - name: YORKSHIRE CTA 12
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 534030N 0011550W
+        - 533038N 0011307W
+        - 532845N 0013215W
+        - 533835N 0013503W
+
+  - aref: 83858e0b-94c6-49da-b55f-7e90298eed11
+    geometry:
+    - name: YORKSHIRE CTA 11A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 534140N 0010347W
+        - 533059N 0010932W
+        - 533038N 0011307W
+        - 534030N 0011550W
+
+    - name: YORKSHIRE CTA 11B
+      upper: FL195
+      lower: FL65
+      boundary:
+      - line:
+        - 534140N 0010347W
+        - 534117N 0010226W
+        - 533109N 0010751W
+        - 533059N 0010932W
+
+  - aref: 9a073bd4-03e0-4d7b-a218-675b13893b49
+    geometry:
+    - name: YORKSHIRE CTA 10A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 534007N 0011937W
+        - 534610N 0011937W
+        - 534312N 0011636W
+        - 534134N 0010443W
+
+    - name: YORKSHIRE CTA 10B
+      upper: FL195
+      lower: FL125
+      boundary:
+      - line:
+        - 550334N 0015352W
+        - 550218N 0014154W
+        - 550101N 0012957W
+        - 541152N 0014544W
+        - 534610N 0011937W
+        - 534007N 0011937W
+        - 535348N 0013100W
+        - 535955N 0014027W
+        - 540236N 0014900W
+        - 541110N 0021856W
+        - 541528N 0020852W
+
+#----------------------------------------------------------------------
 - name: DAVENTRY BOX
   add:
   - type: CTA
@@ -273,7 +495,6 @@
         - 521049N 0010650W
 
   replace:
-  # DAVENTRY CTA 9
   - aref: 5f1999a0-908e-40cd-a68e-fb088e237c45
     geometry:
     - name: DAVENTRY CTA 9A
