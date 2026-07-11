@@ -739,6 +739,38 @@
         - 535859N 0025312W
 
 #----------------------------------------------------------------------
+- name: COTSWOLD COMPS
+  add:
+  - type: GLIDER
+    geometry:
+    - name: KEMBLE COMPETITION GLIDER SECTOR
+      upper: 2436 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 514036N 0020631W
+      - arc:
+          dir: cw
+          radius: 2 nm
+          centre: 514005N 0020325W
+          to: 514144N 0020138W
+
+  replace:
+  - aref: deb23fc2-139e-4b2f-9a99-047f5ce10682
+    geometry:
+    - name: KEMBLE ATZ
+      upper: 2436 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 514144N 0020138W
+      - arc:
+          dir: cw
+          radius: 2 nm
+          centre: 514005N 0020325W
+          to: 514036N 0020631W
+
+#----------------------------------------------------------------------
 - name: DAVENTRY BOX
   add:
   - type: CTA
