@@ -771,6 +771,46 @@
           to: 514036N 0020631W
 
 #----------------------------------------------------------------------
+- name: DEESIDE ROYAL ESTATES
+  add:
+  - type: R
+    geometry:
+    - name: BALMORAL CASTLE
+      upper: 1500 ft
+      lower: SFC
+      boundary:
+      - circle:
+          radius: 0.6 km
+          centre: 570227N 0031349W
+
+  - type: R
+    geometry:
+    - name: CRAIGOWAN HOUSE
+      upper: 1500 ft
+      lower: SFC
+      boundary:
+      - circle:
+          radius: 0.6 km
+          centre: 570152N 0031303W
+
+  - type: R
+    geometry:
+    - name: BIRKHALL
+      upper: 1300 ft
+      lower: SFC
+      boundary:
+      - circle:
+          radius: 0.6 km
+          centre: 570144N 0030427W
+
+  replace:
+  - aref: f1bd47e9-a40c-450c-b7ee-f87c7673804d
+    geometry: []
+
+  - aref: 981c9fe6-7bbb-48eb-8c23-1caeec7099e3
+    geometry: []
+
+#----------------------------------------------------------------------
 - name: DAVENTRY BOX
   add:
   - type: CTA
