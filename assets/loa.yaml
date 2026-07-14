@@ -1082,3 +1082,18 @@
           radius: 9 nm
           centre: 512258N 0024309W
           to: 511620N 0023328W
+
+#----------------------------------------------------------------------
+- name: HIGHGROVE HOUSE
+  add:
+  - type: P
+    geometry:
+    - name: HIGHGROVE PROHIBITED AREA
+      upper: 860 ft
+      lower: SFC
+      boundary:
+      - circle:
+          radius: 0.6 km
+          centre: 513724N 0021048W
+
+  replace: []
