@@ -19,9 +19,9 @@ def do_circle(circle, resolution):
 
     centre_x, centre_y = transformer.transform(*parse_latlon(circle["centre"]))
 
-    # Get radius (assume in nm)
-    radius_str = circle["radius"]
-    radius = float(radius_str.split()[0]) * 1852
+    # Get radius (assume in nm or km)
+    radius_str, uom = circle["radius"].split()
+    radius = float(radius_str) * (1852 if uom == "nm" else 1000)
 
     # Calculate points on circumference
     angle = np.linspace(0, 2 * np.pi, resolution * 4 + 1)
@@ -41,9 +41,10 @@ def do_arc(arc, from_latlon, resolution):
     centre_x, centre_y = transformer.transform(*parse_latlon(arc["centre"]))
 
     # Get radius, either property or calculated
-    if radius_str := arc.get("radius"):
+    if radius_val := arc.get("radius"):
         # assume in nm
-        radius = float(radius_str.split()[0]) * 1852
+        radius_str, uom = radius_val.split()
+        radius = float(radius_str) * (1852 if uom == "nm" else 1000)
     else:
         radius = np.sqrt((to_x - centre_x) ** 2 + (to_y - centre_y) ** 2)
 
