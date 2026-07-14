@@ -42,7 +42,7 @@ def do_arc(arc, from_latlon, resolution):
 
     # Get radius, either property or calculated
     if radius_val := arc.get("radius"):
-        # assume in nm
+        # assume in nm or km
         radius_str, uom = radius_val.split()
         radius = float(radius_str) * (1852 if uom == "nm" else 1000)
     else:
