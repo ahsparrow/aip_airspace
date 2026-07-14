@@ -1021,3 +1021,64 @@
         - 515227N 0004006W
         - 515244N 0003828W
         - 515258N 0003709W
+
+#----------------------------------------------------------------------
+- name: HALESLAND
+  add:
+  - class: D
+    type: CTA
+    geometry:
+    - name: HALESLAND A
+      upper: 4000 ft
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 511740N 0025003W
+        - 511541N 0025003W
+        - 511607N 0023850W
+        - 511807N 0023850W
+
+  - class: D
+    type: CTA
+    geometry:
+    - name: HALESLAND B
+      upper: 4000 ft
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 511607N 0023850W
+        - 511807N 0023850W
+        - 511826N 0023045W
+      - arc:
+          dir: cw
+          radius: 9 nm
+          centre: 512258N 0024309W
+          to: 511620N 0023328W
+
+  replace:
+  - aref: 8cbc8eaa-5161-4166-9ac0-44a12da0583c
+    geometry:
+    - name: BRISTOL CTA 5A
+      upper: FL105
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 511247N 0030302W
+        - 511709N 0030302W
+        - 511740N 0025003W
+        - 511541N 0025003W
+        - 511538N 0025120W
+
+    - name: BRISTOL CTA 5B
+      upper: FL105
+      lower: 4000 ft
+      boundary:
+      - line:
+        - 511541N 0025003W
+        - 511740N 0025003W
+        - 511826N 0023045W
+      - arc:
+          dir: cw
+          radius: 9 nm
+          centre: 512258N 0024309W
+          to: 511620N 0023328W
