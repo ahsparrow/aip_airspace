@@ -861,6 +861,40 @@
     geometry: []
 
 #----------------------------------------------------------------------
+- name: DUNKESWELL
+  add: []
+
+  replace:
+  - aref: d6ff6b94-f152-4ef5-9e48-956864728abd
+    geometry:
+    - name: DUNKESWELL ATZ
+      upper: 2839 ft
+      lower: SFC
+      boundary:
+      - line:
+        - 505057N 0031501W
+        - 505331N 0031501W
+      - arc:
+          dir: cw
+          radius: 2 nm
+          centre: 505136N 0031405W
+          to: 505007N 0031612W
+
+  - aref: 325d9ed5-734f-4778-8a4e-7dd32b2bb316
+    geometry:
+    - name: DUNKESWELL DZ
+      upper: FL150
+      lower: 2839 ft
+      boundary:
+      - line:
+        - 505232N 0031559W
+      - arc:
+          dir: cw
+          radius: 1.5 nm
+          centre: 505138N 0031406W
+          to: 505042N 0031556W
+
+#----------------------------------------------------------------------
 - name: DUNSTABLE (HG/PG)
   add:
   - type: CTA
