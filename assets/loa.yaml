@@ -1416,3 +1416,132 @@
           centre: 512524N 0020650W
 
   replace: []
+
+#----------------------------------------------------------------------
+- name: RILES/OSSEP GLIDING AREA
+  add:
+  - type: CTA
+    class: A
+    geometry:
+    - name: MADLEY BOX A
+      upper: FL195
+      lower: FL145
+      boundary:
+      - line:
+        - 520734N 0025744W
+        - 520722N 0025115W
+        - 515751N 0025203W
+        - 515647N 0025125W
+        - 515701N 0025836W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: MADLEY BOX B
+      upper: FL195
+      lower: FL105
+      boundary:
+      - line:
+        - 515700N 0024716W
+        - 515640N 0024718W
+        - 515642N 0024828W
+
+  - type: CTA
+    class: C
+    geometry:
+    - name: MADLEY BOX C
+      upper: FL195
+      lower: FL175
+      boundary:
+      - line:
+        - 520722N 0025115W
+        - 520712N 0024624W
+        - 515700N 0024716W
+        - 515642N 0024828W
+        - 515647N 0025125W
+        - 515751N 0025203W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: RAGLAN BOX LOWER
+      upper: FL145
+      lower: FL105
+      boundary:
+      - line:
+        - 515701N 0025836W
+        - 515640N 0024718W
+        - 515040N 0024748W
+        - 515153N 0025901W
+
+    - name: RAGLAN BOX UPPER
+      upper: FL195
+      lower: FL145
+      boundary:
+      - line:
+        - 515701N 0025836W
+        - 515640N 0024718W
+        - 515040N 0024748W
+        - 515153N 0025901W
+
+  replace:
+  - aref: 00ff7427-95c5-4a27-b177-949a873c20e0
+    geometry:
+    - name: PEPZE CTA 13
+      upper: FL195
+      lower: FL145
+      boundary:
+      - line:
+        - 520811N 0031848W
+        - 520734N 0025744W
+        - 520200N 0025811W
+        - 520237N 0031916W
+        - 520253N 0031912W
+
+  - aref: 5041d21e-6f3c-4b3c-ae29-3ef467974e99
+    geometry:
+    - name: PEPZE CTA 14
+      upper: FL195
+      lower: FL145
+      boundary:
+      - line:
+        - 520237N 0031916W
+        - 520200N 0025811W
+        - 515701N 0025836W
+        - 515739N 0032029W
+
+  - aref: 8023e871-9620-4fcf-9de8-35f6d7435244
+    geometry:
+    - name: COTSWOLD CTA 17
+      upper: FL195
+      lower: FL175
+      boundary:
+      - line:
+        - 525046N 0024529W
+        - 523253N 0023011W
+        - 521702N 0021251W
+        - 520526N 0023050W
+        - 515714N 0024620W
+        - 515700N 0024716W
+        - 520712N 0024624W
+        - 520722N 0025115W
+        - 522042N 0025007W
+        - 522029N 0024337W
+        - 523651N 0024210W
+        - 524852N 0024522W
+
+  - aref: cf4f8000-0095-4039-ab95-2a633b28ac49
+    geometry:
+    - name: COTSWOLD CTA 11
+      upper: FL195
+      lower: FL105
+      boundary:
+      - line:
+        - 515739N 0032029W
+        - 515701N 0025836W
+        - 515153N 0025901W
+        - 515043N 0024748W
+        - 514515N 0024433W
+        - 514738N 0030638W
+        - 515313N 0030514W
+        - 515341N 0032127W
