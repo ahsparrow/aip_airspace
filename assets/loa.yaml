@@ -1196,3 +1196,208 @@
         - 512415N 0010149W
 
   replace: []
+
+#----------------------------------------------------------------------
+- name: P18 CROSSING
+  add:
+  - type: CTA
+    class: D
+    geometry:
+    - name: CASTLE A
+      upper: FL120
+      lower: FL105
+      boundary:
+      - line:
+        - 543406N 0020308W
+        - 543135N 0013929W
+        - 542344N 0014159W
+        - 542615N 0020534W
+
+    - name: CASTLE B
+      upper: FL120
+      lower: FL75
+      boundary:
+      - line:
+        - 543901N 0020136W
+        - 543746N 0014946W
+        - 543135N 0013929W
+        - 543406N 0020308W
+
+    - name: CASTLE C
+      upper: FL120
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 544356N 0020004W
+        - 543746N 0014946W
+        - 543901N 0020136W
+
+  - type: CTA
+    class: D
+    geometry:
+    - name: DERWENT A
+      upper: FL120
+      lower: FL75
+      boundary:
+      - line:
+        - 543135N 0013929W
+        - 543929N 0014542W
+        - 543724N 0014622W
+        - 543746N 0014946W
+
+    - name: DERWENT B
+      upper: FL105
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 545352N 0015659W
+        - 545821N 0020025W
+        - 544356N 0020004W
+
+    - name: DERWENT C
+      upper: FL120
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 544605N 0015053W
+        - 545352N 0015659W
+        - 544356N 0020004W
+
+    - name: DERWENT D
+      upper: FL120
+      lower: 4500 ft
+      boundary:
+      - line:
+        - 544605N 0015053W
+        - 544240N 0014812W
+        - 544356N 0020004W
+
+    - name: DERWENT E
+      upper: FL120
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 544356N 0020004W
+        - 544240N 0014812W
+        - 543929N 0014542W
+        - 543724N 0014622W
+        - 543746N 0014946W
+
+  replace:
+  - aref: b2a18c00-a99d-43be-bf17-689ae4a630a0
+    geometry:
+    - name: YORKSHIRE CTA 17
+      upper: FL125
+      lower: FL120
+      boundary:
+      - line:
+        - 543406N 0020308W
+        - 543135N 0013929W
+        - 542344N 0014159W
+        - 542615N 0020534W
+
+  - aref: f90e5003-a08c-49b4-95db-7923ac4b4d06
+    geometry:
+    - name: BORDERS CTA 11A
+      upper: FL125
+      lower: FL120
+      boundary:
+      - line:
+        - 544240N 0014812W
+        - 543135N 0013929W
+        - 543406N 0020308W
+        - 544356N 0020004W
+
+    - name: BORDERS CTA 11B
+      upper: FL125
+      lower: FL75
+      boundary:
+      - line:
+        - 543135N 0013929W
+        - 544240N 0014812W
+        - 544124N 0013620W
+
+  - aref: f6404a00-0c99-4659-94b5-bcb9763e9122
+    geometry:
+    - name: BORDERS CTA 10A
+      upper: FL125
+      lower: FL55
+      boundary:
+      - line:
+        - 545849N 0013040W
+        - 544124N 0013620W
+        - 544240N 0014812W
+        - 545352N 0015659W
+        - 545531N 0015626W
+      - arc:
+          dir: ccw
+          radius: 11 nm
+          centre: 550217N 0014123W
+          to: 545336N 0015304W
+
+    - name: BORDERS CTA 10B
+      upper: FL125
+      lower: FL120
+      boundary:
+      - line:
+        - 544356N 0020004W
+        - 544240N 0014812W
+        - 545352N 0015659W
+
+  - aref: 336b8436-08d3-4676-b443-ac79b624fecc
+    geometry:
+    - name: NEWCASTLE CTA 4 
+      upper: FL105
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 550209N 0020030W
+      - arc:
+          dir: ccw
+          radius: 11 nm
+          centre: 550217N 0014123W
+          to: 545531N 0015626W
+      - line:
+        - 545352N 0015659W
+        - 545821N 0020025W
+
+  - aref: b9593112-253b-41b9-aa35-49c5f054397a
+    geometry:
+    - name: NEWCASTLE CTA 5
+      upper: FL55
+      lower: 3000 ft
+      boundary:
+      - line:
+        - 545849N 0013040W
+        - 545010N 0013330W
+        - 544605N 0015053W
+        - 545352N 0015659W
+        - 545531N 0015626W
+      - arc:
+          dir: ccw
+          radius: 11 nm
+          centre: 550217N 0014123W
+          to: 545336N 0015304W
+
+  - aref: 882a540b-6ab1-4614-9059-985d1504fa62
+    geometry:
+    - name: NEWCASTLE CTA 6 
+      upper: FL55
+      lower: 4500 ft
+      boundary:
+      - line:
+        - 545010N 0013330W
+        - 544124N 0013620W
+        - 544240N 0014812W
+        - 544605N 0015053W
+
+  - aref: 9016723b-1efc-4158-9a84-e23ab44df66e
+    geometry:
+    - name: NEWCASTLE CTA 7 
+      upper: FL75
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 544219N 0014448W
+        - 543929N 0014542W
+        - 544240N 0014812W
