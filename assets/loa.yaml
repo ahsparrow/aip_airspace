@@ -1401,3 +1401,18 @@
         - 544219N 0014448W
         - 543929N 0014542W
         - 544240N 0014812W
+
+#----------------------------------------------------------------------
+- name: RAYMILL HOUSE
+  add:
+  - type: P
+    geometry:
+    - name: RAYMILL PROHIBITED AREA
+      upper: 640 ft
+      lower: SFC
+      boundary:
+      - circle:
+          radius: 0.3 km
+          centre: 512524N 0020650W
+
+  replace: []
