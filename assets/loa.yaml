@@ -1545,3 +1545,98 @@
         - 514738N 0030638W
         - 515313N 0030514W
         - 515341N 0032127W
+
+#----------------------------------------------------------------------
+- name: UBLEY (HG/PG)
+  add:
+  - type: CTR
+    class: D
+    geometry:
+    - name: UBLEY A
+      lower: SFC
+      upper: 2500 ft
+      boundary:
+      - line:
+        - 511940N 0024247W
+        - 511758N 0024259W
+      - arc:
+          dir: ccw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 511836N 0023915W
+
+    - name: UBLEY B
+      lower: 1500 ft
+      upper: 2500 ft
+      boundary:
+      - line:
+        - 511807N 0023915W
+        - 511758N 0024259W
+      - arc:
+          dir: ccw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 511836N 0023915W
+  replace:
+  - aref: 0f98b958-2d23-40a9-b156-18437fea928d
+    geometry:
+    - name: BRISTOL CTR A
+      upper: FL105
+      lower: SFC
+      boundary:
+      - line:
+        - 511940N 0024247W
+        - 511758N 0024259W
+      - arc:
+          dir: cw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 511836N 0023915W
+
+    - name: BRISTOL CTR B
+      lower: 2500 ft
+      upper: FL105
+      boundary:
+      - line:
+        - 511940N 0024247W
+        - 511758N 0024259W
+      - arc:
+          dir: ccw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 511836N 0023915W
+
+  - aref: 725ee500-b2f7-41bf-82be-c48116194352
+    geometry:
+    - name: BRISTOL CTA 1A
+      upper: FL105
+      lower: 2500 ft
+      boundary:
+      - line:
+        - 511807N 0023915W
+        - 511758N 0024259W
+      - arc:
+          dir: ccw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 511836N 0023915W
+
+    - name: BRISTOL CTA 1B
+      upper: FL105
+      lower: 1500 ft
+      boundary:
+      - line:
+        - 512824N 0023142W
+      - arc:
+          dir: cw
+          radius: 9 nm
+          centre: 512258N 0024309W
+          to: 511826N 0023045W
+      - line:
+        - 511807N 0023915W
+        - 511836N 0023915W
+      - arc:
+          dir: ccw
+          radius: 5 nm
+          centre: 512258N 0024309W
+          to: 512757N 0024339W
