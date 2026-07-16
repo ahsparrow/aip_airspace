@@ -1403,6 +1403,241 @@
         - 544240N 0014812W
 
 #----------------------------------------------------------------------
+- name: P600/N864 CROSSING
+  add:
+  - type: D
+    class: A
+    geometry:
+    - name: STRATHALLAN
+      upper: FL150
+      lower: FL55
+      boundary:
+      - line:
+        - 562130N 0034455W
+      - arc:
+          dir: cw
+          radius: 2 nm
+          centre: 561930N 0034455W
+          to: 561949N 0034829W
+      - line:
+        - 562000N 0034746W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: P600 AREA A
+      upper: FL190
+      lower: FL55
+      boundary:
+      - line:
+        - 562146N 0034425W
+        - 561555N 0032923W
+        - 561400N 0033259W
+        - 561400N 0040926W
+        - 562000N 0034746W
+
+    - name: P600 AREA B
+      upper: FL190
+      lower: FL85
+      boundary:
+      - line:
+        - 562948N 0032900W
+        - 562633N 0032207W
+        - 562341N 0031445W
+        - 562219N 0031721W
+        - 561555N 0032923W
+        - 562146N 0034425W
+
+    - name: P600 AREA C
+      upper: FL190
+      lower: FL105
+      boundary:
+      - line:
+        - 563900N 0031738W
+        - 563321N 0030244W
+        - 562341N 0031445W
+        - 562633N 0032207W
+        - 562948N 0032900W
+
+    - name: P600 AREA D
+      upper: FL190
+      lower: FL105
+      boundary:
+      - line:
+        - 564838N 0030536W
+        - 564257N 0025041W
+        - 563321N 0030244W
+        - 563900N 0031738W
+
+    - name: P600 AREA E
+      upper: FL190
+      lower: FL85
+      boundary:
+      - line:
+        - 565650N 0025515W
+        - 565109N 0024016W
+        - 564257N 0025041W
+        - 564838N 0030536W
+
+    - name: P600 AREA F
+      upper: FL190
+      lower: FL55
+      boundary:
+      - line:
+        - 570015N 0025056W
+        - 565433N 0023557W
+        - 565109N 0024016W
+        - 565650N 0025515W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: N864 AREA X1
+      upper: FL190
+      lower: FL65
+      boundary:
+      - line:
+        - 561241N 0031943W
+        - 561118N 0030159W
+        - 560700N 0030304W
+        - 560700N 0032107W
+
+    - name: N864 AREA X2
+      upper: FL190
+      lower: FL85
+      boundary:
+      - line:
+        - 561750N 0031827W
+        - 561627N 0030040W
+        - 561118N 0030159W
+        - 561241N 0031943W
+
+    - name: N864 AREA Y1
+      upper: FL190
+      lower: FL85
+      boundary:
+      - line:
+        - 562341N 0031445W
+        - 562228N 0025909W
+        - 561627N 0030040W
+        - 561750N 0031827W
+        - 562219N 0031721W
+
+    - name: N864 AREA Y2
+      upper: FL190
+      lower: FL105
+      boundary:
+      - line:
+        - 563947N 0025440W
+        - 562228N 0025909W
+        - 562341N 0031445W
+
+  replace:
+  - aref: a979d00d-c0e1-4a18-8103-0c5d118d4e79
+    geometry:
+    - name: TAY CTA 1
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 562146N 0034425W
+        - 561555N 0032923W
+        - 561400N 0033259W
+        - 561400N 0040926W
+        - 562000N 0034746W
+
+  - aref: db3bd97d-9dc4-4db7-9212-1cb03dd00db6
+    geometry:
+    - name: TAY CTA 2
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 562948N 0032900W
+        - 562633N 0032207W
+        - 562341N 0031445W
+        - 562219N 0031721W
+        - 561555N 0032923W
+        - 562146N 0034425W
+
+  - aref: 6642e5a4-5726-49a8-99fa-08a9cd08725d
+    geometry:
+    - name: TAY CTA 6
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 564838N 0030536W
+        - 564257N 0025041W
+        - 563321N 0030244W
+        - 562341N 0031445W
+        - 562633N 0032207W
+        - 562948N 0032900W
+        - 563900N 0031738W
+
+  - aref: ff322b60-b07d-4b95-96e1-e2f88f822796
+    geometry:
+    - name: TAY CTA 7A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 565650N 0025515W
+        - 565109N 0024016W
+        - 564257N 0025041W
+        - 564838N 0030536W
+
+  - aref: 81afd8e6-b563-4c3a-bd92-a958b2ebfbbc
+    geometry:
+    - name: TAY CTA 8
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 570015N 0025056W
+        - 565433N 0023557W
+        - 565109N 0024016W
+        - 565650N 0025515W
+
+  - aref: 9f7ca6a2-04a1-4eff-84a2-95a45ac07e1a
+    geometry:
+    - name: TAY CTA 3
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 561241N 0031943W
+        - 561118N 0030159W
+        - 560700N 0030304W
+        - 560700N 0032107W
+
+  - aref: fdf39741-c0a2-44a6-b3c5-d7a52bcabb36
+    geometry:
+    - name: TAY CTA 4
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 562341N 0031445W
+        - 562228N 0025909W
+        - 561627N 0030040W
+        - 561118N 0030159W
+        - 561241N 0031943W
+        - 561750N 0031827W
+        - 562219N 0031721W
+
+  - aref: 61a38657-b2c7-4a83-933b-3a77242f27cf
+    geometry:
+    - name: TAY CTA 5
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 563947N 0025440W
+        - 562228N 0025909W
+        - 562341N 0031445W
+
+#----------------------------------------------------------------------
 - name: P600/SCOTTISH TMA
   add:
   - type: CTA
