@@ -1403,6 +1403,161 @@
         - 544240N 0014812W
 
 #----------------------------------------------------------------------
+- name: P600/SCOTTISH TMA
+  add:
+  - type: CTA
+    class: E
+    geometry:
+    - name: SCOTTISH TMA 7 ACCESS
+      upper: 6000 ft
+      lower: 4000 ft
+      boundary:
+      - line:
+        - 561400N 0040926W
+        - 561400N 0033259W
+        - 560700N 0032938W
+        - 560700N 0040000W
+
+  - type: CTA
+    class: D
+    geometry:
+    - name: SCOTTISH TMA 3 ACCESS
+      upper: FL190
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 561400N 0040926W
+        - 561400N 0033259W
+        - 560700N 0032938W
+        - 560700N 0040000W
+
+  - type: CTA
+    class: A
+    geometry:
+    - name: P600 ACCESS A
+      upper: FL190
+      lower: FL55
+      boundary:
+      - line:
+        - 562146N 0034425W
+        - 561555N 0032923W
+        - 561400N 0033259W
+        - 561400N 0040926W
+        - 562000N 0034746W
+
+    - name: P600 ACCESS B
+      upper: FL190
+      lower: FL85
+      boundary:
+      - line:
+        - 562948N 0032900W
+        - 562633N 0032207W
+        - 562429N 0031648W
+        - 562219N 0031721W
+        - 561555N 0032923W
+        - 562146N 0034425W
+
+  - type: D
+    class: A
+    geometry:
+    - name: STRATHALLAN
+      upper: FL150
+      lower: FL55
+      boundary:
+      - line:
+        - 562130N 0034455W
+      - arc:
+          dir: cw
+          radius: 2 nm
+          centre: 561930N 0034455W
+          to: 561949N 0034829W
+      - line:
+        - 562000N 0034746W
+
+  replace:
+  - aref: 556144ab-a0a2-4423-9962-198687f08722
+    geometry:
+    - name: SCOTTISH TMA 3A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 561400N 0040926W
+        - 561400N 0033259W
+        - 560700N 0032938W
+        - 560700N 0040000W
+
+    - name: SCOTTISH TMA 3B
+      upper: FL195
+      lower: 6000 ft
+      boundary:
+      - line:
+        - 561400N 0040926W
+        - 560700N 0040000W
+        - 560700N 0032938W
+        - 560700N 0025608W
+        - 560008N 0024849W
+        - 554125N 0025510W
+        - 554125N 0041017W
+        - 553700N 0042847W
+        - 554428N 0045035W
+        - 554336N 0050000W
+        - 555000N 0050000W
+        - 560000N 0044400W
+
+  - aref: 8e4af43d-9772-4d52-8f7d-efdfa499bdde
+    geometry:
+    - name: SCOTTISH TMA 7
+      upper: 6000 ft
+      lower: 4000 ft
+      boundary:
+      - line:
+        - 561400N 0040926W
+
+        - 560700N 0040000W
+
+        - 560700N 0040910W
+        - 555500N 0045200W
+        - 560000N 0044400W
+        - 561400N 0040926W
+
+  - aref: a979d00d-c0e1-4a18-8103-0c5d118d4e79
+    geometry:
+    - name: TAY CTA 1
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 562146N 0034425W
+        - 561555N 0032923W
+        - 561400N 0033259W
+        - 561400N 0040926W
+        - 562000N 0034746W
+
+  - aref: db3bd97d-9dc4-4db7-9212-1cb03dd00db6
+    geometry:
+    - name: TAY CTA 2A
+      upper: FL195
+      lower: FL190
+      boundary:
+      - line:
+        - 562948N 0032900W
+        - 562633N 0032207W
+        - 562341N 0031445W
+        - 562219N 0031721W
+        - 561555N 0032923W
+        - 562146N 0034425W
+
+    - name: TAY CTA 2B
+      upper: FL195
+      lower: FL85
+      boundary:
+      - line:
+        - 562429N 0031648W
+        - 562341N 0031445W
+        - 562219N 0031721W
+
+#----------------------------------------------------------------------
 - name: RAYMILL HOUSE
   add:
   - type: P
