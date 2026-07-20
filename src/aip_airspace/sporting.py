@@ -26,6 +26,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
     upper_limits = []
     channels = []
     identifiers = []
+    radii = []
 
     name_tags = root.xpath(
         # Ignore if marked as deleted
@@ -41,11 +42,15 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
             match name_match.group(2):
                 case "GLIDER SITE":
                     atype = "GLIDER"
+                    radius = 1852
                 case "MICROLIGHT SITE":
                     atype = "MICROLIGHT"
+                    radius = 1852 * 0.75
                 case "TRAINING AERODROME":
                     atype = "TRAINING"
+                    radius = 1852 * 1.5
             atypes.append(atype)
+            radii.append(radius)
 
             # Lat/lon
             lat_lon = tag.xpath("following-sibling::p")[0].text_content()
@@ -102,6 +107,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
             "lowerLimit_uom": "FT",
             "lowerLimitReference": "SFC",
             "channel": channels,
+            "radius": radii,
             "geometry": geoms,
         },
         crs="EPSG:4326",

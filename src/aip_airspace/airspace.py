@@ -291,7 +291,9 @@ def make_airspace_gdf(
 
     # Sporting activities (with 1 nm buffer)
     sporting_activity_gdf.to_crs(epsg=32630, inplace=True)
-    sporting_activity_gdf["geometry"] = sporting_activity_gdf["geometry"].buffer(1852)
+    sporting_activity_gdf.geometry = sporting_activity_gdf.geometry.buffer(
+        sporting_activity_gdf.radius
+    )
     sporting_activity_gdf.to_crs(epsg=4326, inplace=True)
 
     # Merge airspace, ILS, MATZ and gliding
