@@ -9,7 +9,7 @@ from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up
 from aip_airspace.obstacle import make_obstacle_gdf
-from aip_airspace.openair import make_openair
+from aip_airspace.openair import make_openair, parse_openair
 from aip_airspace.overlay import overlay
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
@@ -240,3 +240,15 @@ def make_overlay() -> None:
                 f"*\n* Height Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
             )
             f.write(oa)
+
+
+def openair_to_geojson():
+    parser = ArgumentParser()
+    parser.add_argument("openair_filename")
+    parser.add_argument("geojson_filename", help="GeoJSON (.geojson) or OpenAir (.txt)")
+    args = parser.parse_args()
+
+    with open(args.openair_filename) as f:
+        gdf = parse_openair(f.read())
+
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")

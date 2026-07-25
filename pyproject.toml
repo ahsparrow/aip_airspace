@@ -7,6 +7,7 @@ requires-python = ">=3.14"
 dependencies = [
     "freetype-py>=2.5.1",
     "geopandas>=1.1.3",
+    "lark>=1.3.1",
     "lxml>=6.1.1",
     "pyproj>=3.7.2",
     "pyyaml>=6.0.3",
@@ -17,6 +18,7 @@ dependencies = [
 [project.scripts]
 airspace = "aip_airspace:cli.aip_to_geojson"
 fixup = "aip_airspace:cli.aip_fixup"
+gis = "aip_airspace:cli.openair_to_geojson"
 loa = "aip_airspace:cli.loa_to_geojson"
 obstacle = "aip_airspace:cli.obstacle_to_geojson"
 overlay = "aip_airspace:cli.make_overlay"
