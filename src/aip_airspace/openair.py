@@ -19,7 +19,7 @@ Grammer = """
     upper: "AH" (ALT | FL) _NEWLINE
     freq: "AF" FREQ _NEWLINE
 
-    boundary: (line | circle)+
+    boundary: (line | circle)
 
     line: point+
     circle: centre radius
