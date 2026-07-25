@@ -124,9 +124,6 @@ class OpenairTransformer(Transformer):
 
         return lat, lon
 
-    def DIRECTION(self, dirn):
-        return "cw" if dirn == "+" else "ccw"
-
     def RADIUS(self, r):
         return round(float(r) * 1852)
 
