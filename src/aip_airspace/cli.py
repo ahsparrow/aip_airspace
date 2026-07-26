@@ -1,7 +1,9 @@
 from argparse import ArgumentParser
+import datetime
 from pathlib import Path
 import json
 
+import requests
 from geopandas import read_file
 import yaml
 
@@ -168,9 +170,6 @@ def loa_to_geojson() -> None:
 
 
 def sporting_to_geojson() -> None:
-    import datetime
-    import requests
-
     parser = ArgumentParser()
     parser.add_argument("geojson_filename")
     parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
