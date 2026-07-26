@@ -235,7 +235,7 @@ def make_overlay() -> None:
         oa = make_openair(gdf)
         with open(args.output_filename, "wt") as f:
             f.write(
-                f"*\n* Height Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
+                f"*\n* Altitude Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
             )
             f.write(oa)
 
