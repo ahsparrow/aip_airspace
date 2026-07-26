@@ -1,6 +1,10 @@
 # AIP AIRSPACE
 
-Utilities to make the airspace files for asselect.uk
+aip_airspace is a Python utility for processing UK airspace data from
+the NATS ICAO Aeronautical Information Publication (AIP), converting
+it into GeoJSON format for use by the asselect.uk aviation platform.
+It handles transformation of airspace definitions, obstacles, letters
+of agreement, temporary restricted areas, and sporting activities.
 
 ## Assets
 
