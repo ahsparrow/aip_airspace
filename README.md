@@ -30,15 +30,15 @@ Download the current UK ICAO AIP Dataset from
 [NATS](https://nats-uk.ead-it.com/cms-nats/opencms/en/Publications/digital-datasets/)
 and unpack into the data directory. Then build the airspace file, e.g.
 
-    uv run airspace data/EG_AIP_DS_FULL_20260709.xml build/airspace.geojson
+    uv run airspace data/EG_AIP_DS_FULL_20260709.xml dist/airspace.geojson
 
 ### Letters of Agreement
 
-    uv run loa assets/loa.yaml build/airspace.geojson build/loa.geojson
+    uv run loa assets/loa.yaml dist/airspace.geojson dist/loa.geojson
 
 ### Temporary Restricted Areas
 
-    uv run rat assets/rat.yaml build/rat.geojson
+    uv run rat assets/rat.yaml dist/rat.geojson
 
 ### Obstacles
 
@@ -46,10 +46,10 @@ Download the current UK ICAO Obstacle Dataset from
 [NATS](https://nats-uk.ead-it.com/cms-nats/opencms/en/Publications/digital-datasets/)
 and unpack into the data directory. Then build the obstacle file, e.g.
 
-    uv run obstacle data/EG_OBS_DS_AREA1_FULL_20260709.xml build/obstacle.geojson
+    uv run obstacle data/EG_OBS_DS_AREA1_FULL_20260709.xml dist/obstacle.geojson
 
 ### Overlays
 
-    uv run overlay --max_alt 10400 build/airspace.geoson build/overlay_105.geojson
-    uv run overlay --max_alt 19400 build/airspace.geoson build/overlay_195.geojson
-    uv run overlay --max_alt 10400 --atzdz build/airspace.geoson build/overlay_atzdz.geojson
+    uv run overlay --max_alt 10400 dist/airspace.geoson dist/overlay_105.txt
+    uv run overlay --max_alt 19400 dist/airspace.geoson dist/overlay_195.txt
+    uv run overlay --max_alt 10400 --atzdz dist/airspace.geoson dist/overlay_atzdz.txt
