@@ -35,10 +35,8 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
     for tag in name_tags:
         txt = tag.text_content().strip()
 
+        # Type and radius
         if name_match := NAME_RE.match(txt):
-            name = name_match.group(1)
-            names.append(name)
-
             match name_match.group(2):
                 case "GLIDER SITE":
                     atype = "GLIDER"
@@ -51,6 +49,12 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
                     radius = 1852 * 1.5
             atypes.append(atype)
             radii.append(radius)
+
+            # Name
+            name = name_match.group(1)
+            if atype == "MICROLIGHT":
+                name = name + " UL"
+            names.append(name)
 
             # Lat/lon
             lat_lon = tag.xpath("following-sibling::p")[0].text_content()
