@@ -142,7 +142,7 @@ def rat_to_geojson() -> None:
     else:
         print("WARNING: Invalid geometry")
 
-    rat_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    rat_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
 
 
 def loa_to_geojson() -> None:
@@ -166,7 +166,7 @@ def loa_to_geojson() -> None:
     else:
         print("WARNING: Invalid geometry")
 
-    loa_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    loa_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
 
 
 def sporting_to_geojson() -> None:
@@ -188,7 +188,7 @@ def sporting_to_geojson() -> None:
 
     gdf = parse_sporting(request.content)
 
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
 
 
 def obstacle_to_geojson() -> None:
@@ -207,7 +207,7 @@ def obstacle_to_geojson() -> None:
     coast_gdf = read_file(config["files"]["coast"])
 
     gdf = make_obstacle_gdf(obstacle_gdf, airspace_gdf, coast_gdf)
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
 
 
 def make_overlay() -> None:
@@ -227,7 +227,7 @@ def make_overlay() -> None:
     gdf = overlay(airspace_gdf, args.max_alt, args.atzdz)
 
     if Path(args.output_filename).suffix == ".geojson":
-        gdf.to_file(Path(args.output_filename), driver="GeoJSON")
+        gdf.to_file(Path(args.output_filename), driver="GeoJSON", RFC7946="YES")
     else:
         with open(args.airspace_filename) as f:
             airspace = json.load(f)
@@ -249,4 +249,4 @@ def openair_to_geojson():
     with open(args.openair_filename) as f:
         gdf = parse_openair(f.read())
 
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON")
+    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")

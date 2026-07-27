@@ -322,9 +322,6 @@ def make_airspace_gdf(
     # Snap to one second grid
     final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=1 / 3600)
 
-    # Reduce size of output file
-    final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=0.000001)
-    #
     # Sort by atype then name
     final_gdf.sort_values(["atype", "name"], inplace=True)
 
