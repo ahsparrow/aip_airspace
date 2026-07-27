@@ -57,3 +57,15 @@ used.
     uv run overlay --max_alt 10400 build/airspace.geoson build/overlay_105.txt
     uv run overlay --max_alt 19400 build/airspace.geoson build/overlay_195.txt
     uv run overlay --max_alt 10400 --atzdz build/airspace.geoson build/overlay_atzdz.txt
+
+### Workflow
+
+1. Review latest AIP changes
+2. Download latest data from AIP
+3. (Generate new sporting.geojson, if necessary)
+4. (Update rat.yaml, if necessary)
+5. Generate airspace.geojson
+6. Review changes using jdiff.sh utility
+7. (Generate new obstacle.geojson, when required)
+8. (Generate new overlay data using overlay.sh utility, if airspace has changed)
+9. Deploy to asselect using deploy.sh utility
