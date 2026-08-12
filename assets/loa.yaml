@@ -1147,6 +1147,64 @@
         - 512400N 0011001W
 
 #----------------------------------------------------------------------
+- name: MOORFOOTS (HG/PG)
+  add:
+  - type: CTA
+    class: D
+    geometry:
+    - name: MOORFOOTS
+      upper: 4500 ft
+      lower: 3500 ft
+      boundary:
+      - line:
+        - 554125N 0025510W
+        - 554128N 0031247W
+        - 554244N 0031224W
+        - 554452N 0031217W
+        - 554855N 0030010W
+        - 554857N 0025235W
+        - 554125N 0025510W
+
+  replace:
+    # Edinburgh CTA 4
+  - aref: 384e0954-503b-424a-9015-37542a52c50c
+    geometry:
+    - name: EDINBURGH CTA 4A
+      upper: 6000 ft
+      lower: 3500 ft
+      boundary:
+      - line:
+        - 560008N 0024849W
+        - 554857N 0025235W
+        - 554855N 0030010W
+        - 554452N 0031217W
+        - 554244N 0031224W
+        - 554128N 0031247W
+        - 554125N 0034324W
+        - 554349N 0034715W
+        - 554851N 0033235W
+      - arc:
+          dir: ccw
+          radius: 10 nm
+          centre: 555700N 0032221W
+          to: 555442N 0030503W
+      - line:
+        - 560008N 0024849W
+
+    - name: EDINBURGH CTA 4B
+      upper: 6000 ft
+      lower: 4500 ft
+      boundary:
+      - line:
+        - 554125N 0025510W
+        - 554128N 0031247W
+        - 554244N 0031224W
+        - 554452N 0031217W
+        - 554855N 0030010W
+        - 554857N 0025235W
+        - 554125N 0025510W
+
+#----------------------------------------------------------------------
 - name: NUCLEAR EXEMPTIONS
   add:
   - type: R
