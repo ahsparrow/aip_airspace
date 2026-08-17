@@ -7,9 +7,7 @@ from shapely import affinity, box, union_all, Point
 NM_M = 1852
 
 
-def create_matz(
-    matz_list: list[dict], atz_gdf: GeoDataFrame
-) -> tuple[GeoDataFrame, DataFrame]:
+def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # ATS DataFrame with cartesian coordiates
     catz_gdf = atz_gdf.to_crs(epsg=32630)
 
