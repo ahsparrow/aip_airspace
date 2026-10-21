@@ -87,7 +87,7 @@ def fix_units(et):
         el.set("uom", "FT")
 
 
-def fix_up(aip_data: str) -> tuple[str, str]:
+def fix_up(aip_data: str) -> tuple[bytes, str]:
     root_element = ET.fromstring(aip_data)
 
     # Replace "[ft_i]" with "FT"
@@ -98,8 +98,10 @@ def fix_up(aip_data: str) -> tuple[str, str]:
     fix_links(root_element, borders)
 
     # Get AIRAC data
-    airac_date = root_element.find(
-        ".//gmd:identificationInfo//gml:beginPosition", ns
-    ).text[:10]
+    airac_date = root_element.find(".//gmd:identificationInfo//gml:beginPosition", ns)
 
-    return ET.tostring(root_element), airac_date
+    return ET.tostring(root_element), (
+        airac_date.text[10]
+        if airac_date is not None and airac_date.text is not None
+        else "Unknown"
+    )

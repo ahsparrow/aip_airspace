@@ -60,7 +60,7 @@ def make_string(glyphs, text, style="normal"):
 
     for char in text:
         poly = glyphs[style][char]
-        minx, miny, maxx, maxy = poly.bounds
+        _minx, _miny, maxx, _maxy = poly.bounds
 
         poly = translate(poly, offset)
         result = result.union(poly)
@@ -162,8 +162,8 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
     point_gdf.geometry = point_gdf.buffer(point_gdf.radius)
     airspace_gdf.update(point_gdf)
 
-    airspace_gdf = airspace_gdf.assign(
-        normlower=airspace_gdf.apply(norm_lower_limit, axis=1)
+    airspace_gdf = GeoDataFrame(
+        airspace_gdf.assign(normlower=airspace_gdf.apply(norm_lower_limit, axis=1))
     )
 
     # Filter CTA, etc. and limit base level
@@ -315,7 +315,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
                 )
 
     # Add type
-    annotation = annotation.assign(atype="TEXT")
+    annotation = GeoDataFrame(annotation.assign(atype="TEXT"))
 
     # Convert float limits to int
     annotation.lowerLimit = annotation.lowerLimit.astype(int)

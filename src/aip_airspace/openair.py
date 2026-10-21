@@ -1,7 +1,7 @@
 from geopandas import GeoDataFrame
 from lark import Lark, Transformer
 from shapely import Point, Polygon
-import shapely
+import shapely.ops
 
 LATLON_FMT = (
     "{0[d]:02d}:{0[m]:02d}:{0[s]:02d} {0[ns]} {1[d]:03d}:{1[m]:02d}:{1[s]:02d} {1[ew]}"
@@ -36,7 +36,7 @@ Grammer = """
     AIRTYPE.2: /\\b(A|B|C|D|E|F|G|P|Q|R|W|CTR|MATZ|OTHER|RMZ|TMZ)\\b/
 
     NAME_STRING.1: LETTER (NAME_CHAR | " ")~1..40 NAME_CHAR
-    NAME_CHAR: (LETTER | DIGIT | "(" | ")" | "/" | "-" | "." | "'")
+    NAME_CHAR: (LETTER | DIGIT | "(" | ")" | "/" | "-" | "." | "'" | ",")
 
     ALT.2: DIGIT+ " ft"
     FL.2: "FL" DIGIT+
@@ -82,7 +82,7 @@ def dms(deg):
     return {"d": degs, "m": mins, "s": secs, "ns": ns, "ew": ew}
 
 
-def level(limit, uom, reference):
+def level(limit, _uom, reference):
     if reference == "SFC":
         return "SFC"
     elif reference == "STD":
@@ -187,7 +187,8 @@ def parse_openair(data: str) -> GeoDataFrame:
     gdf = GeoDataFrame(d)
     gdf["radius"] = gdf.boundary.apply(lambda b: b[1])
     gdf["geom"] = gdf.boundary.apply(lambda b: b[0])
-    gdf = gdf.set_geometry("geom").rename_geometry("geometry")
+    gdf.set_geometry("geom", inplace=True)
+    gdf.rename_geometry("geometry", inplace=True)
 
     # Swap lat/lon
     gdf.geometry = gdf.geometry.map(
@@ -195,15 +196,15 @@ def parse_openair(data: str) -> GeoDataFrame:
     )
 
     # Create polygons from points
-    gdf = gdf.set_crs(epsg=4326)
-    gdf = gdf.to_crs(epsg=32630)
+    gdf.set_crs(epsg=4326, inplace=True)
+    gdf.to_crs(epsg=32630, inplace=True)
     points = gdf.geometry.geom_type == "Point"
     gdf.loc[points, "geometry"] = gdf.loc[points, "geometry"].buffer(
         gdf.loc[points, "radius"]
     )
-    gdf = gdf.to_crs(epsg=4326)
+    gdf.to_crs(epsg=4326, inplace=True)
 
     # Drop radius and boundary columns
-    gdf = gdf.drop(["radius", "boundary"], axis=1)
+    gdf.drop(["radius", "boundary"], axis=1, inplace=True)
 
     return gdf
