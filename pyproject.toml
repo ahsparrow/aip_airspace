@@ -16,15 +16,18 @@ dependencies = [
 ]
 
 [project.scripts]
-airspace = "aip_airspace:cli.aip_to_geojson"
-fixup = "aip_airspace:cli.aip_fixup"
-gis = "aip_airspace:cli.openair_to_geojson"
+aip = "aip_airspace:cli.remote_aip"
+
+airspace = "aip_airspace:cli.local_aip"
 loa = "aip_airspace:cli.loa_to_geojson"
 obstacle = "aip_airspace:cli.obstacle_to_geojson"
 overlay = "aip_airspace:cli.make_overlay"
 rat = "aip_airspace:cli.rat_to_geojson"
 sporting = "aip_airspace:cli.sporting_to_geojson"
 
+fixup = "aip_airspace:cli.fixup_aip"
+gis = "aip_airspace:cli.openair_to_geojson"
+
 [build-system]
-requires = ["uv_build>=0.11.11,<0.12"]
+requires = ["uv_build>=0.12.24,<0.13"]
 build-backend = "uv_build"

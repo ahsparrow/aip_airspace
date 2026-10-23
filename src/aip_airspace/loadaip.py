@@ -27,9 +27,10 @@ def cut(line, distance):
             return [LineString(coords[: i + 1]), LineString(coords[i:])]
 
 
-def fix_links(et, borders_df):
+# Convert polygons with geographic border links to plain polygons
+def fix_links(root: ET.Element, borders_df):
     # Find gml:Rings with xlink-ed gml:curveMembers
-    rings = et.findall(".//gml:Ring/gml:curveMember[@xlink:href]/..", ns)
+    rings = root.findall(".//gml:Ring/gml:curveMember[@xlink:href]/..", ns)
     for ring in rings:
         curve_members = ring.findall("gml:curveMember", ns)
 
@@ -40,10 +41,10 @@ def fix_links(et, borders_df):
 
                 # Get previous and next positions
                 prev = curve_members[(n - 1) % len(ring)].findall(".//gml:pos", ns)
-                prev = Point([float(x) for x in prev[-1].text.split()][::-1])
+                prev = Point([float(x) for x in prev[-1].text.split()][::-1])  # ty: ignore[unresolved-attribute]
 
                 next = curve_members[(n + 1) % len(ring)].findall(".//gml:pos", ns)
-                next = Point([float(x) for x in next[0].text.split()][::-1])
+                next = Point([float(x) for x in next[0].text.split()][::-1])  # ty: ignore[unresolved-attribute]
 
                 # Find border geometry
                 border = borders_df[borders_df["identifier"] == identifier][
@@ -81,27 +82,23 @@ def fix_links(et, borders_df):
                     pos.text = f"{p[1]} {p[0]}"
 
 
-def fix_units(et):
-    ft_i = et.findall(".//gml:radius[@uom='[ft_i]']", ns)
+# Fix units not recognised by GeoPandas parser
+def fix_units(root: ET.Element) -> None:
+    ft_i = root.findall(".//gml:radius[@uom='[ft_i]']", ns)
     for el in ft_i:
         el.set("uom", "FT")
 
 
-def fix_up(aip_data: str) -> tuple[bytes, str]:
-    root_element = ET.fromstring(aip_data)
-
+def fix_up(root: ET.Element) -> None:
     # Replace "[ft_i]" with "FT"
-    fix_units(root_element)
+    fix_units(root)
 
     # Fix border links in the airspace
-    borders = geopandas.read_file(ET.tostring(root_element), layer="GeoBorder")
-    fix_links(root_element, borders)
+    borders = geopandas.read_file(ET.tostring(root), layer="GeoBorder")
+    fix_links(root, borders)
 
-    # Get AIRAC data
-    airac_date = root_element.find(".//gmd:identificationInfo//gml:beginPosition", ns)
 
-    return ET.tostring(root_element), (
-        airac_date.text[10]
-        if airac_date is not None and airac_date.text is not None
-        else "Unknown"
-    )
+def airac_date(root: ET.Element) -> str:
+    airac_date_str = root.find(".//gmd:identificationInfo//gml:beginPosition", ns)
+
+    return airac_date_str.text[10]  # ty: ignore

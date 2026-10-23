@@ -1,7 +1,10 @@
-from argparse import ArgumentParser
 import datetime
-from pathlib import Path
 import json
+import xml.etree.ElementTree as ET
+from argparse import ArgumentParser
+from io import BytesIO
+from pathlib import Path
+from zipfile import ZipFile
 
 import requests
 from geopandas import read_file
@@ -9,31 +12,51 @@ import yaml
 
 from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.loa import make_loa_gdf
-from aip_airspace.loadaip import fix_up
+from aip_airspace.loadaip import fix_up, airac_date
 from aip_airspace.obstacle import make_obstacle_gdf
 from aip_airspace.openair import make_openair, parse_openair
 from aip_airspace.overlay import overlay
 from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
+from aip_airspace.util import next_airac_date
 
 
-def aip_fixup() -> None:
+def remote_aip() -> None:
     parser = ArgumentParser()
-    parser.add_argument("aip_filename")
-    parser.add_argument("fixup_filename")
+    parser.add_argument("geojson_filename")
+    parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
+    parser.add_argument("--config_file", default="config.yaml")
     args = parser.parse_args()
 
-    with open(args.aip_filename, "rt") as aip_file:
-        aip_str = aip_file.read()
+    with open(args.config_file, "rt") as f:
+        config = yaml.safe_load(f.read())
 
-    # Fix "problems" in raw XML data
-    aip_bytes, _ = fix_up(aip_str)
+    airac_date = next_airac_date()
+    if args.prev:
+        airac_date += datetime.timedelta(days=-28)
+    airac_date_str = airac_date.strftime("%Y%m%d")
 
-    with open(args.fixup_filename, "wb") as fixup_file:
-        fixup_file.write(aip_bytes)
+    # Download zip archive from NATS and extract AIP XML data
+    url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/ICAO_AIP/EG_AIP_DS_{airac_date_str}_XML.zip"
+
+    print("Downloading AIP dataset...")
+    response = requests.get(url)
+    response.raise_for_status()
+
+    print("Extracting XML...")
+    zip_data = BytesIO(response.content)
+    with ZipFile(zip_data) as archive:
+        xml_data = archive.read(f"EG_AIP_DS_FULL_{airac_date_str}.xml")
+
+    root = ET.fromstring(xml_data)
+
+    # Fix "issues" in XML
+    fix_up(root)
+
+    aip_to_geojson(root, config, args.geojson_filename)
 
 
-def aip_to_geojson() -> None:
+def local_aip() -> None:
     parser = ArgumentParser()
     parser.add_argument("aip_filename")
     parser.add_argument("geojson_filename")
@@ -44,14 +67,20 @@ def aip_to_geojson() -> None:
         config = yaml.safe_load(f.read())
 
     print("Loading AIP")
-    with open(args.aip_filename, "rt") as aip_file:
-        aip_str = aip_file.read()
+    tree = ET.parse(args.aip_filename)
+    root = tree.getroot()
 
     # Fix "problems" in raw XML data
-    aip_bytes, airac_date = fix_up(aip_str)
+    fix_up(root)
+
+    aip_to_geojson(root, config, args.geojson_filename)
+
+
+def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
+    aip_bytes = ET.tostring(root)
 
     # Data from AIP
-    print("Loading data frames")
+    print("Loading data frames...")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
     airspace_gdf.set_index("identifier", inplace=True)
     airspace_gdf.set_crs(epsg=4326, inplace=True)
@@ -120,9 +149,25 @@ def aip_to_geojson() -> None:
 
     airspace_gdf.reset_index(inplace=True)
     geo_dict = airspace_gdf.to_geo_dict(drop_id=True)
-    geo_dict["airac_date"] = airac_date
-    with open(args.geojson_filename, "wt") as f:
+    geo_dict["airac_date"] = airac_date(root)
+    with open(geojson_filename, "wt") as f:
         json.dump(geo_dict, f)
+
+
+def fixup_aip() -> None:
+    parser = ArgumentParser()
+    parser.add_argument("aip_filename")
+    parser.add_argument("fixup_filename")
+    args = parser.parse_args()
+
+    # Parse the XML
+    tree = ET.parse(args.aip_filename)
+    root = tree.getroot()
+
+    # Fix "problems" in raw XML data
+    fix_up(root)
+
+    tree.write(args.fixup_filename)
 
 
 def rat_to_geojson() -> None:
