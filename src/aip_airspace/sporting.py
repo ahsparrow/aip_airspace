@@ -81,10 +81,10 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
             # Upper limit
             if upper_limit_tag := tag.xpath("../following-sibling::td[1]/p[1]"):
                 upper_match = UPPER_LIMIT_RE.match(upper_limit_tag[0].text_content())
-                upper_limit = (
-                    int(upper_match.group(1))  # ty: ignore[unresolved-attribute]
-                    + elevation
-                )
+                if upper_match is not None:
+                    upper_limit = int(upper_match.group(1)) + elevation
+                else:
+                    upper_limit = elevation + 1000
             else:
                 upper_limit = elevation + 1000
             upper_limits.append(upper_limit)
