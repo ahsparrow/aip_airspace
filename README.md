@@ -32,6 +32,10 @@ and unpack into the data directory. Then build the airspace file, e.g.
 
     uv run airspace data/EG_AIP_DS_FULL_20260709.xml build/airspace.geojson
 
+or download it automatically
+
+    uv run aip build/airspace.geojson
+
 ### Letters of Agreement
 
     uv run loa assets/loa.yaml build/airspace.geojson build/loa.geojson
