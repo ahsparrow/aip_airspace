@@ -101,4 +101,4 @@ def fix_up(root: ET.Element) -> None:
 def airac_date(root: ET.Element) -> str:
     airac_date_str = root.find(".//gmd:identificationInfo//gml:beginPosition", ns)
 
-    return airac_date_str.text[10]  # ty: ignore
+    return airac_date_str.text[:10]  # ty: ignore
