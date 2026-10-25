@@ -148,10 +148,14 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
         print("WARNING: Invalid geometry")
 
     airspace_gdf.reset_index(inplace=True)
-    geo_dict = airspace_gdf.to_geo_dict(drop_id=True)
-    geo_dict["airac_date"] = airac_date(root)
-    with open(geojson_filename, "wt") as f:
-        json.dump(geo_dict, f)
+
+    # Use GeoJSON 2018
+    airspace_gdf.to_file(
+        Path(geojson_filename),
+        driver="GeoJSON",
+        RFC7946="YES",
+        FOREIGN_MEMBERS_COLLECTION=json.dumps({"airac_date": f"{airac_date(root)}"}),
+    )
 
 
 def fixup_aip() -> None:
