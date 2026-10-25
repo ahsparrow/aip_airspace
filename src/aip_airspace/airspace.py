@@ -226,7 +226,7 @@ def thinness(poly):
 
 
 def circles_to_points(xy_gdf):
-    collapse_gdf = xy_gdf.assign(radius=None)
+    collapse_gdf = xy_gdf.assign(radius=np.nan)
 
     # convert circle to point/radius
     gdf = collapse_gdf[thinness(collapse_gdf.geometry) > 0.999]
