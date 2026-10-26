@@ -36,7 +36,7 @@ Grammer = """
     AIRTYPE.2: /\\b(A|B|C|D|E|F|G|P|Q|R|W|CTR|MATZ|OTHER|RMZ|TMZ)\\b/
 
     NAME_STRING.1: LETTER (NAME_CHAR | " ")~1..40 NAME_CHAR
-    NAME_CHAR: (LETTER | DIGIT | "(" | ")" | "/" | "-" | "." | "'" | "," | "&")
+    NAME_CHAR: (LETTER | DIGIT | "(" | ")" | "/" | "-" | "." | "'" | "," | "&" | "_")
 
     ALT.2: DIGIT+ " ft"
     FL.2: "FL" DIGIT+
