@@ -106,7 +106,7 @@ def make_openair(annotation: GeoDataFrame) -> str:
             latlon = LATLON_FMT.format(dms(coord[1]), dms(coord[0]))
             oa.append(f"DP {latlon}")
 
-    return "\n".join(oa)
+    return "\n".join(oa) + "\n"
 
 
 class OpenairTransformer(Transformer):
