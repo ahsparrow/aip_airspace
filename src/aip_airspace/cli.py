@@ -11,6 +11,7 @@ from geopandas import read_file
 import yaml
 
 from aip_airspace.airspace import make_airspace_gdf
+from aip_airspace.license import license
 from aip_airspace.loa import make_loa_gdf
 from aip_airspace.loadaip import fix_up, airac_date
 from aip_airspace.obstacle import make_obstacle_gdf
@@ -154,7 +155,9 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
         Path(geojson_filename),
         driver="GeoJSON",
         RFC7946="YES",
-        FOREIGN_MEMBERS_COLLECTION=json.dumps({"airac_date": f"{airac_date(root)}"}),
+        FOREIGN_MEMBERS_COLLECTION=json.dumps(
+            {"airac_date": f"{airac_date(root)}", "license": license}
+        ),
     )
 
 
