@@ -168,7 +168,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
 
     # Filter CTA, etc. and limit base level
     cta_gdf = airspace_gdf[
-        airspace_gdf.atype.isin(["CTA", "CTR", "TMA"])
+        airspace_gdf.atype.isin(["CTA", "CTR", "TMA", "TMZ"])
         & (airspace_gdf.normlower <= max_alt)
         & (airspace_gdf.name != "BRIZE NORTON CTR")
     ]
