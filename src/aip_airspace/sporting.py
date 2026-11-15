@@ -25,7 +25,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
     atypes = []
     upper_limits = []
     channels = []
-    identifiers = []
+    ids = []
     radii = []
 
     name_tags = root.xpath(
@@ -89,8 +89,8 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
                 upper_limit = elevation + 1000
             upper_limits.append(upper_limit)
 
-            # UUID identifier
-            identifiers.append(
+            # UUID id
+            ids.append(
                 str(
                     uuid.uuid5(
                         uuid.NAMESPACE_URL,
@@ -101,7 +101,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
 
     gdf = GeoDataFrame(
         {
-            "identifier": identifiers,
+            "id": ids,
             "name": names,
             "atype": atypes,
             "upperLimit": upper_limits,
@@ -116,5 +116,5 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         },
         crs="EPSG:4326",
     )
-    gdf.set_index("identifier", inplace=True)
+    gdf.set_index("id", inplace=True)
     return gdf

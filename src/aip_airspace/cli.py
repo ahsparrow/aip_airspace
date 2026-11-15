@@ -83,33 +83,17 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
     # Data from AIP
     print("Loading data frames...")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
-    airspace_gdf.set_index("identifier", inplace=True)
-    airspace_gdf.set_crs(epsg=4326, inplace=True)
-
     rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
-    rwy_centreline_pt_gdf.set_crs(epsg=4326, inplace=True)
-    rwy_centreline_pt_gdf.set_index("identifier", inplace=True)
-
     rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
-    rwy_dirn_df.set_index("identifier", inplace=True)
-
     air_traffic_control_df = read_file(aip_bytes, layer="AirTrafficControlService")
-    air_traffic_control_df.set_index("identifier", inplace=True)
-
     air_traffic_management_df = read_file(
         aip_bytes, layer="AirTrafficManagementService"
     )
-    air_traffic_management_df.set_index("identifier", inplace=True)
-
     info_service_df = read_file(aip_bytes, layer="InformationService")
-    info_service_df.set_index("identifier", inplace=True)
-
     radio_comm_channel_df = read_file(aip_bytes, layer="RadioCommunicationChannel")
-    radio_comm_channel_df.set_index("identifier", inplace=True)
 
     # Coast data
     coast_gdf = read_file(config["files"]["coast"])
-    coast_gdf.set_crs(epsg=4326, inplace=True)
 
     # ILS runway centreline points
     with open(config["files"]["ils"]) as ils_file:
@@ -121,8 +105,6 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
 
     # Sporting activities
     sporting_activity_gdf = read_file(config["files"]["sporting_activity"])
-    sporting_activity_gdf.set_crs(epsg=4326, inplace=True)
-    sporting_activity_gdf.set_index("identifier", inplace=True)
 
     print("Making airspace")
     airspace_gdf = make_airspace_gdf(
@@ -148,8 +130,6 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
     else:
         print("WARNING: Invalid geometry")
 
-    airspace_gdf.reset_index(inplace=True)
-
     # Use GeoJSON 2018
     airspace_gdf.to_file(
         Path(geojson_filename),
@@ -158,6 +138,7 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
         FOREIGN_MEMBERS_COLLECTION=json.dumps(
             {"airac_date": f"{airac_date(root)}", "license": license}
         ),
+        ID_FIELD="id",
     )
 
 
@@ -195,7 +176,9 @@ def rat_to_geojson() -> None:
         print("WARNING: Invalid geometry")
 
     # Use GeoJSON 2018
-    rat_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
+    rat_gdf.to_file(
+        Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES", ID_FIELD="id"
+    )
 
 
 def loa_to_geojson() -> None:
@@ -209,7 +192,6 @@ def loa_to_geojson() -> None:
         loa_list = yaml.safe_load(f.read())
 
     airspace_gdf = read_file(args.airspace_filename)
-    airspace_gdf.set_index("identifier", inplace=True)
 
     loa_gdf = make_loa_gdf(loa_list, airspace_gdf)
 
@@ -220,7 +202,9 @@ def loa_to_geojson() -> None:
         print("WARNING: Invalid geometry")
 
     # Use GeoJSON 2018
-    loa_gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
+    loa_gdf.to_file(
+        Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES", ID_FIELD="id"
+    )
 
 
 def sporting_to_geojson() -> None:
@@ -243,7 +227,9 @@ def sporting_to_geojson() -> None:
     gdf = parse_sporting(request.content)
 
     # Use GeoJSON 2018
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
+    gdf.to_file(
+        Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES", ID_FIELD="id"
+    )
 
 
 def obstacle_to_geojson() -> None:
@@ -264,7 +250,9 @@ def obstacle_to_geojson() -> None:
     gdf = make_obstacle_gdf(obstacle_gdf, airspace_gdf, coast_gdf)
 
     # Use GeoJSON 2018
-    gdf.to_file(Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES")
+    gdf.to_file(
+        Path(args.geojson_filename), driver="GeoJSON", RFC7946="YES", ID_FIELD="id"
+    )
 
 
 def make_overlay() -> None:

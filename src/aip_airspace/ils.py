@@ -30,7 +30,7 @@ def calculate_ils(
     atc_rcp_gdf = rcp_gdf.sjoin_nearest(atz_gdf, how="left")
 
     ils_data = {
-        "identifier": [],
+        "id": [],
         "name": [],
         "upperLimit": [],
         "lowerLimit": [],
@@ -60,7 +60,7 @@ def calculate_ils(
         ils_data["name"].append(name)
         ils_data["upperLimit"].append(atc_rcp.upperLimit)
         ils_data["lowerLimit"].append(atc_rcp.upperLimit - 1000)
-        ils_data["identifier"].append(
+        ils_data["id"].append(
             str(uuid.uuid5(uuid.NAMESPACE_URL, f"asselect.uk/airspace/ils/{name}"))
         )
 
@@ -74,6 +74,6 @@ def calculate_ils(
     ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
     ils_gdf = ils_gdf.assign(lowerLimitReference="MSL")
 
-    ils_gdf.set_index("identifier", inplace=True)
+    ils_gdf.set_index("id", inplace=True)
 
     return ils_gdf  # ty: ignore[invalid-return-type]

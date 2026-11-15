@@ -1,12 +1,15 @@
 from geopandas import GeoDataFrame
 from shapely import MultiPolygon
 
-KEEP_COLUMNS = ["identifier", "type", "elevation", "elevation_uom", "geometry"]
+KEEP_COLUMNS = ["id", "type", "elevation", "elevation_uom", "geometry"]
 
 
 def make_obstacle_gdf(
     obstacle_gdf: GeoDataFrame, airspace_gdf: GeoDataFrame, coast_gdf: GeoDataFrame
 ) -> GeoDataFrame:
+    # Rename columns
+    obstacle_gdf.rename(columns={"identifier": "id"}, inplace=True)
+
     # Swap lat/long and set CRS
     obstacle_gdf.geometry = obstacle_gdf.affine_transform([0, 1, 1, 0, 0, 0])
     obstacle_gdf.set_crs(epsg=4326, inplace=True)

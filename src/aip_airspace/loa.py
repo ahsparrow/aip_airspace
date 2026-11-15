@@ -13,7 +13,7 @@ def make_loa_add(loa: dict, feature: dict, volume: dict) -> dict:
     lower = parse_level(volume["lower"])
 
     return {
-        "identifier": uuid5(NAMESPACE_URL, f"asselect.uk/loa/add/{volume['name']}"),
+        "id": uuid5(NAMESPACE_URL, f"asselect.uk/loa/add/{volume['name']}"),
         "loa_name": loa["name"],
         "name": volume["name"],
         "atype": feature["type"],
@@ -37,7 +37,7 @@ def make_loa_replace(
     airspace = airspace_gdf.loc[feature["aref"]]
 
     return {
-        "identifier": uuid5(NAMESPACE_URL, f"asselect.uk/loa/replace/{volume['name']}"),
+        "id": uuid5(NAMESPACE_URL, f"asselect.uk/loa/replace/{volume['name']}"),
         "loa_name": loa["name"],
         "aref": feature["aref"],
         "name": volume["name"],
@@ -54,6 +54,8 @@ def make_loa_replace(
 
 
 def make_loa_gdf(loa_list: list[dict], airspace_gdf: GeoDataFrame) -> GeoDataFrame:
+    airspace_gdf = airspace_gdf.set_index("id")
+
     data = [
         make_loa_add(loa, feature, volume)
         for loa in loa_list

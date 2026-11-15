@@ -12,7 +12,7 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     catz_gdf = atz_gdf.to_crs(epsg=32630)
 
     # Filter MATZ ATZs
-    atz_ids = [m["atz_identifier"] for m in matz_list]
+    atz_ids = [m["atz_id"] for m in matz_list]
     catz_gdf = catz_gdf.loc[atz_ids]
 
     # Trim " ATZ" from end of name
@@ -24,7 +24,7 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # Create MATZ core geometries
     geom = []
     for md in matz_list:
-        centroid = catz_gdf.loc[md["atz_identifier"]].centroid
+        centroid = catz_gdf.loc[md["atz_id"]].centroid
 
         matz = centroid.buffer(md.get("radius", 5) * NM_M)
 
@@ -86,7 +86,7 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     names = []
     uppers = []
     for md in matz_list:
-        catz = catz_gdf.loc[md["atz_identifier"]]
+        catz = catz_gdf.loc[md["atz_id"]]
 
         for n, sd in enumerate(md["stubs"]):
             width = sd.get("width", 4)
@@ -133,12 +133,12 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     matz_gdf.to_crs(epsg=4326, inplace=True)
 
     # Add uuids
-    matz_gdf["identifier"] = matz_gdf.apply(
+    matz_gdf["id"] = matz_gdf.apply(
         lambda row: str(
             uuid.uuid5(uuid.NAMESPACE_URL, f"asselect.uk/airspace/matz/{row['name']}")
         ),
         axis=1,
     )
-    matz_gdf.set_index("identifier", inplace=True)
+    matz_gdf.set_index("id", inplace=True)
 
     return matz_gdf

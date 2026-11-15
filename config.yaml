@@ -5,172 +5,172 @@ files:
   ils: assets/ils.yaml
 
 service_overrides:
-- identifier: b99df1df-db49-41b1-b0e9-3a71bb04209f
+- id: b99df1df-db49-41b1-b0e9-3a71bb04209f
   callsign: BRISTOL RADAR
   rcc_href: 6db7de37-785a-4e2e-917b-6a86ded7ac38
 
-- identifier: 5608dec1-e150-4e5e-a20a-4166ad4858f2
+- id: 5608dec1-e150-4e5e-a20a-4166ad4858f2
   callsign: PRESTWICK RADAR
   rcc_href: 3825e483-f73a-46d3-b570-336897e0dc63
 
-- identifier: 4e074fd4-6bb6-4cf4-a825-c91cf0c33b26
+- id: 4e074fd4-6bb6-4cf4-a825-c91cf0c33b26
   callsign: MANCHESTER RADAR
   rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
 
-- identifier: 4ea20eb1-9610-46b4-8dd5-45f988386fd1
+- id: 4ea20eb1-9610-46b4-8dd5-45f988386fd1
   callsign: MANCHESTER RADAR
   rcc_href: 01fd2366-846c-402b-9674-20f7909fccaa
  
-- identifier: 4425a5d5-7931-44ee-af3c-c0bbeb89a6a0
+- id: 4425a5d5-7931-44ee-af3c-c0bbeb89a6a0
   callsign: BIRMINGHAM RADAR
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
-- identifier: a3ef5b21-09d6-4f98-93b5-78896c9fadf0
+- id: a3ef5b21-09d6-4f98-93b5-78896c9fadf0
   callsign: BIRMINGHAM RADAR
   rcc_href: bce451a6-a5e8-45dd-97c8-088d34c02967
 
 overrides:
 # Brize Norton CTR
-- identifier: 358b6948-a579-4444-975a-248e65f3c9ab
+- id: 358b6948-a579-4444-975a-248e65f3c9ab
   callsign: BRIZE ZONE
   channel: "119.005"
 
 # Hawarden
-- identifier: 7e6b43d7-6a0d-499a-b541-bf4182688aea
+- id: 7e6b43d7-6a0d-499a-b541-bf4182688aea
   callsign: HAWARDEN RADAR
   channel: "120.055"
 
 # Farnborough  CTA
-- identifier: 16fa246e-0938-43af-83e1-2b34112f88a9
+- id: 16fa246e-0938-43af-83e1-2b34112f88a9
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: 379395e7-d803-4a67-9030-6ee053e650df
+- id: 379395e7-d803-4a67-9030-6ee053e650df
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: a9fe5f16-f6ff-45c5-803b-fd516d073a48
+- id: a9fe5f16-f6ff-45c5-803b-fd516d073a48
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: f5902e3c-8631-42eb-8d07-aa218bf67431
+- id: f5902e3c-8631-42eb-8d07-aa218bf67431
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: 1f8a72de-f588-435a-9e37-6d2d9fa2c751
+- id: 1f8a72de-f588-435a-9e37-6d2d9fa2c751
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: 2dd40fc1-1950-4384-99d5-8f1b815bc334
+- id: 2dd40fc1-1950-4384-99d5-8f1b815bc334
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: 4f9b31a9-2890-452c-8f71-4ccc1dfe4141
+- id: 4f9b31a9-2890-452c-8f71-4ccc1dfe4141
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
 # Farnborough TMZ
-- identifier: 4c898ed8-5158-4b3c-8b30-aed655aa3a84
+- id: 4c898ed8-5158-4b3c-8b30-aed655aa3a84
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
-- identifier: 934c26e9-0f2d-413c-b0d8-dedcd0c59387
+- id: 934c26e9-0f2d-413c-b0d8-dedcd0c59387
   callsign: FARNBOROUGH RADAR
   channel: "133.440"
 
 # Humberside
-- identifier: fc9f89ff-7e73-4e78-9f68-7c11eaf3e0d6
+- id: fc9f89ff-7e73-4e78-9f68-7c11eaf3e0d6
   callsign: HUMBERSIDE RADAR
   channel: "119.130"
 
 # Lydd
-- identifier: 055fe92b-8ef1-4535-b4ac-12e8561a460e
+- id: 055fe92b-8ef1-4535-b4ac-12e8561a460e
   callsign: LYDD APPROACH
   channel: "120.705"
 
 # Drop zones
-- identifier: 78ec1c2c-50bf-414c-927c-f1c55b579542
+- id: 78ec1c2c-50bf-414c-927c-f1c55b579542
   name: BECCLES DZ
 
-- identifier: fdacfab2-8fe7-4e5a-b23b-ba839a8bea18
+- id: fdacfab2-8fe7-4e5a-b23b-ba839a8bea18
   name: BOSCOMBE DOWN DZ
 
-- identifier: 665d156a-58ab-4a6c-9ce8-c02fba5287c2
+- id: 665d156a-58ab-4a6c-9ce8-c02fba5287c2
   name: BRIDLINGTON DZ
 
-- identifier: ee31fe5d-45ba-4df8-9c70-13e2475adc8f
+- id: ee31fe5d-45ba-4df8-9c70-13e2475adc8f
   name: CARK DZ
 
-- identifier: d0966786-387f-47d6-b907-786acec1d0df
+- id: d0966786-387f-47d6-b907-786acec1d0df
   name: CHALGROVE DZ
 
-- identifier: b4dfa8f4-2a83-40dd-8868-67081db32ba4
+- id: b4dfa8f4-2a83-40dd-8868-67081db32ba4
   name: CHATTERIS DZ
 
-- identifier: 60070e64-5228-4d73-8da0-9671c9bd0a5e
+- id: 60070e64-5228-4d73-8da0-9671c9bd0a5e
   name: COCKERHAM DZ
 
-- identifier: 325d9ed5-734f-4778-8a4e-7dd32b2bb316
+- id: 325d9ed5-734f-4778-8a4e-7dd32b2bb316
   name: DUNKESWELL DZ
 
-- identifier: c8de3bc5-8c5f-478c-bee9-f2ed7ed215ba
+- id: c8de3bc5-8c5f-478c-bee9-f2ed7ed215ba
   name: ERROL DZ
 
-- identifier: f0c97505-0d7d-4517-94d0-c4785216f062
+- id: f0c97505-0d7d-4517-94d0-c4785216f062
   name: FIFE DZ
 
-- identifier: ae9153f7-c458-4c03-ba43-d56a7c1c3c7b
+- id: ae9153f7-c458-4c03-ba43-d56a7c1c3c7b
   name: HIBALDSTOW DZ
 
-- identifier: 89ede616-5632-4e35-9e4d-16180b06e3bd
+- id: 89ede616-5632-4e35-9e4d-16180b06e3bd
   name: HINTON-IN-THE-HEDGES DZ
 
-- identifier: 2efdb90c-fca9-4581-b32e-e99e3cbf524f
+- id: 2efdb90c-fca9-4581-b32e-e99e3cbf524f
   name: KEEVIL DZ
 
-- identifier: 9780b63a-6755-44fe-a007-a1e2df835275
+- id: 9780b63a-6755-44fe-a007-a1e2df835275
   name: KILLYKERGAN DZ
 
-- identifier: 69189821-e974-465c-b6e0-a6dbc6e2be77
+- id: 69189821-e974-465c-b6e0-a6dbc6e2be77
   name: LANGAR DZ
 
-- identifier: e0d78503-60eb-4209-a222-d2589ab2bd7a
+- id: e0d78503-60eb-4209-a222-d2589ab2bd7a
   name: HEADCORN DZ
 
-- identifier: c9ef8ea4-475b-4bd9-994e-f735983b0b5f
+- id: c9ef8ea4-475b-4bd9-994e-f735983b0b5f
   name: LLANBEDR DZ
 
-- identifier: 1b2f3e4c-fc2b-447d-b694-e5536d482404
+- id: 1b2f3e4c-fc2b-447d-b694-e5536d482404
   name: MOVENIS DZ
 
-- identifier: fee1ffb7-483d-4c0e-aa3a-17bd31f414aa
+- id: fee1ffb7-483d-4c0e-aa3a-17bd31f414aa
   name: NETHERAVON DZ
 
-- identifier: 4366f29c-92cd-4d06-9d99-12dc50d83e5c
+- id: 4366f29c-92cd-4d06-9d99-12dc50d83e5c
   name: OLD SARUM DZ
 
-- identifier: 008e3bc1-e1f2-4e0f-8717-0a0448b1acdf
+- id: 008e3bc1-e1f2-4e0f-8717-0a0448b1acdf
   name: PERRANPORTH DZ
 
-- identifier: 86c5b50a-a72d-4b94-9249-18d57eba72ae
+- id: 86c5b50a-a72d-4b94-9249-18d57eba72ae
   name: SIBSON DZ
 
-- identifier: 66dbc527-aed9-4af2-b31c-ff0f6fb07b8f
+- id: 66dbc527-aed9-4af2-b31c-ff0f6fb07b8f
   name: PETERLEE DZ
 
-- identifier: 52f34b1e-e951-4098-a9bb-96eceb14aff1
+- id: 52f34b1e-e951-4098-a9bb-96eceb14aff1
   name: SOUTH CERNEY DZ
 
-- identifier: 8129e69b-97f7-48a7-aa59-d12ae0d44539
+- id: 8129e69b-97f7-48a7-aa59-d12ae0d44539
   name: STRATHALLAN DZ
 
-- identifier: 85923dbc-b0f0-4407-86a0-0888047c00e5
+- id: 85923dbc-b0f0-4407-86a0-0888047c00e5
   name: SWANSEA DZ
 
-- identifier: 921a5aa6-ec8c-486c-9567-0c9ce736564c
+- id: 921a5aa6-ec8c-486c-9567-0c9ce736564c
   name: TILSTOCK DZ
 
-- identifier: 70f0b51b-e745-4c6b-96c6-3871f0fae0db
+- id: 70f0b51b-e745-4c6b-96c6-3871f0fae0db
   name: WESTON-ON-THE-GREEN DZ
 
 exclude_ids:

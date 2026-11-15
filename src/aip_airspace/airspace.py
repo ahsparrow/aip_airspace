@@ -12,7 +12,7 @@ from aip_airspace.ils import calculate_ils
 from aip_airspace.matz import create_matz
 
 KEEP_COLUMNS = [
-    "identifier",
+    "id",
     "name",
     "classification",
     "upperLimit",
@@ -133,8 +133,8 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
 # Override callsign/frequency in ATC service
 def override_ats(ats_df: DataFrame, override: list[dict]) -> DataFrame:
     for svc in override:
-        ats_df.loc[svc["identifier"], "callSign"] = [svc["callsign"]]
-        ats_df.loc[svc["identifier"], "radioCommunication_href"] = [svc["rcc_href"]]
+        ats_df.loc[svc["id"], "callSign"] = [svc["callsign"]]
+        ats_df.loc[svc["id"], "radioCommunication_href"] = [svc["rcc_href"]]
 
     return ats_df
 
@@ -217,7 +217,7 @@ def add_frequency(
 def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
     for o in overrides:
         df = DataFrame({k: [o[k]] for k in o})
-        df.set_index("identifier", inplace=True)
+        df.set_index("id", inplace=True)
         airspace_gdf.update(df)
 
 
@@ -259,6 +259,24 @@ def make_airspace_gdf(
     sporting_activity_gdf: GeoDataFrame,
     override_data: list[dict],
 ) -> GeoDataFrame:
+    # Set CRS on all geodataframes
+    for gdf in [airspace_gdf, rwy_centreline_pt_gdf, coast_gdf, sporting_activity_gdf]:
+        gdf.set_crs(epsg=4326, inplace=True)
+
+    # Set data frame indices
+    for df in [
+        airspace_gdf,
+        rwy_centreline_pt_gdf,
+        air_traffic_control_df,
+        info_service_df,
+        radio_comm_channel_df,
+        rwy_dirn_df,
+    ]:
+        df.rename(columns={"identifier": "id"}, inplace=True)
+        df.set_index("id", inplace=True)
+
+    sporting_activity_gdf.set_index("id", inplace=True)
+
     # Remove offshore airspace
     airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)
 
