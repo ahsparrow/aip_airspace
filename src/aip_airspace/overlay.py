@@ -162,9 +162,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
     point_gdf.geometry = point_gdf.buffer(point_gdf.radius)
     airspace_gdf.update(point_gdf)
 
-    airspace_gdf = GeoDataFrame(
-        airspace_gdf.assign(normlower=airspace_gdf.apply(norm_lower_limit, axis=1))
-    )
+    airspace_gdf["normlower"] = airspace_gdf.apply(norm_lower_limit, axis=1)
 
     # Filter CTA, etc. and limit base level
     cta_gdf = airspace_gdf[

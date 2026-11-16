@@ -226,10 +226,10 @@ def thinness(poly):
 
 
 def circles_to_points(xy_gdf):
-    collapse_gdf = xy_gdf.assign(radius=np.nan)
+    xy_gdf["radius"] = np.nan
 
     # convert circle to point/radius
-    gdf = collapse_gdf[thinness(collapse_gdf.geometry) > 0.999]
+    gdf = xy_gdf[thinness(xy_gdf.geometry) > 0.999]
     gdf.radius = 2 * gdf.geometry.area / gdf.geometry.length
     gdf.geometry = gdf.geometry.centroid
 
@@ -239,8 +239,8 @@ def circles_to_points(xy_gdf):
     gdf.update(big_gdf)
     gdf.radius = np.round(gdf.radius)
 
-    collapse_gdf.update(gdf)
-    return collapse_gdf
+    xy_gdf.update(gdf)
+    return xy_gdf
 
 
 def make_airspace_gdf(
