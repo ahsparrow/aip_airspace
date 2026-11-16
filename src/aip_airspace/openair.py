@@ -205,6 +205,6 @@ def parse_openair(data: str) -> GeoDataFrame:
     gdf.to_crs(epsg=4326, inplace=True)
 
     # Drop radius and boundary columns
-    gdf.drop(["radius", "boundary"], axis=1, inplace=True)
+    gdf = gdf.drop(["radius", "boundary"], axis=1)
 
-    return gdf
+    return gdf  # ty: ignore[invalid-return-type]

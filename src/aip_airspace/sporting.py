@@ -116,5 +116,5 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         },
         crs="EPSG:4326",
     )
-    gdf.set_index("id", inplace=True)
-    return gdf
+    gdf = gdf.set_index("id")
+    return gdf  # ty: ignore[invalid-return-type]

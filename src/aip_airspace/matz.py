@@ -139,6 +139,6 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
         ),
         axis=1,
     )
-    matz_gdf.set_index("id", inplace=True)
+    matz_gdf = matz_gdf.set_index("id")
 
-    return matz_gdf
+    return matz_gdf  # ty: ignore[invalid-return-type]

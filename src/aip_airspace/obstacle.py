@@ -8,7 +8,7 @@ def make_obstacle_gdf(
     obstacle_gdf: GeoDataFrame, airspace_gdf: GeoDataFrame, coast_gdf: GeoDataFrame
 ) -> GeoDataFrame:
     # Rename columns
-    obstacle_gdf.rename(columns={"identifier": "id"}, inplace=True)
+    obstacle_gdf = obstacle_gdf.rename(columns={"identifier": "id"})  # ty: ignore[invalid-assignment]
 
     # Swap lat/long and set CRS
     obstacle_gdf.geometry = obstacle_gdf.affine_transform([0, 1, 1, 0, 0, 0])
@@ -21,7 +21,7 @@ def make_obstacle_gdf(
     coast_gdf.to_crs(epsg=32630, inplace=True)
     coast_gdf.geometry = coast_gdf.buffer(100)
     coast_gdf.to_crs(epsg=4326, inplace=True)
-    coast_gdf.set_index("name", inplace=True)
+    coast_gdf = coast_gdf.set_index("name")  # ty: ignore[invalid-assignment]
     gdf = obstacle_gdf[obstacle_gdf.within(coast_gdf.loc["uk_coast", "geometry"])]
 
     # Buffer point geometries
@@ -50,11 +50,13 @@ def make_obstacle_gdf(
     gdf = gdf[~gdf.within(a)]
 
     # Delete unused columns
-    gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
-    gdf.rename(
-        {"type": "name", "elevation": "upperLimit", "elevation_uom": "upperLimit_uom"},
-        axis=1,
-        inplace=True,
+    gdf = gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS])
+    gdf = gdf.rename(
+        columns={
+            "type": "name",
+            "elevation": "upperLimit",
+            "elevation_uom": "upperLimit_uom",
+        },
     )
     gdf["upperLimitReference"] = "MSL"
     gdf["lowerLimit"] = 0

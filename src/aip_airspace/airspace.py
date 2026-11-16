@@ -106,7 +106,7 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     gdf["name"] = gdf.apply(rename, axis=1)
 
     # Remove unused columns
-    gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS], inplace=True)
+    gdf = gdf.drop(columns=[c for c in gdf.columns if c not in KEEP_COLUMNS])
 
     # Convert classification from array to scalar
     gc = gdf["classification"]
@@ -119,7 +119,7 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     gdf["classification"] = gc.astype(str)
 
     # Remove CTAs and CTRs duplicated by TMZs
-    gdf.sort_values(by="atype", inplace=True)
+    gdf = gdf.sort_values(by="atype")
     out_gdf = gdf[
         ~(
             (gdf[["geometry", "upperLimit", "lowerLimit"]].duplicated(keep="last"))
@@ -217,7 +217,7 @@ def add_frequency(
 def override(airspace_gdf: GeoDataFrame, overrides: list[dict]):
     for o in overrides:
         df = DataFrame({k: [o[k]] for k in o})
-        df.set_index("id", inplace=True)
+        df = df.set_index("id")
         airspace_gdf.update(df)
 
 
@@ -264,18 +264,21 @@ def make_airspace_gdf(
         gdf.set_crs(epsg=4326, inplace=True)
 
     # Set data frame indices
-    for df in [
-        airspace_gdf,
-        rwy_centreline_pt_gdf,
-        air_traffic_control_df,
-        info_service_df,
-        radio_comm_channel_df,
-        rwy_dirn_df,
-    ]:
-        df.rename(columns={"identifier": "id"}, inplace=True)
-        df.set_index("id", inplace=True)
-
-    sporting_activity_gdf.set_index("id", inplace=True)
+    airspace_gdf = airspace_gdf.rename(columns={"identifier": "id"}).set_index("id")  # ty: ignore[invalid-assignment]
+    rwy_centreline_pt_gdf = rwy_centreline_pt_gdf.rename(  # ty: ignore[invalid-assignment]
+        columns={"identifier": "id"}
+    ).set_index("id")
+    air_traffic_control_df = air_traffic_control_df.rename(
+        columns={"identifier": "id"}
+    ).set_index("id")
+    info_service_df = info_service_df.rename(columns={"identifier": "id"}).set_index(
+        "id"
+    )
+    radio_comm_channel_df = radio_comm_channel_df.rename(
+        columns={"identifier": "id"}
+    ).set_index("id")
+    rwy_dirn_df = rwy_dirn_df.rename(columns={"identifier": "id"}).set_index("id")
+    sporting_activity_gdf = sporting_activity_gdf.set_index("id")  # ty: ignore[invalid-assignment]
 
     # Remove offshore airspace
     airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)
@@ -340,6 +343,6 @@ def make_airspace_gdf(
     final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=1 / 3600)
 
     # Sort by atype then name
-    final_gdf.sort_values(["atype", "name"], inplace=True)
+    final_gdf = final_gdf.sort_values(["atype", "name"])
 
     return final_gdf

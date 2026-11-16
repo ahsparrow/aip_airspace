@@ -74,6 +74,6 @@ def calculate_ils(
     ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
     ils_gdf = ils_gdf.assign(lowerLimitReference="MSL")
 
-    ils_gdf.set_index("id", inplace=True)
+    ils_gdf = ils_gdf.set_index("id")
 
     return ils_gdf  # ty: ignore[invalid-return-type]
