@@ -66,7 +66,7 @@ def simple_type(row: Series) -> str | None:
 
 
 def rename(row: Series) -> str:
-    if row.type in ["D", "D*", "P", "R"]:
+    if row["type"] in ["D", "D*", "P", "R"]:
         return f"{row.designator[2:]} {row['name']}"
     else:
         return row["name"]
@@ -95,7 +95,7 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
 
     # Drop above FL195 (except TRAG)
     gdf = gdf[
-        (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf.type == "TRAG")
+        (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf["type"] == "TRAG")
     ]
 
     # Remove anything wholly inside a CTR
