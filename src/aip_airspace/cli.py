@@ -7,18 +7,18 @@ from pathlib import Path
 from zipfile import ZipFile
 
 import requests
-from geopandas import read_file
 import yaml
+from geopandas import read_file
 
 from aip_airspace.airspace import make_airspace_gdf
 from aip_airspace.license import license
 from aip_airspace.loa import make_loa_gdf
-from aip_airspace.loadaip import fix_up, airac_date
+from aip_airspace.loadaip import airac_date, fix_up
 from aip_airspace.obstacle import make_obstacle_gdf
 from aip_airspace.openair import make_openair, parse_openair
 from aip_airspace.overlay import overlay
-from aip_airspace.sporting import parse_sporting
 from aip_airspace.rat import make_rat_gdf
+from aip_airspace.sporting import parse_sporting
 from aip_airspace.util import next_airac_date
 
 

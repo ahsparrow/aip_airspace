@@ -1,7 +1,7 @@
+import shapely.ops
 from geopandas import GeoDataFrame
 from lark import Lark, Transformer
 from shapely import Point, Polygon
-import shapely.ops
 
 LATLON_FMT = (
     "{0[d]:02d}:{0[m]:02d}:{0[s]:02d} {0[ns]} {1[d]:03d}:{1[m]:02d}:{1[s]:02d} {1[ew]}"

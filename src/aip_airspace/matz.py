@@ -1,8 +1,8 @@
 import uuid
 
 from geopandas import GeoDataFrame
-from pandas import DataFrame, concat
-from shapely import affinity, box, union_all, Point
+from pandas import concat
+from shapely import Point, affinity, box, union_all
 
 NM_M = 1852
 

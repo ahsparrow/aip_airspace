@@ -1,11 +1,11 @@
-from math import sin, cos
 import uuid
+from math import cos, sin
+from uuid import UUID
 
 from geopandas import GeoDataFrame
 from pandas import DataFrame
 from shapely import Polygon
 from shapely.affinity import rotate, translate
-from uuid import UUID
 
 
 def calculate_ils(

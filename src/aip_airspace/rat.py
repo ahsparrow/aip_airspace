@@ -1,5 +1,6 @@
-from geopandas import GeoDataFrame
 from uuid import NAMESPACE_URL, uuid5
+
+from geopandas import GeoDataFrame
 
 from aip_airspace.boundary import boundary_polygon
 from aip_airspace.util import parse_level

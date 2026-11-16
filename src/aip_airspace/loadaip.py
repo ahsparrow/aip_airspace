@@ -1,6 +1,7 @@
-from shapely import LineString, Point
-import geopandas
 import xml.etree.ElementTree as ET
+
+import geopandas
+from shapely import LineString, Point
 
 ns = {
     "aixm": "http://www.aixm.aero/schema/5.1",
@@ -9,8 +10,8 @@ ns = {
     "message": "http://www.aixm.aero/schema/5.1/message",
     "xlink": "http://www.w3.org/1999/xlink",
 }
-for name in ns:
-    ET.register_namespace(name, ns[name])
+for name, value in ns.items():
+    ET.register_namespace(name, value)
 
 TOLERANCE = 0.001
 

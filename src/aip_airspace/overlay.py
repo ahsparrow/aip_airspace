@@ -1,10 +1,10 @@
 from importlib.resources import files
 from math import sqrt
 
-from freetype import Face, FT_LOAD_DEFAULT, FT_LOAD_NO_BITMAP
-from geopandas import GeoDataFrame, GeoSeries
 import numpy as np
 import pandas
+from freetype import FT_LOAD_DEFAULT, FT_LOAD_NO_BITMAP, Face
+from geopandas import GeoDataFrame, GeoSeries
 from shapely import (
     MultiPoint,
     MultiPolygon,

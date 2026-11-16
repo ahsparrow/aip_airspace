@@ -1,8 +1,8 @@
 from typing import cast
+from uuid import NAMESPACE_URL, uuid5
 
 from geopandas import GeoDataFrame
 from pandas import concat
-from uuid import NAMESPACE_URL, uuid5
 
 from aip_airspace.boundary import boundary_polygon
 from aip_airspace.util import parse_level
