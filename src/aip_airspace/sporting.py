@@ -48,7 +48,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
                     typ = "TRAINING"
                     radius = 1852 * 1.5
             types.append(typ)
-            radii.append(radius)
+            radii.append(int(radius))
 
             # Name
             name = name_match.group(1)
