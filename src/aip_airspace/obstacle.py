@@ -62,7 +62,7 @@ def make_obstacle_gdf(
     gdf["lowerLimit"] = 0
     gdf["lowerLimit_uom"] = "FT"
     gdf["lowerLimitReference"] = "SFC"
-    gdf["atype"] = "OBST"
+    gdf["type"] = "OBST"
     gdf["radius"] = 500
 
     return gdf

@@ -22,7 +22,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
 
     names = []
     geoms = []
-    atypes = []
+    types = []
     upper_limits = []
     channels = []
     ids = []
@@ -39,20 +39,20 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         if name_match := NAME_RE.match(txt):
             match name_match.group(2):
                 case "GLIDER SITE":
-                    atype = "GLIDER"
+                    typ = "GLIDER"
                     radius = 1852
                 case "MICROLIGHT SITE":
-                    atype = "MICROLIGHT"
+                    typ = "MICROLIGHT"
                     radius = 1852 * 0.75
                 case "TRAINING AERODROME":
-                    atype = "TRAINING"
+                    typ = "TRAINING"
                     radius = 1852 * 1.5
-            atypes.append(atype)
+            types.append(typ)
             radii.append(radius)
 
             # Name
             name = name_match.group(1)
-            if atype == "MICROLIGHT":
+            if typ == "MICROLIGHT":
                 name = name + " UL"
             names.append(name)
 
@@ -65,7 +65,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
             elev_channel_tag = tag.xpath("../following-sibling::td[3]/p[1]")[0]
             elev_match = ELEVATION_RE.search(elev_channel_tag.text_content())
             if (
-                elev_str := elev_match.group(1)  # ty: ignore[unresolved-attribute]
+                elev_str := elev_match.group(1)  # ty: ignore[missing-union-attribute]
             ) == "SL":
                 elevation = 0
             else:
@@ -94,7 +94,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
                 str(
                     uuid.uuid5(
                         uuid.NAMESPACE_URL,
-                        f"asselect.uk/airspace/{atype.lower()}/{name}",
+                        f"asselect.uk/airspace/{typ.lower()}/{name}",
                     )
                 )
             )
@@ -103,7 +103,7 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         {
             "id": ids,
             "name": names,
-            "atype": atypes,
+            "type": types,
             "upperLimit": upper_limits,
             "upperLimit_uom": "FT",
             "upperLimitReference": "MSL",
@@ -117,4 +117,4 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         crs="EPSG:4326",
     )
     gdf = gdf.set_index("id")
-    return gdf  # ty: ignore[invalid-return-type]
+    return gdf  # ty: ignore[invalid-explicit-return]

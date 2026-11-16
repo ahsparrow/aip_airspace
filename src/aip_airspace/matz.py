@@ -68,7 +68,7 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
     # Create GeoDataFrame of MATZ cores
     core_gdf = GeoDataFrame(
         {
-            "atype": ["MATZ"] * len(geom),
+            "type": ["MATZ"] * len(geom),
             "name": names,
             "upperLimit": uppers,
             "upperLimit_uom": ["FT"] * len(geom),
@@ -115,7 +115,7 @@ def create_matz(matz_list: list[dict], atz_gdf: GeoDataFrame) -> GeoDataFrame:
 
     stub_gdf = GeoDataFrame(
         {
-            "atype": ["MATZ"] * len(geom),
+            "type": ["MATZ"] * len(geom),
             "name": names,
             "upperLimit": uppers,
             "upperLimit_uom": ["FT"] * len(geom),

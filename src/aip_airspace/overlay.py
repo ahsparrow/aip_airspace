@@ -168,7 +168,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
 
     # Filter CTA, etc. and limit base level
     cta_gdf = airspace_gdf[
-        airspace_gdf.atype.isin(["CTA", "CTR", "TMA", "TMZ"])
+        airspace_gdf["type"].isin(["CTA", "CTR", "TMA", "TMZ"])
         & (airspace_gdf.normlower <= max_alt)
         & (airspace_gdf.name != "BRIZE NORTON CTR")
     ]
@@ -199,7 +199,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
         # ATZs (with exceptions)
         atz_gdf = airspace_gdf[
             (
-                (airspace_gdf.atype == "ATZ")
+                (airspace_gdf["type"] == "ATZ")
                 & ~airspace_gdf.name.isin(
                     [
                         "BARTON ATZ",
@@ -219,7 +219,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
         ]
 
         # Dropzones
-        dz_gdf = airspace_gdf[(airspace_gdf.atype == "DZ")]
+        dz_gdf = airspace_gdf[(airspace_gdf["type"] == "DZ")]
 
         # Update cta_multipoly by removing ATZs and dropzones
         cta_multipoly = cta_multipoly.difference(
@@ -315,7 +315,7 @@ def overlay(airspace_gdf: GeoDataFrame, max_alt: int, atzdz: bool) -> GeoDataFra
                 )
 
     # Add type
-    annotation = GeoDataFrame(annotation.assign(atype="TEXT"))
+    annotation["type"] = "TEXT"
 
     # Convert float limits to int
     annotation.lowerLimit = annotation.lowerLimit.astype(int)

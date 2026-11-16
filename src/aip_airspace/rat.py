@@ -14,7 +14,7 @@ def make_rat(rat: dict, geometry: dict) -> dict:
         "id": uuid5(NAMESPACE_URL, f"asselect.uk/rat/{geometry['name']}"),
         "rat_name": rat["name"],
         "name": geometry["name"],
-        "atype": rat["type"],
+        "type": rat["type"],
         "classification": rat.get("class"),
         "upperLimit": upper["limit"],
         "upperLimit_uom": upper["uom"],

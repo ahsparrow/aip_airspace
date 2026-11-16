@@ -24,7 +24,7 @@ KEEP_COLUMNS = [
     "status",
     "geometry",
     "radius",
-    "atype",
+    "type",
 ]
 
 SI_RE = re.compile(r"SI \d\d\d\d\/\d")
@@ -66,7 +66,7 @@ def simple_type(row: Series) -> str | None:
 
 
 def rename(row: Series) -> str:
-    if row.atype in ["D", "D*", "P", "R"]:
+    if row.type in ["D", "D*", "P", "R"]:
         return f"{row.designator[2:]} {row['name']}"
     else:
         return row["name"]
@@ -88,19 +88,19 @@ def remove_excluded(gdf: GeoDataFrame, exclude: list[str]) -> GeoDataFrame:
 
 
 def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
-    as_gdf["atype"] = as_gdf.apply(simple_type, axis=1)
+    as_gdf["type"] = as_gdf.apply(simple_type, axis=1)
 
     # Drop unknown types
-    gdf = as_gdf.dropna(subset=["atype"])
+    gdf = as_gdf.dropna(subset=["type"])
 
     # Drop above FL195 (except TRAG)
     gdf = gdf[
-        (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf.atype == "TRAG")
+        (gdf.lowerLimit_uom != "FL") | (gdf.lowerLimit < 195) | (gdf.type == "TRAG")
     ]
 
     # Remove anything wholly inside a CTR
-    ctr_poly = MultiPolygon(gdf[gdf["atype"] == "CTR"].geometry)
-    gdf = gdf[~gdf.within(ctr_poly) | (gdf["atype"] == "CTR")]
+    ctr_poly = MultiPolygon(gdf[gdf["type"] == "CTR"].geometry)
+    gdf = gdf[~gdf.within(ctr_poly) | (gdf["type"] == "CTR")]
 
     # Rename danger, prohibited and restricted areas
     gdf["name"] = gdf.apply(rename, axis=1)
@@ -113,17 +113,17 @@ def asselect_airspace(as_gdf: GeoDataFrame) -> GeoDataFrame:
     gc[gc.notna()] = gc[gc.notna()].apply(lambda x: x[0])
 
     # Remove ATZ classification and all class G
-    gc[gdf["atype"] == "ATZ"] = None
+    gc[gdf["type"] == "ATZ"] = None
     gc[gc == "G"] = None
 
     gdf["classification"] = gc.astype(str)
 
     # Remove CTAs and CTRs duplicated by TMZs
-    gdf = gdf.sort_values(by="atype")
+    gdf = gdf.sort_values(by="type")
     out_gdf = gdf[
         ~(
             (gdf[["geometry", "upperLimit", "lowerLimit"]].duplicated(keep="last"))
-            & ((gdf["atype"] == "CTA") | (gdf["atype"] == "CTR"))
+            & ((gdf["type"] == "CTA") | (gdf["type"] == "CTR"))
         )
     ]
 
@@ -300,7 +300,7 @@ def make_airspace_gdf(
     )
 
     # Calculate ILS feathers
-    atz_gdf = airspace_gdf[airspace_gdf["atype"] == "ATZ"]
+    atz_gdf = airspace_gdf[airspace_gdf["type"] == "ATZ"]
     ils_gdf = calculate_ils(
         ils_rwy_centreline_pt_ids, atz_gdf, rwy_centreline_pt_gdf, rwy_dirn_df
     )
@@ -342,7 +342,7 @@ def make_airspace_gdf(
     # Snap to one second grid
     final_gdf.geometry = final_gdf.geometry.set_precision(grid_size=1 / 3600)
 
-    # Sort by atype then name
-    final_gdf = final_gdf.sort_values(["atype", "name"])
+    # Sort by type then name
+    final_gdf = final_gdf.sort_values(["type", "name"])
 
     return final_gdf

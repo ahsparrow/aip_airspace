@@ -68,12 +68,12 @@ def calculate_ils(
     ils_gdf = GeoDataFrame(ils_data, crs="EPSG:32630")
     ils_gdf.to_crs(epsg=4326, inplace=True)
 
-    ils_gdf = ils_gdf.assign(atype="ILS")
-    ils_gdf = ils_gdf.assign(upperLimit_uom="FT")
-    ils_gdf = ils_gdf.assign(upperLimitReference="MSL")
-    ils_gdf = ils_gdf.assign(lowerLimit_uom="FT")
-    ils_gdf = ils_gdf.assign(lowerLimitReference="MSL")
+    ils_gdf["type"] = "ILS"
+    ils_gdf["upperLimit_uom"] = "FT"
+    ils_gdf["upperLimitReference"] = "MSL"
+    ils_gdf["lowerLimit_uom"] = "FT"
+    ils_gdf["lowerLimitReference"] = "MSL"
 
     ils_gdf = ils_gdf.set_index("id")
 
-    return ils_gdf  # ty: ignore[invalid-return-type]
+    return ils_gdf  # ty: ignore[invalid-explicit-return]
