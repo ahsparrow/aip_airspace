@@ -258,7 +258,9 @@ def obstacle_to_geojson() -> None:
 def make_overlay() -> None:
     parser = ArgumentParser()
     parser.add_argument("airspace_filename")
-    parser.add_argument("output_filename", help="GeoJSON (.geojson) or OpenAir (.txt)")
+    parser.add_argument(
+        "output_filename", nargs="+", help="GeoJSON (.geojson) or OpenAir (.txt)"
+    )
     parser.add_argument(
         "--max_alt", type=int, default=10400, help="maximum base altitude"
     )
@@ -271,19 +273,20 @@ def make_overlay() -> None:
 
     gdf = overlay(airspace_gdf, args.max_alt, args.atzdz)
 
-    if Path(args.output_filename).suffix == ".geojson":
-        # Use GeoJSON 2018
-        gdf.to_file(Path(args.output_filename), driver="GeoJSON", RFC7946="YES")
-    else:
-        with open(args.airspace_filename) as f:
-            airspace = json.load(f)
+    for fname in args.output_filename:
+        if Path(fname).suffix == ".geojson":
+            # Use GeoJSON 2018
+            gdf.to_file(Path(fname), driver="GeoJSON", RFC7946="YES")
+        else:
+            with open(args.airspace_filename) as f:
+                airspace = json.load(f)
 
-        oa = make_openair(gdf)
-        with open(args.output_filename, "wt") as f:
-            f.write(
-                f"*\n* Altitude Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
-            )
-            f.write(oa)
+            oa = make_openair(gdf)
+            with open(fname, "wt") as f:
+                f.write(
+                    f"*\n* Altitude Overlay {args.max_alt}ALT{' ATZ/DZ' if args.atzdz else ''} ({airspace['airac_date']})\n*\n"
+                )
+                f.write(oa)
 
 
 def openair_to_geojson():
