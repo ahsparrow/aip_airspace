@@ -22,9 +22,10 @@ from aip_airspace.sporting import parse_sporting
 from aip_airspace.util import next_airac_date
 
 
-def remote_aip() -> None:
+def airspace_to_geojson() -> None:
     parser = ArgumentParser()
     parser.add_argument("geojson_filename")
+    parser.add_argument("--aip_filename", help="local AIP xml file")
     parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
     parser.add_argument("--config_file", default="config.yaml")
     args = parser.parse_args()
@@ -32,46 +33,31 @@ def remote_aip() -> None:
     with open(args.config_file, "rt") as f:
         config = yaml.safe_load(f.read())
 
-    airac_date = next_airac_date()
-    if args.prev:
-        airac_date += datetime.timedelta(days=-28)
-    airac_date_str = airac_date.strftime("%Y%m%d")
+    if args.aip_filename:
+        print("Loading AIP")
+        tree = ET.parse(args.aip_filename)
+        root = tree.getroot()
+    else:
+        airac_date = next_airac_date()
+        if args.prev:
+            airac_date += datetime.timedelta(days=-28)
+        airac_date_str = airac_date.strftime("%Y%m%d")
 
-    # Download zip archive from NATS and extract AIP XML data
-    url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/ICAO_AIP/EG_AIP_DS_{airac_date_str}_XML.zip"
+        # Download zip archive from NATS and extract AIP XML data
+        url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/ICAO_AIP/EG_AIP_DS_{airac_date_str}_XML.zip"
 
-    print("Downloading AIP dataset...")
-    response = requests.get(url)
-    response.raise_for_status()
+        print("Downloading AIP dataset...")
+        response = requests.get(url)
+        response.raise_for_status()
 
-    print("Extracting XML...")
-    zip_data = BytesIO(response.content)
-    with ZipFile(zip_data) as archive:
-        xml_data = archive.read(f"EG_AIP_DS_FULL_{airac_date_str}.xml")
+        print("Extracting XML...")
+        zip_data = BytesIO(response.content)
+        with ZipFile(zip_data) as archive:
+            xml_data = archive.read(f"EG_AIP_DS_FULL_{airac_date_str}.xml")
 
-    root = ET.fromstring(xml_data)
+        root = ET.fromstring(xml_data)
 
     # Fix "issues" in XML
-    fix_up(root)
-
-    aip_to_geojson(root, config, args.geojson_filename)
-
-
-def local_aip() -> None:
-    parser = ArgumentParser()
-    parser.add_argument("aip_filename")
-    parser.add_argument("geojson_filename")
-    parser.add_argument("--config_file", default="config.yaml")
-    args = parser.parse_args()
-
-    with open(args.config_file, "rt") as f:
-        config = yaml.safe_load(f.read())
-
-    print("Loading AIP")
-    tree = ET.parse(args.aip_filename)
-    root = tree.getroot()
-
-    # Fix "problems" in raw XML data
     fix_up(root)
 
     aip_to_geojson(root, config, args.geojson_filename)

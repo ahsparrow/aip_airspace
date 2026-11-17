@@ -16,9 +16,8 @@ dependencies = [
 ]
 
 [project.scripts]
-aip = "aip_airspace:cli.remote_aip"
+airspace = "aip_airspace:cli.airspace_to_geojson"
 
-airspace = "aip_airspace:cli.local_aip"
 loa = "aip_airspace:cli.loa_to_geojson"
 obstacle = "aip_airspace:cli.obstacle_to_geojson"
 overlay = "aip_airspace:cli.make_overlay"
