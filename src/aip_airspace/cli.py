@@ -23,7 +23,9 @@ from aip_airspace.util import next_airac_date
 
 
 def airspace_to_geojson() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="Download the AIP airspace data and convert to GeoJSON"
+    )
     parser.add_argument("geojson_filename")
     parser.add_argument("--aip_filename", help="local AIP xml file")
     parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
@@ -129,7 +131,9 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
 
 
 def fixup_aip() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="Fix the airspace XML data for compatibility with GDAL"
+    )
     parser.add_argument("aip_filename")
     parser.add_argument("fixup_filename")
     args = parser.parse_args()
@@ -145,7 +149,7 @@ def fixup_aip() -> None:
 
 
 def rat_to_geojson() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(description="Convert RA(T) data to GeoJSON")
     parser.add_argument("rat_filename")
     parser.add_argument("geojson_filename")
     args = parser.parse_args()
@@ -168,7 +172,7 @@ def rat_to_geojson() -> None:
 
 
 def loa_to_geojson() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(description="Convert LOA data to GeoJSON")
     parser.add_argument("loa_filename")
     parser.add_argument("airspace_filename")
     parser.add_argument("geojson_filename")
@@ -194,7 +198,9 @@ def loa_to_geojson() -> None:
 
 
 def sporting_to_geojson() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="Scrape sporting data from AIP website and convert to GeoJSON"
+    )
     parser.add_argument("geojson_filename")
     parser.add_argument("--prev", action="store_true", help="use previous AIRAC date")
     args = parser.parse_args()
@@ -220,7 +226,7 @@ def sporting_to_geojson() -> None:
 
 def obstacle_to_geojson() -> None:
     parser = ArgumentParser(
-        description="Download AIP the obstacle data and convert to GeoJSON"
+        description="Download the AIP obstacle data and convert to GeoJSON"
     )
     parser.add_argument("--obstacle_filename", help="Local obstacle XML file")
     parser.add_argument("airspace_filename", help="Airspace GeoJSON file")
@@ -264,7 +270,9 @@ def obstacle_to_geojson() -> None:
 
 
 def make_overlay() -> None:
-    parser = ArgumentParser()
+    parser = ArgumentParser(
+        description="Generate overlay data in OpenAir and/or GeoJSON"
+    )
     parser.add_argument("airspace_filename")
     parser.add_argument(
         "output_filename", nargs="+", help="GeoJSON (.geojson) or OpenAir (.txt)"
@@ -298,7 +306,7 @@ def make_overlay() -> None:
 
 
 def openair_to_geojson():
-    parser = ArgumentParser()
+    parser = ArgumentParser(description="Convert ASSelect OpenAir data to GeoJSON")
     parser.add_argument("openair_filename")
     parser.add_argument("geojson_filename")
     args = parser.parse_args()
