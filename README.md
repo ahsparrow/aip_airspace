@@ -17,6 +17,13 @@ of agreement, temporary restricted areas, and sporting activities.
 
 ## ASSelect file generation
 
+Run the build script to generate all files automatically (or run individual scripts
+as detailed below)
+
+    ./bin/build.sh
+
+Review changes using `./bin/jdiff.sh` utility, then deploy with `./bin/deploy.sh`
+
 ### Sporting activities
 
 Single geometry points are excluded from the AIP dataset, so they have to be scraped
@@ -30,11 +37,11 @@ Download the current UK ICAO AIP Dataset from
 [NATS](https://nats-uk.ead-it.com/cms-nats/opencms/en/Publications/digital-datasets/)
 and unpack into the data directory. Then build the airspace file, e.g.
 
-    uv run airspace data/EG_AIP_DS_FULL_20260709.xml build/airspace.geojson
+    uv run airspace --aip_filename data/EG_AIP_DS_FULL_20260709.xml build/airspace.geojson
 
 or download it automatically
 
-    uv run aip build/airspace.geojson
+    uv run airspace build/airspace.geojson
 
 ### Letters of Agreement
 
@@ -50,7 +57,12 @@ Download the current UK ICAO Obstacle Dataset from
 [NATS](https://nats-uk.ead-it.com/cms-nats/opencms/en/Publications/digital-datasets/)
 and unpack into the data directory. Then build the obstacle file, e.g.
 
-    uv run obstacle data/EG_OBS_DS_AREA1_FULL_20260709.xml build/obstacle.geojson
+    uv run obstacle --obstacle_filename data/EG_OBS_DS_AREA1_FULL_20260709.xml \
+    build/airspace.geojson build/obstacle.geojson
+
+or with automatic download
+
+    uv run obstacle build/airspace.geojson build/obstacle.geojson
 
 ### Overlays
 
@@ -62,7 +74,7 @@ used.
     uv run overlay --max_alt 19400 build/airspace.geoson build/overlay_195.txt
     uv run overlay --max_alt 10400 --atzdz build/airspace.geoson build/overlay_atzdz.txt
 
-### Workflow
+### Manual workflow
 
 1. Review latest AIP changes
 2. Download latest data from AIP

@@ -36,7 +36,7 @@ def airspace_to_geojson() -> None:
         config = yaml.safe_load(f.read())
 
     if args.aip_filename:
-        print("Loading AIP")
+        print("loading AIP")
         tree = ET.parse(args.aip_filename)
         root = tree.getroot()
     else:
@@ -48,11 +48,11 @@ def airspace_to_geojson() -> None:
         # Download zip archive from NATS and extract AIP XML data
         url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/ICAO_AIP/EG_AIP_DS_{airac_date_str}_XML.zip"
 
-        print("Downloading AIP dataset...")
+        print("downloading AIP dataset")
         response = requests.get(url)
         response.raise_for_status()
 
-        print("Extracting XML...")
+        print("extracting XML")
         zip_data = BytesIO(response.content)
         with ZipFile(zip_data) as archive:
             xml_data = archive.read(f"EG_AIP_DS_FULL_{airac_date_str}.xml")
@@ -69,7 +69,7 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
     aip_bytes = ET.tostring(root)
 
     # Data from AIP
-    print("Loading data frames...")
+    print("loading data frames")
     airspace_gdf = read_file(aip_bytes, layer="Airspace")
     rwy_centreline_pt_gdf = read_file(aip_bytes, layer="RunwayCentrelinePoint")
     rwy_dirn_df = read_file(aip_bytes, layer="RunwayDirection")
@@ -94,7 +94,7 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
     # Sporting activities
     sporting_activity_gdf = read_file(config["files"]["sporting_activity"])
 
-    print("Making airspace")
+    print("making airspace")
     airspace_gdf = make_airspace_gdf(
         airspace_gdf,
         rwy_centreline_pt_gdf,
@@ -114,7 +114,7 @@ def aip_to_geojson(root: ET.Element, config, geojson_filename) -> None:
 
     # Final validity check
     if airspace_gdf.geometry.is_valid.all():
-        print("Geometry Valid: OK")
+        print("geometry valid: OK")
     else:
         print("WARNING: Invalid geometry")
 
@@ -161,7 +161,7 @@ def rat_to_geojson() -> None:
 
     # Final validity check
     if rat_gdf.geometry.is_valid.all():
-        print("Geometry Valid: OK")
+        print("geometry valid: OK")
     else:
         print("WARNING: Invalid geometry")
 
@@ -187,7 +187,7 @@ def loa_to_geojson() -> None:
 
     # Final validity check
     if loa_gdf.geometry.is_valid.all():
-        print("Geometry Valid: OK")
+        print("geometry valid: OK")
     else:
         print("WARNING: Invalid geometry")
 
@@ -213,6 +213,7 @@ def sporting_to_geojson() -> None:
     if args.prev:
         airac_date += datetime.timedelta(days=-28)
 
+    print("scraping data")
     url = f"https://www.aurora.nats.co.uk/htmlAIP/Publications/{airac_date.isoformat()}-AIRAC/html/eAIP/EG-ENR-5.5-en-GB.html#ENR-5.5"
     request = requests.get(url)
 
@@ -250,11 +251,11 @@ def obstacle_to_geojson() -> None:
         # Download zip archive from NATS and extract AIP XML data
         url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/UK_ICAO_Obstacle_Dataset_Area_1/EG_OBS_DS_AREA1_FULL_{airac_date_str}_XML.zip"
 
-        print("Downloading obstacle dataset...")
+        print("downloading obstacle dataset")
         response = requests.get(url)
         response.raise_for_status()
 
-        print("Extracting XML...")
+        print("extracting XML")
         zip_data = BytesIO(response.content)
         with ZipFile(zip_data) as archive:
             xml_data = archive.read(f"EG_OBS_DS_AREA1_FULL_{airac_date_str}.xml")
