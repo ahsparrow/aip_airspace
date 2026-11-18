@@ -219,19 +219,41 @@ def sporting_to_geojson() -> None:
 
 
 def obstacle_to_geojson() -> None:
-    parser = ArgumentParser()
-    parser.add_argument("obstacle_filename")
-    parser.add_argument("airspace_filename")
-    parser.add_argument("geojson_filename")
+    parser = ArgumentParser(
+        description="Download AIP the obstacle data and convert to GeoJSON"
+    )
+    parser.add_argument("--obstacle_filename", help="Local obstacle XML file")
+    parser.add_argument("airspace_filename", help="Airspace GeoJSON file")
+    parser.add_argument("geojson_filename", help="Output GeoJSON file")
     parser.add_argument("--config_file", default="config.yaml")
     args = parser.parse_args()
 
     with open(args.config_file, "rt") as f:
         config = yaml.safe_load(f.read())
 
-    obstacle_gdf = read_file(args.obstacle_filename, layer="VerticalStructure")
     airspace_gdf = read_file(args.airspace_filename)
     coast_gdf = read_file(config["files"]["coast"])
+
+    if args.obstacle_filename:
+        obstacle_gdf = read_file(args.obstacle_filename, layer="VerticalStructure")
+    else:
+        # Seems AIP doesn't publish obstacle data in advance
+        airac_date = next_airac_date() - datetime.timedelta(days=28)
+        airac_date_str = airac_date.strftime("%Y%m%d")
+
+        # Download zip archive from NATS and extract AIP XML data
+        url = f"https://nats-uk.ead-it.com/cms-nats/export/sites/default/en/Publications/digital-datasets/UK_ICAO_Obstacle_Dataset_Area_1/EG_OBS_DS_AREA1_FULL_{airac_date_str}_XML.zip"
+
+        print("Downloading obstacle dataset...")
+        response = requests.get(url)
+        response.raise_for_status()
+
+        print("Extracting XML...")
+        zip_data = BytesIO(response.content)
+        with ZipFile(zip_data) as archive:
+            xml_data = archive.read(f"EG_OBS_DS_AREA1_FULL_{airac_date_str}.xml")
+
+        obstacle_gdf = read_file(BytesIO(xml_data), layer="VerticalStructure")
 
     gdf = make_obstacle_gdf(obstacle_gdf, airspace_gdf, coast_gdf)
 
