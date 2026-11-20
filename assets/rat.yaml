@@ -11,6 +11,43 @@
 # details (including a data schema and a validator) can be found in the
 # YAXIM project on GitLab at https://gitlab.com/ahsparrow/airspace.
 
+- name: HOLBEACH RANGE (30 OCT-30 APR)
+  type: D
+  geometry:
+  - name: D290B HOLBEACH
+    lower: 2300 ft
+    upper: 7000 ft
+    boundary:
+    - line:
+      - 525400N 0000633E
+      - 524830N 0001200E
+      - 524830N 0002000E
+      - 524725N 0001856E
+    - arc:
+        dir: cw
+        radius: 7 nm
+        centre: 525152N 0001001E
+        to: 525553N 0001929E
+    - arc:
+        dir: ccw
+        radius: 6.5 nm
+        centre: 525000N 0001500E
+        to: 525400N 0000633E 
+
+  - name: D290C HOLBEACH
+    lower: SFC
+    upper: 2300 ft
+    boundary:
+    - line:
+      - 525323N 0000710E
+      - 524938N 0001052E
+    - arc:
+        dir: cw
+        radius: 2.3 nm
+        centre: 525153N 0001002E
+        to: 525323N 0000710E 
+
+
 - name:  FAIRFORD TMZ
   type: TMZ
   geometry:
