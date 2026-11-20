@@ -11,7 +11,7 @@
 # details (including a data schema and a validator) can be found in the
 # YAXIM project on GitLab at https://gitlab.com/ahsparrow/airspace.
 
-- name: HOLBEACH RANGE (30 OCT-30 APR)
+- name: HOLBEACH (30 OCT-30 APR)
   type: D
   geometry:
   - name: D290B HOLBEACH
@@ -51,7 +51,7 @@
 - name:  FAIRFORD TMZ
   type: TMZ
   geometry:
-  - name: "FAIRFORD TMZ"
+  - name: FAIRFORD TMZ
     lower: SFC
     upper: FL100
     boundary:
