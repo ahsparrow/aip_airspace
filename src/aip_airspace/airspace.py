@@ -264,10 +264,16 @@ def make_airspace_gdf(
         gdf.set_crs(epsg=4326, inplace=True)
 
     # Set data frame indices
-    airspace_gdf = airspace_gdf.rename(columns={"identifier": "id"}).set_index("id")  # ty: ignore[invalid-assignment]
-    rwy_centreline_pt_gdf = rwy_centreline_pt_gdf.rename(  # ty: ignore[invalid-assignment]
-        columns={"identifier": "id"}
-    ).set_index("id")
+    airspace_gdf = (
+        airspace_gdf.rename(columns={"identifier": "id"})
+        .set_index("id")
+        .set_geometry("geometry")
+    )
+    rwy_centreline_pt_gdf = (
+        rwy_centreline_pt_gdf.rename(columns={"identifier": "id"})
+        .set_index("id")
+        .set_geometry("geometry")
+    )
     air_traffic_control_df = air_traffic_control_df.rename(
         columns={"identifier": "id"}
     ).set_index("id")
@@ -278,7 +284,9 @@ def make_airspace_gdf(
         columns={"identifier": "id"}
     ).set_index("id")
     rwy_dirn_df = rwy_dirn_df.rename(columns={"identifier": "id"}).set_index("id")
-    sporting_activity_gdf = sporting_activity_gdf.set_index("id")  # ty: ignore[invalid-assignment]
+    sporting_activity_gdf = sporting_activity_gdf.set_index("id").set_geometry(
+        "geometry"
+    )
 
     # Remove offshore airspace
     airspace_gdf = remove_offshore(airspace_gdf, coast_gdf)

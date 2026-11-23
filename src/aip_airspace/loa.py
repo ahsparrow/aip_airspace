@@ -54,7 +54,7 @@ def make_loa_replace(
 
 
 def make_loa_gdf(loa_list: list[dict], airspace_gdf: GeoDataFrame) -> GeoDataFrame:
-    airspace_gdf = airspace_gdf.set_index("id")
+    gdf = airspace_gdf.set_index("id").set_geometry("geometry")
 
     data = [
         make_loa_add(loa, feature, volume)
@@ -67,7 +67,7 @@ def make_loa_gdf(loa_list: list[dict], airspace_gdf: GeoDataFrame) -> GeoDataFra
     add_gdf.set_crs(epsg=4326, inplace=True)
 
     data = [
-        make_loa_replace(loa, feature, volume, airspace_gdf)
+        make_loa_replace(loa, feature, volume, gdf)
         for loa in loa_list
         for feature in loa["replace"]
         for volume in feature["geometry"]

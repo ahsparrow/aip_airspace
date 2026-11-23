@@ -42,10 +42,10 @@ def fix_links(root: ET.Element, borders_df):
 
                 # Get previous and next positions
                 prev = curve_members[(n - 1) % len(ring)].findall(".//gml:pos", ns)
-                prev = Point([float(x) for x in prev[-1].text.split()][::-1])  # ty: ignore[unresolved-attribute]
+                prev = Point([float(x) for x in prev[-1].text.split()][::-1])  # ty: ignore[missing-union-attribute]
 
                 next = curve_members[(n + 1) % len(ring)].findall(".//gml:pos", ns)
-                next = Point([float(x) for x in next[0].text.split()][::-1])  # ty: ignore[unresolved-attribute]
+                next = Point([float(x) for x in next[0].text.split()][::-1])  # ty: ignore[missing-union-attribute]
 
                 # Find border geometry
                 border = borders_df[borders_df["identifier"] == identifier][

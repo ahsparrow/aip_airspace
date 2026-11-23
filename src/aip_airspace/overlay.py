@@ -3,7 +3,7 @@ from math import sqrt
 
 import numpy as np
 import pandas
-from freetype import FT_LOAD_DEFAULT, FT_LOAD_NO_BITMAP, Face
+from freetype import FT_LOAD_DEFAULT, FT_LOAD_NO_BITMAP, Face  # ty: ignore[missing-module-member]
 from geopandas import GeoDataFrame, GeoSeries
 from shapely import (
     MultiPoint,

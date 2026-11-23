@@ -116,5 +116,5 @@ def parse_sporting(text: bytes) -> GeoDataFrame:
         },
         crs="EPSG:4326",
     )
-    gdf = gdf.set_index("id")
-    return gdf  # ty: ignore[invalid-explicit-return]
+    gdf = gdf.set_index("id").set_geometry("geometry")
+    return gdf
