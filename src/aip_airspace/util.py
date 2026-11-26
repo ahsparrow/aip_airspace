@@ -46,9 +46,9 @@ def parse_level(level: str) -> dict:
 
 
 def next_airac_date() -> datetime.date:
-    airac_date = datetime.date(2026, 10, 1)
+    airac_date = datetime.date(2026, 11, 26)
     today = datetime.date.today()
-    while airac_date < today:
+    while airac_date <= today:
         airac_date += datetime.timedelta(days=28)
 
     return airac_date
